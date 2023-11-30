@@ -7,22 +7,25 @@ export const EditPersonaModal = ({ isVisible, onClose, onEnviar, persona }) => {
   const [correo, setCorreo] = useState(persona.correo ?? '');
   const [nombre, setNombre] = useState(persona.nombre ?? '');
   const [codZona, setCodZona] = useState(persona.cod_zona);
-  const [idDepto, setIdDepto] = useState(persona.id_depto);
+  const [codCargo, setCodCargo] = useState(persona.cod_cargo ?? '');
   const [telefono, setTelefono] = useState(persona.telefono ?? '');
   const [direccion, setDireccion] = useState(persona.direccion ?? '');
+  const [password, setPassword] = useState('');
 
   const handleEnviar = () => {
     const nuevaPersona = {
       rol,
-      cedula: persona.cedula,
+      password,
       correo,
       nombre,
       cod_zona: codZona,
-      id_depto: idDepto,
+      cod_cargo: codCargo,
       telefono,
       direccion,
     };
-    onEnviar(nuevaPersona);   
+    nuevaPersona.cod_cargo = rol === "colaborador" ? codCargo : undefined;
+    nuevaPersona.password = password === '' ? undefined : password;
+    onEnviar(nuevaPersona,persona.cedula); 
     onClose();
   };
 
@@ -31,41 +34,54 @@ export const EditPersonaModal = ({ isVisible, onClose, onEnviar, persona }) => {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Editar Usuario</Text>
-          <Pressable style={styles.dropdown} onPress={() => setRol(rol === 0 ? 1 : 0)}>
-            <Text>{rol === 0 ? 'Colaborador' : 'Cliente'}</Text>
+          <Text>Rol:</Text>
+          <Pressable style={styles.dropdown} onPress={() => setRol(rol === "cliente" ? "colaborador" : "cliente")}>
+            <Text>{rol === "colaborador" ? 'Colaborador' : 'Cliente'}</Text>
           </Pressable>
+          <Text>Cambio de contraseña:</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Cambio de contraseña"
+            value={password}
+            onChangeText={setPassword}
+          />
+          <Text>Correo:</Text>
           <TextInput
             style={styles.input}
             placeholder="Correo"
             value={correo}
             onChangeText={setCorreo}
           />
+          <Text>Nombre:</Text>
           <TextInput
             style={styles.input}
             placeholder="Nombre"
             value={nombre}
             onChangeText={setNombre}
           />
-          <TextInput
+          <Text>Código de Zona</Text>
+          <TextInput           
             style={styles.input}
-            placeholder="Código Zona"
             keyboardType="numeric"
             value={codZona.toString()}
             onChangeText={(text) => setCodZona(parseInt(text))}
           />
+          <Text>Código de Cargo</Text>
           <TextInput
+            editable={rol === "colaborador"}
             style={styles.input}
-            placeholder="ID Depto"
             keyboardType="numeric"
-            value={idDepto.toString()}
-            onChangeText={(text) => setIdDepto(parseInt(text))}
+            value={codCargo.toString()}
+            onChangeText={(text) => setCodCargo(parseInt(text))}
           />
+          <Text>Telefono:</Text>
           <TextInput
             style={styles.input}
             placeholder="Teléfono"
             value={telefono}
             onChangeText={setTelefono}
           />
+          <Text>Dirección:</Text>
           <TextInput
             style={styles.input}
             placeholder="Dirección"

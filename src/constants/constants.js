@@ -55,6 +55,16 @@ export const Personas = [
     }
 ];
 
+export const fechaParser = (fecha) => {
+  const date = new Date(fecha);
+  const day = date.getDate();
+  const month = date.getMonth() + 1;
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+}
+
+export const noImg = "https://www.steaua-dunarii.ro/client/img/image-not-found.png";
+
 
 export const Proveedores = [
   {

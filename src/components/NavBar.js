@@ -5,16 +5,14 @@ import { Verde } from '../constants/constants';
 import { Link } from 'react-router-native';
 
 export const NavBar = () => {
-    const handlePress = (buttonName) => {
-      console.log(`Botón presionado: ${buttonName}`);
-    };
+   
   
     return (
       <View style={styles.navBar}>
         
         <Pressable
           style={styles.navItem}
-          onPress={() => handlePress('Inicio')}
+          
         >
           <Link to="/">
           <View style={styles.navItem}>
@@ -26,9 +24,8 @@ export const NavBar = () => {
         
         <Pressable
           style={styles.navItem}
-          onPress={() => handlePress('Perfil')}
         >
-          <Link to="/perfil">
+          <Link to="/">
           <View style={styles.navItem}>
             <Feather name="user" size={24} color="black" />
             <Text style={styles.navText}>Perfil</Text>
@@ -37,9 +34,8 @@ export const NavBar = () => {
         </Pressable>
         <Pressable
           style={styles.navItem}
-          onPress={() => handlePress('Menú')}
         >
-          <Link to="/menu">
+          <Link to="/">
           <View style={styles.navItem}>
             <Feather name="menu" size={24} color="black" />
             <Text style={styles.navText}>Menú</Text>
@@ -48,9 +44,8 @@ export const NavBar = () => {
         </Pressable>
         <Pressable
           style={styles.navItem}
-          onPress={() => handlePress('Notificaciones')}
         >
-          <Link to="/notificaciones">
+          <Link to="/">
           <View style={styles.navItem}>
             <Feather name="bell" size={24} color="black" />
             <Text style={styles.navText}>Notificaciones</Text>
@@ -69,7 +64,8 @@ export const NavBar = () => {
       backgroundColor: Verde,//#c2d75f
       borderTopWidth: 1,
       borderTopColor: '#ccc',
-      position: 'sticky',
+      position: 'absolute',
+      zIndex: 1,
       bottom: 0,
       left: 0,
       right: 0,
@@ -83,5 +79,6 @@ export const NavBar = () => {
     },
     navText: {
       marginTop: 5,
+      fontSize: 12,
     },
   });

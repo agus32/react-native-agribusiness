@@ -77,7 +77,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginTop: 30,
-    width: '100%', // Ancho del botón al 100% del contenedor
+    width: 200, // Ancho del botón al 100% del contenedor
   },
   buttonText: {
     color: 'white',

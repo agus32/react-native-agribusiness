@@ -3,7 +3,7 @@ import { View, Text, Pressable, StyleSheet,Modal } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { EditPersonaModal } from './EditPersona';
 
-export const PersonaItem = ({ persona, onDelete, onEdit }) => {
+export const PersonaItem = ({ persona, onDelete, onEdit, cargos }) => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
 
@@ -11,18 +11,31 @@ export const PersonaItem = ({ persona, onDelete, onEdit }) => {
     onDelete(persona.cedula);
     setConfirmModalVisible(false);
   };
-  const handleEnviarEdit = (nuevaPersona) => {
-    onEdit(nuevaPersona);
+  const handleEnviarEdit = (nuevaPersona,cedula) => {
+    onEdit(nuevaPersona,cedula);
     setEditModalVisible(false);
+  }
+  const getCargo = (cod_cargo) => {
+    if(cod_cargo && cargos){
+      const cargo = cargos.find(c => c.cod_cargo === cod_cargo);
+      return cargo ? cargo.nombre: "";
+    }
+    return
   }
 
   return (
     <View style={styles.personaItem}>
       <Text style={styles.personaNombre}>{persona.nombre}</Text>
-      <Text style={styles.personaRol}>{persona.rol === 0 ? 'Colaborador' : 'Cliente'}</Text>
+      <Text style={styles.personaRol}>{persona.rol.charAt(0).toUpperCase() + persona.rol.slice(1)}</Text>
       <Text style={styles.personaCorreo}>{persona.correo}</Text>
-      <View style={styles.personaZonaContainer}>
-        <Text style={styles.personaZonaText}>Zona {persona.cod_zona}</Text>
+      <View style={styles.iconContainer}>
+        <View style={styles.personaZonaContainer}>
+          <Text style={styles.personaZonaText}>Zona {persona.cod_zona}</Text>
+        </View>
+        {persona.cod_cargo && (<View style={styles.personaCargoContainer}>
+          <Text style={styles.personaZonaText}>{getCargo(persona.cod_cargo)}</Text>
+        </View>)}
+        
       </View>
       <View style={styles.iconContainer}>
         <Pressable onPress={() => setEditModalVisible(true)}>
@@ -95,6 +108,15 @@ const styles = StyleSheet.create({
   },
   personaZonaContainer: {
     backgroundColor: '#2196F3',
+    borderRadius: 5,
+    alignSelf: 'flex-start',
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    marginTop: 5,
+    marginRight: 5,
+  },
+  personaCargoContainer: {
+    backgroundColor: 'green',
     borderRadius: 5,
     alignSelf: 'flex-start',
     paddingHorizontal: 10,

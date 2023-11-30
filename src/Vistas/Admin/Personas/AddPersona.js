@@ -1,26 +1,28 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TextInput, Pressable, StyleSheet } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 
-
-export const AddPersona = ({ isVisible, onClose, onAgregar }) => {
-  const [rol, setRol] = useState(0);
+export const AddPersona = ({ isVisible, onClose, onAgregar,cargos }) => {
+  const [rol, setRol] = useState("cliente");
   const [cedula, setCedula] = useState('');
   const [correo, setCorreo] = useState('');
   const [nombre, setNombre] = useState('');
   const [codZona, setCodZona] = useState(0);
-  const [idDepto, setIdDepto] = useState(0);
+  const [codCargo, setCodCargo] = useState(0);
   const [telefono, setTelefono] = useState('');
   const [direccion, setDireccion] = useState('');
+  const [password, setPassword] = useState('');
 
   const clearImputs = () => {
-    setRol(0);
+    setRol("cliente");
     setCedula('');
     setCorreo('');
     setNombre('');
     setCodZona(0);
-    setIdDepto(0);
+    setCodCargo(0);
     setTelefono('');
     setDireccion('');
+    setPassword('');
     };
 
   const handleAgregar = () => {
@@ -29,15 +31,18 @@ export const AddPersona = ({ isVisible, onClose, onAgregar }) => {
       cedula,
       correo,
       nombre,
+      password,
       cod_zona: codZona,
-      id_depto: idDepto,
+      cod_cargo: parseInt(codCargo),
       telefono,
       direccion,
     };
+    nuevaPersona.cod_cargo = rol === "colaborador" ? codCargo : null;
     onAgregar(nuevaPersona);
     clearImputs();
     onClose();
   };
+  
 
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible} onRequestClose={onClose}>
@@ -45,14 +50,20 @@ export const AddPersona = ({ isVisible, onClose, onAgregar }) => {
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Agregar Persona</Text>
           <Text>Rol:</Text>
-          <Pressable style={styles.dropdown} onPress={() => setRol(rol === 0 ? 1 : 0)}>
-            <Text>{rol === 0 ? 'Colaborador' : 'Cliente'}</Text>
+          <Pressable style={styles.dropdown} onPress={() => setRol(rol === "cliente" ? "colaborador" : "cliente")}>
+            <Text>{rol === "colaborador" ? 'Colaborador' : 'Cliente'}</Text>
           </Pressable>
           <TextInput
             style={styles.input}
             placeholder="Cédula"
             value={cedula}
             onChangeText={setCedula}
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Contraseña"
+            value={password}
+            onChangeText={setPassword}
           />
           <TextInput
             style={styles.input}
@@ -66,20 +77,30 @@ export const AddPersona = ({ isVisible, onClose, onAgregar }) => {
             value={nombre}
             onChangeText={setNombre}
           />
-          <TextInput
+          <Text>Código de Zona</Text>
+          <TextInput           
             style={styles.input}
-            placeholder="Código Zona"
             keyboardType="numeric"
             value={codZona.toString()}
             onChangeText={(text) => setCodZona(parseInt(text))}
           />
-          <TextInput
-            style={styles.input}
-            placeholder="ID Depto"
-            keyboardType="numeric"
-            value={idDepto.toString()}
-            onChangeText={(text) => setIdDepto(parseInt(text))}
-          />
+          {rol === "colaborador" && (
+          <View>
+          <Text>Cargo</Text>
+          <Picker           
+                selectedValue={codCargo}
+                onValueChange={setCodCargo}
+                mode="dropdown"
+                style={styles.picker}
+              >
+                {cargos.map((cargo) => (
+                  <Picker.Item
+                    key={cargo.cod_cargo}
+                    label={cargo.nombre}
+                    value={cargo.cod_cargo}
+                  />
+                ))}</Picker>
+                </View>)}
           <TextInput
             style={styles.input}
             placeholder="Teléfono"
@@ -157,5 +178,14 @@ const styles = StyleSheet.create({
     cancelarButtonText: {
       color: 'white',
       fontWeight: 'bold',
+    },
+    picker: {
+      borderWidth: 1,
+      borderColor: '#E0E0E0',
+      borderRadius: 5,
+      backgroundColor: 'white',
+      overflow: 'hidden',
+      padding: 5,
+      marginBottom: 15,
     },
   });

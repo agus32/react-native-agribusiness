@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, StyleSheet,Pressable } from 'react-native';
 import { Link } from "react-router-native"
 
-export const AdminMenu = () => {
+export const AdminMenu = ({handleLogout}) => {
   return (
     <View style={styles.container}>
       <Image source={require('../../media/PAGINA-INICIO-C.jpeg')} style={styles.image} />
@@ -34,12 +34,12 @@ export const AdminMenu = () => {
             <Text style={styles.linkText}>Eventos</Text>
           </View>
         </Link>
-        <Link to="/notificaciones" style={styles.link}>
+        <Pressable onPress={handleLogout} style={styles.link}>
           <View>
-            <Image source={require('../../media/notificaciones.png')} style={styles.linkImage} />
-            <Text style={styles.linkText}>Notificaciones</Text>
+            <Image source={require('../../media/cerrar-sesion.png')} style={styles.linkImage} />
+            <Text style={styles.linkText}>Cerrar Sesión</Text>
           </View>
-        </Link>
+        </Pressable>
         </View>
       
     </View>

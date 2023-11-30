@@ -1,14 +1,17 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, TextInput, Pressable, Image } from 'react-native';
-import { useAuth } from '../../context/UserContext';
 import { useNavigate } from "react-router-native";
+import { PostLogin } from '../../services/ApiHandler';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const LoginScreen = () => {
-  const { login } = useAuth();
+
+
+export const LoginScreen = ({LoggedUser}) => {
+
   const navigate = useNavigate();
 
   const [imputs, setImputs] = useState({
-    user: '',
+    cedula: '',
     password: '',
   });
 
@@ -19,10 +22,15 @@ export const LoginScreen = () => {
     });
   }
 
-  const handleEnviar = () => {
-    console.log(imputs);
-    login({nombre: imputs.user, rol:"admin"},"1234");
-    navigate("/");
+  const handleEnviar = async() => {
+
+    const response = await PostLogin(imputs);
+    if (response.success){    
+      await AsyncStorage.setItem('loggedUser', JSON.stringify({rol:response.rol,token:response.token}));
+      LoggedUser();
+      navigate("/");
+    }
+    
   }
 
 
@@ -33,7 +41,7 @@ export const LoginScreen = () => {
         style={styles.logo}
       />
       <Text style={styles.label}>Usuario:</Text>
-      <TextInput style={styles.input} value={imputs.user} onChangeText={(text) => handleInputChange(text, 'user')}/>
+      <TextInput style={styles.input} value={imputs.cedula} onChangeText={(text) => handleInputChange(text, 'cedula')}/>
       <Text style={styles.label}>Contraseña:</Text>
       <TextInput style={styles.input} secureTextEntry={true}  value={imputs.password} onChangeText={(text) => handleInputChange(text, 'password')}/>
       <Pressable style={styles.forgotPasswordLink}>
@@ -58,6 +66,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   logo: {
+    marginTop: 30,
     width: 100,
     height: 100,
     resizeMode: 'contain',
@@ -67,9 +76,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     marginBottom: 5,
     alignSelf: 'flex-start',
+    
   },
   input: {
-    width: '100%',
+    width: 300,
     height: 40,
     borderRadius: 10, // Menos redondeado
     backgroundColor: '#E1F5FE', // Fondo celeste

@@ -3,13 +3,14 @@ import { View, Text, StyleSheet, FlatList, Pressable, TextInput } from 'react-na
 import { Feather } from '@expo/vector-icons';
 import { ProductoItem } from './ProductoItem';
 import { AddProducto } from './AddProducto';
-import { Productos } from '../../../constants/constants';
 import { ImportarCSVModal } from './ImportarCSV';
+import { getApiData,deleteApiData,postApiData, putApiData,handleApiFile} from '../../../services/ApiHandler';
 
 
 export const ProductosList = () => {
-  const [productos, setProductos] = useState(Productos);
-  const [filteredProductos, setFilteredProductos] = useState(Productos);
+  const [productos, setProductos] = useState([]);
+  const [proveedores, setProveedores] = useState([]);
+  const [filteredProductos, setFilteredProductos] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
   const [modalImportarVisible, setModalImportarVisible] = useState(false);
@@ -24,24 +25,40 @@ export const ProductosList = () => {
       );
       setFilteredProductos(filtered);
     }
-  }, [searchText]);
+  }, [searchText,productos]);
   
-  
+  const getProductos = async () => {
+    const response = await getApiData('producto'); 
+    setProductos(response);
+  };
+  const getProveedores = async () => {
+    const response = await getApiData('proveedor');
+    setProveedores(response);
+  }
 
-  const handleDelete = (id_producto) => {
-    setProductos(productos.filter((producto) => producto.id_producto !== id_producto));
-    setFilteredProductos(filteredProductos.filter((producto) => producto.id_producto !== id_producto));
+  useEffect(() => {   
+    getProductos();
+   getProveedores();
+    
+  }, []);
+
+  const handleDelete = async(id_producto) => {
+    await deleteApiData('producto', id_producto);
+    getProductos();
   };
 
-  const handleEdit = (producto) => {
-    setProductos(productos.map((p) => (p.id_producto === producto.id_producto ? producto : p)));
-    setFilteredProductos(filteredProductos.map((p) => (p.id_producto === producto.id_producto ? producto : p)));
+  const handleEdit = async(nuevoProducto,id_producto,ficha) => {
+    await putApiData('producto',id_producto,nuevoProducto);
+    if(ficha) handleApiFile('PUT',`producto/${id_producto}/ficha`,ficha);
+    getProductos();
+    console.log(producto);
   };
 
-  const handleAgregar = (nuevoProducto) => {
-    nuevoProducto.id_producto = productos.length + 1;
-    setProductos([...productos, nuevoProducto]);
-    setFilteredProductos([...filteredProductos, nuevoProducto]);
+  const handleAgregar = async(nuevoProducto,ficha,imagen) => {
+    const response = await postApiData('producto',nuevoProducto);
+    if(ficha && response.success) handleApiFile('PUT',`producto/${response.data.id_producto}/ficha`,ficha);
+    if(imagen && response.success) handleApiFile('POST',`producto/${response.data.id_producto}/imagen`,imagen);
+    getProductos();
   }
 
   const handleDownload = (file_path) => {
@@ -66,7 +83,7 @@ export const ProductosList = () => {
       <FlatList
         data={filteredProductos}
         renderItem={({ item }) => (
-          <ProductoItem producto={item} onDelete={handleDelete} onEdit={handleEdit} onDownload={handleDownload} />
+          <ProductoItem producto={item} onDelete={handleDelete} onEdit={handleEdit} onDownload={handleDownload} proveedores={proveedores}/>
         )}
         keyExtractor={(item) => item.id_producto}
         ListHeaderComponent={         
@@ -84,6 +101,7 @@ export const ProductosList = () => {
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
         onEnviar={handleAgregar}
+        proveedores={proveedores}
       />
       <ImportarCSVModal
         isVisible={modalImportarVisible}

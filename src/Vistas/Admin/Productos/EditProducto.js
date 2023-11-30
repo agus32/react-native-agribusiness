@@ -1,30 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TextInput, Pressable, StyleSheet,Picker } from 'react-native';
+import { View, Text, Modal, TextInput, Pressable, StyleSheet } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
-import { Proveedores } from '../../../constants/constants';
+import {Picker} from '@react-native-picker/picker';
 
 
-export const EditProductoModal = ({ isVisible, onClose, onEnviar, producto }) => {
+export const EditProductoModal = ({ isVisible, onClose, onEnviar, producto ,proveedores}) => {
     const[precio, setPrecio] = useState(producto.precio) ?? "";
     const[nombre, setNombre] = useState(producto.nombre?? "");
     const[presentacion, setPresentacion] = useState(producto.presentacion?? "");
     const[descripcion, setDescripcion] = useState(producto.descripcion?? "");
     const [selectedFile, setSelectedFile] = useState(null);
-    const [selectedImagen, setSelectedImagen] = useState(producto.imagen ?? "");
-    const [selectedProveedor, setSelectedProveedor] = useState(producto.proovedor?? "");
+    const [selectedImagen, setSelectedImagen] = useState(null);
+    const[idProveedor, setIdProveedor] = useState(producto.id_proveedor ?? -1);
+
 
   const handleEnviar = () => {
     const nuevoProducto = {
-        id_producto: producto.id_producto,
-        precio,
+        precio: parseFloat(precio),
         nombre,
         presentacion,
         descripcion,
-        ficha_tecnica: selectedFile?.uri ?? producto.ficha_tecnica,
-        imagen: selectedImagen,
-        proveedor: selectedProveedor,   
+        id_proveedor: parseInt(idProveedor),   
     };
-    onEnviar(nuevoProducto); 
+    onEnviar(nuevoProducto,producto.id_producto,selectedFile); 
     onClose();
   };
   const handleSelectFile = async () => {
@@ -41,9 +39,7 @@ export const EditProductoModal = ({ isVisible, onClose, onEnviar, producto }) =>
     }
   };
 
-  const handleProveedorChange = (itemValue) => {
-    setSelectedProveedor(itemValue);
-  };
+
   
 
   return (
@@ -51,46 +47,45 @@ export const EditProductoModal = ({ isVisible, onClose, onEnviar, producto }) =>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Editar Producto</Text>
-
-          <TextInput
-            style={styles.input}
-            placeholder="Precio"
-            value={precio}
-            onChangeText={setPrecio}
-          />
+            <Text>Precio:</Text>
+            <TextInput
+              style={styles.input}
+              value={precio}
+              onChangeText={setPrecio}
+            />
+            <Text>Nombre:</Text>
             <TextInput
             style={styles.input}
-            placeholder="Nombre"
             value={nombre}
             onChangeText={setNombre}
             />
+            <Text>Presentación:</Text>
             <TextInput
             style={styles.input}
-            placeholder="Presentación"
             value={presentacion}
             onChangeText={setPresentacion}
             />
+            <Text>Descripción:</Text>
             <TextInput
             style={styles.input}
-            placeholder="Descripción"
             multiline={true}
             numberOfLines={4}
             value={descripcion}
             onChangeText={setDescripcion}
             />
-            <View style={styles.container}>
-              <Text>Selecciona un proveedor:</Text>
+            <View>
+            <Text>Selecciona un proveedor:</Text>
               <Picker           
-                selectedValue={selectedProveedor}
-                onValueChange={handleProveedorChange}
+                selectedValue={idProveedor}
+                onValueChange={setIdProveedor}
                 style={styles.picker}
                 mode="dropdown"
               >
-                {Proveedores.map((proveedor) => (
+                {proveedores.map((proveedor) => (
                   <Picker.Item
-                    key={proveedor.id}
+                    key={proveedor.id_proveedor}
                     label={proveedor.nombre}
-                    value={proveedor.nombre}
+                    value={proveedor.id_proveedor}
                   />
                 ))}
               </Picker>
@@ -98,6 +93,7 @@ export const EditProductoModal = ({ isVisible, onClose, onEnviar, producto }) =>
             <Pressable style={styles.importarButton} onPress={handleSelectFile}>
               <Text style={styles.agregarButtonText}>Seleccionar Ficha Técnica</Text>
             </Pressable>
+           
             <Pressable style={styles.importarButton} onPress={handleImagen}>
               <Text style={styles.agregarButtonText}>Seleccionar Imagen</Text>
             </Pressable>

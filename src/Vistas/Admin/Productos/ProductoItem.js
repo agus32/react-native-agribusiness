@@ -4,7 +4,7 @@ import { AntDesign } from '@expo/vector-icons';
 import { EditProductoModal } from './EditProducto';
 import { Azul} from '../../../constants/constants';
 
-export const ProductoItem = ({ producto, onDelete, onEdit,onDownload }) => {
+export const ProductoItem = ({ producto, onDelete, onEdit,onDownload,proveedores }) => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
 
@@ -12,26 +12,29 @@ export const ProductoItem = ({ producto, onDelete, onEdit,onDownload }) => {
     onDelete(producto.id_producto);
     setConfirmModalVisible(false);
   };
-  const handleEnviarEdit = (nuevoProducto) => {
-    onEdit(nuevoProducto);
+  const handleEnviarEdit = (nuevoProducto,id_producto,ficha) => {
+    onEdit(nuevoProducto,id_producto,ficha);
     setEditModalVisible(false);
+  }
+  const handleDownload = () => {
+    onDownload(producto.ficha_tecnica);
   }
 
   return (
     <View style={styles.productoItem}>
       <View>
-        <Image source={producto.imagen} style={{ width: 100, height: 100,marginRight: '10px', borderRadius: 5 }} />
+        <Image source={producto.imagen || require('../../../media/image-not-found.png')} style={{ width: 100, height: 100,marginRight: '10px', borderRadius: 5 }} />
       </View>
       <View>
         <Text style={styles.productoNombre}>{producto.nombre}</Text>
         <Text style={styles.productoDesc} numberOfLines={1} ellipsizeMode="tail" >{producto.descripcion}</Text>
-        <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Proovedor: </Text>{producto.proveedor}</Text>
+        <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Proovedor: </Text>{producto.nombre_proveedor}</Text>
         <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Presentacíon: </Text>{producto.presentacion}</Text>
         <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Precio: </Text>{producto.precio}</Text>
         
-        <Pressable onPress={onDownload(producto.ficha_tecnica)}>
+        <Pressable onPress={handleDownload}>
           <Text style={styles.linkText}>Descargar Ficha Técnica</Text>
-        </Pressable> 
+        </Pressable>
       </View>
       <View style={styles.iconContainer}>
         <Pressable style={styles.icon} onPress={() => setEditModalVisible(true)}>
@@ -51,6 +54,7 @@ export const ProductoItem = ({ producto, onDelete, onEdit,onDownload }) => {
         onClose={() => setEditModalVisible(false)}
         onEnviar={handleEnviarEdit}
         producto={producto}
+        proveedores={proveedores}
       />
 
     </View>

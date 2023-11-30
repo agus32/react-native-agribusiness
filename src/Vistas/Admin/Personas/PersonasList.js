@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, TextInput } from 'react-native';
 import { PersonaItem } from './PersonaItem';
 import {PersonaFiltro} from './PersonaFiltro';
-import { Personas } from '../../../constants/constants';
+import { deleteApiData, getApiData, postApiData, putApiData } from '../../../services/ApiHandler';
 import { Feather } from '@expo/vector-icons';
 import { AddPersona } from './AddPersona';
 
 
+
 export const PersonasList = () => {
-  const [personas, setPersonas] = useState(Personas); 
-  const [filteredPersonas, setFilteredPersonas] = useState(Personas);
+  const [personas, setPersonas] = useState([]); 
+  const [filteredPersonas, setFilteredPersonas] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [filtro, setFiltro] = useState('Todos los Usuarios');
   const [modalVisible, setModalVisible] = useState(false);
+  const [cargos, setCargos] = useState([]);
 
   useEffect(() => {
     if (searchText.trim() === '') {
@@ -32,25 +34,40 @@ export const PersonasList = () => {
       setFilteredPersonas(personas);
     } else {
       const filtered = personas.filter(
-        (persona) => (filtro === 'Clientes' && persona.rol === 1) || (filtro === 'Colaboradores' && persona.rol === 0)
+        (persona) => (filtro === 'Clientes' && persona.rol === "cliente") || (filtro === 'Colaboradores' && persona.rol === "colaborador")
       );
       setFilteredPersonas(filtered);
     }
   }, [filtro]);
   
+  const getPersonas = async () => {
+    const response = await getApiData('persona');
+    console.log(response);
+    setPersonas(response);
+  };
+  const getCargos = async () => {
+    const response = await getApiData('cargo');
+    setCargos(response);
+  }
 
-  const handleDelete = (cedula) => {
-    setFilteredPersonas(personas.filter((persona) => persona.cedula !== cedula));
+  useEffect(() => {   
+    getPersonas();
+    getCargos();
+  }, []);
+
+  const handleDelete = async (cedula) => {
+    await deleteApiData('persona', cedula);
+    getPersonas();
   };
 
-  const handleEdit = (persona) => {
-    
-    setFilteredPersonas(personas.map((p) => (p.cedula === persona.cedula ? persona : p)));
+  const handleEdit = async(persona,cedula) => {   
+    await putApiData('persona',cedula,persona);
+    getPersonas();
   };
 
-  const handleAgregar = (nuevaPersona) => {
-    setPersonas([...personas, nuevaPersona]);
-    console.log(nuevaPersona);
+  const handleAgregar = async (nuevaPersona) => {
+    await postApiData('persona', nuevaPersona);
+    getPersonas();
   }
   return (
     <View style={styles.container}>
@@ -72,7 +89,7 @@ export const PersonasList = () => {
       <FlatList      
         data={filteredPersonas}
         renderItem={({ item }) => (
-          <PersonaItem persona={item} onDelete={handleDelete} onEdit={handleEdit} />
+          <PersonaItem persona={item} onDelete={handleDelete} onEdit={handleEdit} cargos={cargos} />
         )}
         keyExtractor={(item) => item.cedula}
       />
@@ -80,6 +97,7 @@ export const PersonasList = () => {
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
         onAgregar={handleAgregar}
+        cargos={cargos}
       />
     </View>
   );

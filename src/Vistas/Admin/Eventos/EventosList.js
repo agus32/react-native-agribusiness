@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, TextInput } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import {Eventos} from '../../../constants/constants';
 import {EventosItem} from './EventosItem';
 import { AddEvento } from './AddEvento';
+import { getApiData, deleteApiData,postApiData,handleApiFile,putApiData} from '../../../services/ApiHandler';
+
 
 
 
 export const EventosList = () => {
-  const [eventos,setEventos] = useState(Eventos);
-  const [filteredEventos, setFilteredEventos] = useState(Eventos);
+  const [eventos,setEventos] = useState([]);
+  const [filteredEventos, setFilteredEventos] = useState([]);
   const [searchText, setSearchText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -25,22 +26,32 @@ export const EventosList = () => {
     }
   }, [searchText]);
   
-  
-
-  const handleDelete = (id_evento) => {
-    setEventos(eventos.filter((e) => e.id_evento !== id_evento));
-    setFilteredEventos(filteredEventos.filter((e) => e.id_evento !== id_evento));
+  const getEventos = async () => {
+    const response = await getApiData('evento');
+      setEventos(response);
+      setFilteredEventos(response);
   };
 
-  const handleEdit = (evento) => {
-    setEventos(eventos.map((e) => (e.id_evento === evento.id_evento ? evento : e)));
-    setFilteredEventos(filteredEventos.map((e) => (e.id_evento === evento.id_evento ? evento : e)));
+  useEffect(() => {   
+    getEventos();
+  }, []);
+
+
+  const handleDelete = async (id_evento) => {
+    await deleteApiData('evento', id_evento);
+    getEventos();
   };
 
-  const handleAgregar = (nuevoEvento) => {
-    nuevoEvento.id_evento = eventos.length + 1;
-    setEventos([...eventos, nuevoEvento]);
-    setFilteredEventos([...filteredEventos, nuevoEvento]);
+  const handleEdit = async(evento,id_evento,imagen) => {
+    const response = await putApiData('evento',id_evento,evento);
+    if(imagen) handleApiFile('PUT',`evento/${id_evento}/imagen`,imagen);
+    getEventos();
+  };
+
+  const handleAgregar = async (nuevoEvento,imagen) => {
+    const response = await postApiData('evento',nuevoEvento);
+    if(imagen && response.success) handleApiFile('PUT',`evento/${response.data.id_evento}/imagen`,imagen);  
+    getEventos();
   }
 
 
@@ -60,7 +71,7 @@ export const EventosList = () => {
         renderItem={({ item }) => (
           <EventosItem evento={item} onDelete={handleDelete} onEdit={handleEdit} />
         )}
-        keyExtractor={(item) => item.id_producto}
+        keyExtractor={(item) => item.id_evento}
         ListHeaderComponent={         
             <View style={styles.addProductoContainer}>
               <Pressable style={styles.addProductoButton} onPress={() => setModalVisible(true)}>

@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { View, Text, Pressable, StyleSheet, Modal, Image } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { EditEventoModal } from './EditEvento';
-import { Azul } from '../../../constants/constants';
+import { Azul, fechaParser} from '../../../constants/constants';
+
 
 export const EventosItem = ({ evento, onDelete, onEdit }) => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -12,21 +13,21 @@ export const EventosItem = ({ evento, onDelete, onEdit }) => {
     onDelete(evento.id_evento);
     setConfirmModalVisible(false);
   };
-  const handleEnviarEdit = (nuevoEvento) => {
-    onEdit(nuevoEvento);
+  const handleEnviarEdit = (evento,id_evento,imagen) => {
+    onEdit(evento,id_evento,imagen);
     setEditModalVisible(false);
   };
 
   return (
     <View style={styles.eventoItem}>
       <View style={styles.imageContainer}>
-        <Image source={evento.image} style={styles.eventoImage} />
+        <Image source={evento.image || require('../../../media/image-not-found.png')} style={styles.eventoImage} />
       </View>
       <View style={styles.eventoInfo}>
         <Text style={styles.eventoNombre}>{evento.titulo}</Text>
         <Text style={styles.eventoDesc}>
           <Text style={{ fontWeight: 'bold' }}>Fecha: </Text>
-          {evento.fecha_creacion}
+          {fechaParser(evento.fecha_creacion)}
         </Text>
         <Text style={styles.eventoDesc}>{evento.descripcion}</Text>
       </View>

@@ -1,26 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TextInput, Pressable, StyleSheet,Picker } from 'react-native';
+import { View, Text, Modal, TextInput, Pressable, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import DatePicker from 'react-native-date-picker'
 
 
 
 
 export const EditEventoModal = ({ isVisible, onClose, onEnviar, evento }) => {
     const[titulo, setTitulo] = useState(evento.titulo) ?? "";
-    const[fecha, setFecha] = useState(new Date(evento.fecha_creacion));
     const[descripcion, setDescripcion] = useState(evento.descripcion?? "");
     const[selectedImagen, setSelectedImagen] = useState(null);
 
   const handleEnviar = () => {
     const nuevoEvento = {
-        id_evento: evento.id_evento,
         titulo,
         descripcion,
-        fecha_creacion:fecha.toISOString().split('T')[0],
-        image: evento.image
     };
-    onEnviar(nuevoEvento); 
+    console.log(evento.id_evento);
+    onEnviar(nuevoEvento,evento.id_evento,selectedImagen);
     onClose();
     console.log(selectedImagen);
   };
@@ -43,12 +39,14 @@ export const EditEventoModal = ({ isVisible, onClose, onEnviar, evento }) => {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Editar Evento</Text>
+          <Text>Titulo:</Text>
             <TextInput
             style={styles.input}
             placeholder="Titulo"
             value={titulo}
             onChangeText={setTitulo}
             />
+            <Text>Descripción:</Text>
             <TextInput
             style={styles.input}
             placeholder="Descripción"
@@ -57,7 +55,6 @@ export const EditEventoModal = ({ isVisible, onClose, onEnviar, evento }) => {
             value={descripcion}
             onChangeText={setDescripcion}
             />
-            <DatePicker date={fecha} onDateChange={setFecha} />
             <Pressable style={styles.importarButton} onPress={pickImage}>
               <Text style={styles.agregarButtonText}>Seleccionar Imagen</Text>
             </Pressable>

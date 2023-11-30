@@ -1,4 +1,4 @@
-import { StyleSheet, View} from 'react-native';
+import { StyleSheet, SafeAreaView} from 'react-native';
 import {NavBar} from '../components/NavBar';
 import {HomeScreen} from '../Vistas/Home/HomeScreen';
 import {LoginScreen} from '../Vistas/Home/LoginScreen';
@@ -6,55 +6,51 @@ import { Productos } from '../Vistas/Admin/Productos/Productos';
 import { Route,Routes } from 'react-router-native';
 import { Personas } from '../Vistas/Admin/Personas/Personas';
 import { AdminMenu } from '../Vistas/Admin/AdminMenu';
-import { useAuth } from '../context/UserContext';
 import { Eventos } from '../Vistas/Admin/Eventos/Eventos';
-import { Notificaciones } from '../Vistas/Admin/Notificaciones/Notificaciones';
 
-export const Admin= () => {
+
+export const Admin= ({handleLogout}) => {
     return (
 
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
         <Routes> 
-            <Route exact path="/"   element={<AdminMenu/>}/>
+            <Route exact path="/"   element={<AdminMenu handleLogout={handleLogout}/>}/>
             <Route path="/usuarios" element={<Personas/>}/>
             <Route path="/productos" element={<Productos/>}/>
             <Route path="/eventos" element={<Eventos/>}/>
-            <Route path="/notificaciones" element={<Notificaciones/>}/>
         </Routes>     
         <NavBar/>
-        </View>
+        </SafeAreaView>
       );
 }
 
-export const Home= () => {
+export const Home= ({LoggedUser}) => {
     return(
-        <View style={styles.container}>
+        <SafeAreaView style={styles.container}>
         <Routes> 
             <Route exact path="/"   element={<HomeScreen/>}/>
-            <Route path="/login" element={<LoginScreen/>}/>
+            <Route path="/login" element={<LoginScreen LoggedUser={LoggedUser}/>}/>
         </Routes>     
-        </View>
+        </SafeAreaView>
     );
 }
 
 
 
-export const Navigation = () => {
-    const { user,login } = useAuth();
-    //login({nombre: "admin", rol:"admin"},"1234");
+export const Navigation = ({user,LoggedUser,handleLogout}) => {
 
-    if (user != null){
+    if (user != {}){
         switch(user.rol){
             case "admin":
-                return <Admin/>;
+                return <Admin handleLogout={handleLogout}/>;
             case "colaborador":
-                return <Home/>;
+                return <Home LoggedUser={LoggedUser}/>;
             case "cliente":
-                return <Home/>;
+                return <Home LoggedUser={LoggedUser}/>;
             default:
-                return <Home/>;
+                return <Home LoggedUser={LoggedUser}/>;
         }
-    }else return <Home/>;
+    }else return <Home LoggedUser={LoggedUser}/>;
 }
 
 const styles = StyleSheet.create({
@@ -63,6 +59,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    
+    position: 'relative',
   },
 });

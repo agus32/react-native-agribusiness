@@ -1,30 +1,48 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TextInput, Pressable, StyleSheet } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import * as ImagePicker from 'expo-image-picker';
+import {Picker} from '@react-native-picker/picker';
 
-export const AddProducto = ({ isVisible, onClose, onEnviar }) => {
+export const AddProducto = ({ isVisible, onClose, onEnviar,proveedores}) => {
   const[precio, setPrecio] = useState("");
   const[nombre, setNombre] = useState("");
   const[presentacion, setPresentacion] = useState("");
   const[descripcion, setDescripcion] = useState("");
-  const [selectedFile, setSelectedFile] = useState(null);
+  const[idProveedor, setIdProveedor] = useState(proveedores[0]?.id_proveedor ?? "1");
+  const[selectedFile, setSelectedFile] = useState(null);
+  const[selectedImagen, setSelectedImagen] = useState(null);
 
   const handleEnviar = () => {
     const nuevoProducto = {
-        precio,
+        precio: parseFloat(precio),
         nombre,
         presentacion,
         descripcion,
-        ficha_tecnica: selectedFile?.uri ?? "",
+        id_proveedor: parseInt(idProveedor),
     };
-    onEnviar(nuevoProducto);   
+    console.log(selectedFile);
+    onEnviar(nuevoProducto,selectedFile,selectedImagen);   
     onClose();
   };
 
+
   const handleSelectFile = async () => {
-    const result = await DocumentPicker.getDocumentAsync();
-    if (result.type === 'success') {
-      setSelectedFile(result);
+    let result = await DocumentPicker.getDocumentAsync({});
+    if(!result.canceled) {setSelectedFile(result.assets[0].uri); console.log(result.assets[0].uri);}
+    console.log(selectedFile);
+  };
+
+  const pickImage = async () => {
+   
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+        setSelectedImagen(result.assets[0].uri);
     }
   };
 
@@ -60,10 +78,29 @@ export const AddProducto = ({ isVisible, onClose, onEnviar }) => {
             value={descripcion}
             onChangeText={setDescripcion}
             />
+            <View>
+              <Text>Selecciona un proveedor:</Text>
+              <Picker           
+                selectedValue={idProveedor}
+                onValueChange={setIdProveedor}
+                style={styles.picker}
+                mode="dropdown"
+              >
+                {proveedores.map((proveedor) => (
+                  <Picker.Item
+                    key={proveedor.id_proveedor}
+                    label={proveedor.nombre}
+                    value={proveedor.id_proveedor}
+                  />
+                ))}
+              </Picker>
+            </View>
             <Pressable style={styles.importarButton} onPress={handleSelectFile}>
               <Text style={styles.agregarButtonText}>Seleccionar Ficha Técnica</Text>
             </Pressable>
-
+            <Pressable style={styles.importarButton} onPress={pickImage}>
+              <Text style={styles.agregarButtonText}>Seleccionar Imagen</Text>
+            </Pressable>
           <Pressable style={styles.agregarButton} onPress={handleEnviar}>
             <Text style={styles.agregarButtonText}>Aceptar</Text>
           </Pressable>
@@ -93,6 +130,14 @@ const styles = StyleSheet.create({
       fontSize: 18,
       fontWeight: 'bold',
       marginBottom: 15,
+    },
+    picker: {
+      borderWidth: 1,
+      borderColor: '#E0E0E0',
+      borderRadius: 5,
+      backgroundColor: 'white',
+      overflow: 'hidden',
+      padding: 5,
     },
     input: {
       borderWidth: 1,

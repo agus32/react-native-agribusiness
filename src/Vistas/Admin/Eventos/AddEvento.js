@@ -1,25 +1,22 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TextInput, Pressable, StyleSheet,Picker } from 'react-native';
+import { View, Text, Modal, TextInput, Pressable, StyleSheet } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import DatePicker from 'react-native-date-picker'
+
 
 
 export const AddEvento = ({ isVisible, onClose, onEnviar}) => {
     const[titulo, setTitulo] = useState("");
-    const[fecha, setFecha] = useState(new Date());
     const[descripcion, setDescripcion] = useState("");
     const[selectedImagen, setSelectedImagen] = useState(null);
 
   const handleEnviar = () => {
     const nuevoEvento = {
         titulo,
-        descripcion,
-        fecha_creacion: fecha.toISOString().split('T')[0],
-        image: selectedImagen ?? "no-image" 
+        descripcion
     };
-    onEnviar(nuevoEvento); 
+    onEnviar(nuevoEvento,selectedImagen); 
+    setTitulo(""); setDescripcion(""); setSelectedImagen(null);
     onClose();
-    console.log(selectedImagen);
   };
 
   const pickImage = async () => {
@@ -39,7 +36,7 @@ export const AddEvento = ({ isVisible, onClose, onEnviar}) => {
     <Modal animationType="slide" transparent={true} visible={isVisible} onRequestClose={onClose}>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Editar Evento</Text>
+          <Text style={styles.modalTitle}>Nuevo Evento</Text>
             <TextInput
             style={styles.input}
             placeholder="Titulo"
@@ -53,8 +50,7 @@ export const AddEvento = ({ isVisible, onClose, onEnviar}) => {
             numberOfLines={4}
             value={descripcion}
             onChangeText={setDescripcion}
-            />
-            <DatePicker date={fecha} onDateChange={setFecha} />
+            />          
             <Pressable style={styles.importarButton} onPress={pickImage}>
               <Text style={styles.agregarButtonText}>Seleccionar Imagen</Text>
             </Pressable>

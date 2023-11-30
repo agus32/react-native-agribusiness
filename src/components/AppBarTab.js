@@ -1,18 +1,24 @@
-import { Link } from "react-router-native"
+import {useNavigate } from "react-router-native"
 import React from 'react';
-import { StyleSheet,View,Image,Text } from 'react-native';
+import { StyleSheet,View,Image,Text, Pressable } from 'react-native';
 import { Verde } from "../constants/constants";
 
-export const AppBarTab = ({children}) => (  
-    <View style={styles.AppBarContainer}>
-        <Link to="/">
+export const AppBarTab = ({children}) => {
+    const navigate = useNavigate();
+    const goBack = () => {
+        navigate(-1);
+    }
+
+    return(  
+    <View style={styles.AppBarContainer}>        
             <View style={styles.AppBar}>
+                <Pressable onPress={goBack}>
                 <Image style={styles.img} source={require('../media/ATRAS.png')} />
+                </Pressable>
                 <Text style={styles.navText}>{children}</Text>
-            </View>
-        </Link>
+            </View>        
     </View>
-);
+)};
 
 const styles = StyleSheet.create({
     AppBarContainer: {
@@ -20,7 +26,8 @@ const styles = StyleSheet.create({
         padding: 10,
         position: 'sticky',
         top: 0,
-        zIndex: 1,        
+        zIndex: 1, 
+        paddingTop: 40,       
     },
     AppBar: {
         flexDirection: 'row',
