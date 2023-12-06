@@ -29,7 +29,7 @@ export const LoginScreen = ({LoggedUser}) => {
       await AsyncStorage.setItem('loggedUser', JSON.stringify({rol:response.rol,token:response.token}));
       LoggedUser();
       navigate("/");
-    }
+    }else alert("Usuario o contraseña incorrectos");
     
   }
 

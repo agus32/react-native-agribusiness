@@ -23,7 +23,7 @@ export const Personas = [
   
     {      
       "rol": 1,     
-      "cedula": "348213902",     
+      "cedula": "39214282",     
       "correo": "juanramon@gmail.com",      
       "nombre": "Juan ramon",      
       "cod_zona": 2,     
