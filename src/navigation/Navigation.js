@@ -7,10 +7,14 @@ import { Route,Routes } from 'react-router-native';
 import { Personas } from '../Vistas/Admin/Personas/Personas';
 import { AdminMenu } from '../Vistas/Admin/AdminMenu';
 import { Eventos } from '../Vistas/Admin/Eventos/Eventos';
-import {ColaboradorMenu} from '../Vistas/Colaborador/ColaboradorMenu';
+import {ColaboradorInicio} from '../Vistas/Colaborador/ColaboradorInicio';
 import { Solicitudes } from '../Vistas/Colaborador/Solicitudes/Solicitudes';
 import { Cotizaciones } from '../Vistas/Colaborador/Cotizaciones/Cotizaciones';
 import { NuevaSolicitud } from '../Vistas/Colaborador/Solicitudes/NuevaSolicitud';
+import { ListaSolicitudes } from '../Vistas/Colaborador/Solicitudes/ListaSolicitudes';
+import { Perfil } from '../Vistas/Perfil';
+import { ColaboradorMenu } from '../Vistas/Colaborador/Menu/ColaboradorMenu';
+import {ArchivosInteres} from '../Vistas/Colaborador/Menu/ArchivosInteres';
 
 
 export const Admin= ({handleLogout}) => {
@@ -33,18 +37,18 @@ export const Colaborador= ({handleLogout}) => {
 
         <SafeAreaView style={styles.container}>
         <Routes> 
-            <Route exact path="/"   element={<ColaboradorMenu/>}/>
+            <Route exact path="/"   element={<ColaboradorInicio/>}/>
             <Route path="/solicitudes" element={<Solicitudes/>}/>
             <Route path="/solicitudes/nueva" element={<NuevaSolicitud/>}/>
-            <Route path="/solicitudes/lista" element={<Personas/>}/>
+            <Route path="/solicitudes/lista" element={<ListaSolicitudes/>}/>
             <Route path="/cotizaciones" element={<Cotizaciones/>}/>
             <Route path="/cotizaciones/nueva" element={<Personas/>}/>
             <Route path="/cotizaciones/lista" element={<Personas/>}/>
-            <Route path="/menu" element={<Personas/>}/>
+            <Route path="/menu" element={<ColaboradorMenu/>}/>
             <Route path="/menu/galeria" element={<Personas/>}/>
-            <Route path="/menu/archivos" element={<Personas/>}/>
+            <Route path="/menu/archivos" element={<ArchivosInteres/>}/>
             <Route path="/menu/archivos/fichas" element={<Personas/>}/>
-            <Route path="/perfil" element={<Productos/>}/>
+            <Route path="/perfil" element={<Perfil/>}/>
             <Route path="/notificaciones" element={<Eventos/>}/>
         </Routes>     
         <NavBar/>

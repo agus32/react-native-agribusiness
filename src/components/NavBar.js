@@ -25,7 +25,7 @@ export const NavBar = () => {
         <Pressable
           style={styles.navItem}
         >
-          <Link to="/">
+          <Link to="/perfil">
           <View style={styles.navItem}>
             <Feather name="user" size={24} color="black" />
             <Text style={styles.navText}>Perfil</Text>
@@ -35,7 +35,7 @@ export const NavBar = () => {
         <Pressable
           style={styles.navItem}
         >
-          <Link to="/">
+          <Link to="/menu">
           <View style={styles.navItem}>
             <Feather name="menu" size={24} color="black" />
             <Text style={styles.navText}>Menú</Text>

@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, Image, StyleSheet,Pressable } from 'react-native';
 import { Link } from "react-router-native"
 
-export const ColaboradorMenu = () => {
+export const ColaboradorInicio = () => {
   return (
     <View style={styles.container}>
       <Image source={require('../../media/PAGINA-INICIO-C.jpeg')} style={styles.image} />
