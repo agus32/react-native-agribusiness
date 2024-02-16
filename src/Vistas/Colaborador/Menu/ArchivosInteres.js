@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, Image, Text, StyleSheet } from 'react-native';
 import { Link } from 'react-router-native';
+import { Azul } from '../../../constants/constants';
 import { AppBarTab } from '../../../components/AppBarTab';
 
 const ArchivosInteresComponent = () => {
@@ -25,7 +26,7 @@ const ArchivosInteresComponent = () => {
           <Text style={styles.buttonText}>Descargar Proyecciones de Ventas</Text>
         </View>
       </Link>
-      <Link to="/solicitudes/lista" style={[styles.link,{marginTop:10}]}>
+      <Link to="/menu/archivos/fichas" style={[styles.link,{marginTop:10}]}>
         <View style={styles.linkContent}>
           <Image
             source={require('../../../media/ficha-tecnica.png')}
@@ -57,7 +58,7 @@ const styles = StyleSheet.create({
     width: '100%',
   },
   buttonText: {
-    color: 'black',
+    color: Azul,
     fontSize: 22,
     fontWeight: 'bold',
     

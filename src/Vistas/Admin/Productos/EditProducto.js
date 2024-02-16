@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TextInput, Pressable, StyleSheet } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
+import * as ImagePicker from 'expo-image-picker';
 import {Picker} from '@react-native-picker/picker';
 
 
 export const EditProductoModal = ({ isVisible, onClose, onEnviar, producto ,proveedores}) => {
     const[precio, setPrecio] = useState(producto.precio) ?? "";
     const[nombre, setNombre] = useState(producto.nombre?? "");
+    const[iva, setIva] = useState(producto.iva?? "");
     const[presentacion, setPresentacion] = useState(producto.presentacion?? "");
     const[descripcion, setDescripcion] = useState(producto.descripcion?? "");
     const [selectedFile, setSelectedFile] = useState(null);
@@ -18,24 +20,29 @@ export const EditProductoModal = ({ isVisible, onClose, onEnviar, producto ,prov
     const nuevoProducto = {
         precio: parseFloat(precio),
         nombre,
+        iva: parseFloat(iva),
         presentacion,
         descripcion,
         id_proveedor: parseInt(idProveedor),   
     };
-    onEnviar(nuevoProducto,producto.id_producto,selectedFile); 
+    onEnviar(nuevoProducto,producto.id_producto,selectedFile,selectedImagen); 
     onClose();
   };
   const handleSelectFile = async () => {
-    const result = await DocumentPicker.getDocumentAsync();
-    if (result.type === 'success') {
-      setSelectedFile(result.uri);
-    }
+    let result = await DocumentPicker.getDocumentAsync({});
+    if(!result.canceled) setSelectedFile(result.assets[0].uri); 
   };
 
   const handleImagen = async () => {
-    const result = await DocumentPicker.getDocumentAsync();
-    if (result.type === 'success') {
-      setSelectedImagen(result.uri);
+   
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsEditing: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+    if (!result.canceled) {
+        setSelectedImagen(result.assets[0].uri);
     }
   };
 
@@ -47,12 +54,7 @@ export const EditProductoModal = ({ isVisible, onClose, onEnviar, producto ,prov
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Editar Producto</Text>
-            <Text>Precio:</Text>
-            <TextInput
-              style={styles.input}
-              value={precio}
-              onChangeText={setPrecio}
-            />
+            
             <Text>Nombre:</Text>
             <TextInput
             style={styles.input}
@@ -65,6 +67,23 @@ export const EditProductoModal = ({ isVisible, onClose, onEnviar, producto ,prov
             value={presentacion}
             onChangeText={setPresentacion}
             />
+            <Text>Precio:</Text>
+            <TextInput
+              style={styles.input}
+              value={precio}
+              onChangeText={setPrecio}
+            />
+            <Text>IVA:</Text>
+            <Picker
+              selectedValue={iva}
+              onValueChange={setIva}
+              style={styles.picker}
+              mode="dropdown"
+            >
+              <Picker.Item label="0%" value="0" />
+              <Picker.Item label="10.5%" value="10.5" />
+              <Picker.Item label="21%" value="21" />
+            </Picker>
             <Text>Descripción:</Text>
             <TextInput
             style={styles.input}
@@ -141,7 +160,8 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       backgroundColor: 'white',
       overflow: 'hidden',
-      padding: 5,
+      padding: 10,
+      marginBottom: 15,
     },
     importarButton: {
         backgroundColor: '#4CAF50',

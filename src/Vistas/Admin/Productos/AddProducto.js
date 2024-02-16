@@ -5,9 +5,11 @@ import * as ImagePicker from 'expo-image-picker';
 import {Picker} from '@react-native-picker/picker';
 
 export const AddProducto = ({ isVisible, onClose, onEnviar,proveedores}) => {
-  const[precio, setPrecio] = useState("");
+  
   const[nombre, setNombre] = useState("");
   const[presentacion, setPresentacion] = useState("");
+  const[precio, setPrecio] = useState("");
+  const[iva, setIva] = useState("0");
   const[descripcion, setDescripcion] = useState("");
   const[idProveedor, setIdProveedor] = useState(proveedores[0]?.id_proveedor ?? "1");
   const[selectedFile, setSelectedFile] = useState(null);
@@ -16,6 +18,7 @@ export const AddProducto = ({ isVisible, onClose, onEnviar,proveedores}) => {
   const handleEnviar = () => {
     const nuevoProducto = {
         precio: parseFloat(precio),
+        iva: parseFloat(iva),
         nombre,
         presentacion,
         descripcion,
@@ -51,13 +54,6 @@ export const AddProducto = ({ isVisible, onClose, onEnviar,proveedores}) => {
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
           <Text style={styles.modalTitle}>Agregar Producto</Text>
-
-          <TextInput
-            style={styles.input}
-            placeholder="Precio"
-            value={precio}
-            onChangeText={setPrecio}
-          />
             <TextInput
             style={styles.input}
             placeholder="Nombre"
@@ -70,6 +66,23 @@ export const AddProducto = ({ isVisible, onClose, onEnviar,proveedores}) => {
             value={presentacion}
             onChangeText={setPresentacion}
             />
+            <TextInput
+            style={styles.input}
+            placeholder="Precio"
+            value={precio}
+            onChangeText={setPrecio}
+            />
+            <Text>Seleccionar IVA:</Text>
+            <Picker
+              selectedValue={iva}
+              onValueChange={setIva}
+              style={styles.picker}
+              mode="dropdown"
+            >
+              <Picker.Item label="0%" value="0" />
+              <Picker.Item label="10.5%" value="10.5" />
+              <Picker.Item label="21%" value="21" />
+            </Picker>
             <TextInput
             style={styles.input}
             placeholder="Descripción"
@@ -137,7 +150,8 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       backgroundColor: 'white',
       overflow: 'hidden',
-      padding: 5,
+      padding: 10,
+      marginBottom: 15,
     },
     input: {
       borderWidth: 1,

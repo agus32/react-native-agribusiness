@@ -1,22 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { AppBarTab } from '../../../components/AppBarTab';
-import { Azul,Personas} from '../../../constants/constants';
-import { postApiData } from '../../../services/ApiHandler';
-import { View, Picker, TextInput, TouchableOpacity, StyleSheet,Text } from 'react-native';
+import { Azul} from '../../../constants/constants';
+import { postApiData,getApiData} from '../../../services/ApiHandler';
+import { View, TextInput, TouchableOpacity, StyleSheet,Text } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NuevaSolicitudForm = () => {
-  const [colaboradores, setColaboradores] = useState(Personas);
+  const [colaboradores, setColaboradores] = useState([]);
   const [solicitado, SetSolicitado] = useState('');
   const [descripcion, setDescripcion] = useState('');
 
   
   const getColaboradores = async () => {
-    const response = await getApiData('persona');
-    setColaboradores(response);
-  };
+    const loggedUser = await AsyncStorage.getItem('loggedUser');
+    if (loggedUser) {
+      const parsedUser = JSON.parse(loggedUser);
+      const data = await getApiData(`persona/${parsedUser.cedula}/solicitables`);
+      setColaboradores(data);
+  }}
+
   
-  
-  //useEffect(() => { getColaboradores();}, []);
+useEffect(() => { getColaboradores();}, []);
 
   const handleEnviar = async() => {
     await postApiData('solicitud',{ solicitado, descripcion });

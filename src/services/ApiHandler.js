@@ -84,7 +84,7 @@ export const postApiData = async (route,body) => {
 
   export const handleApiFile = async (method,route,file) => {
     const formData = new FormData();
-    formData.append('image', file);
+    formData.append('file', file);
     try {
       const response = await fetch(`${BASE_URL}/${route}`, {
         method: method,
@@ -98,6 +98,60 @@ export const postApiData = async (route,body) => {
       if (!response.ok){
         ErrorHandler(data);
       }else showAlert(data.message, 'Exito');
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+  export const handleApiImage = async (method,route,image) => {
+    const formData = new FormData();
+    formData.append('image', {
+      uri: image,
+      name: 'image',
+      type: 'image/jpg',
+    });
+
+    try {
+      const response = await fetch(`${BASE_URL}/${route}`, {
+        method: method,
+        headers: {
+          Authorization: globalToken,
+        },
+        body: formData,
+      });
+      const data = await response.json();
+      if (!response.ok){
+        ErrorHandler(data);
+      }else showAlert(data.message, 'success');
+      return data;
+    } catch (error) {
+      throw error;
+    }
+  };
+
+
+  export const handleGaleriaImage = async (idProducto,image,comentario) => {
+    const formData = new FormData();
+    formData.append('image', {
+      uri: image,
+      name: 'image',
+      type: 'image/jpg',
+    });
+    formData.append('comentarios', comentario);
+
+    try {
+      const response = await fetch(`${BASE_URL}/producto/${idProducto}/imagen`, {
+        method: 'POST',
+        headers: {
+          Authorization: globalToken,
+        },
+        body: formData,
+      });
+      const data = await response.json();
+      if (!response.ok){
+        ErrorHandler(data);
+      }else showAlert(data.message, 'success');
       return data;
     } catch (error) {
       throw error;
@@ -144,3 +198,4 @@ export const deleteApiData = async (route, id) => {
       throw error;
     }
   };
+

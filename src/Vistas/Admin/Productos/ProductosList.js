@@ -4,7 +4,7 @@ import { Feather } from '@expo/vector-icons';
 import { ProductoItem } from './ProductoItem';
 import { AddProducto } from './AddProducto';
 import { ImportarCSVModal } from './ImportarCSV';
-import { getApiData,deleteApiData,postApiData, putApiData,handleApiFile} from '../../../services/ApiHandler';
+import { getApiData,deleteApiData,postApiData, putApiData,handleApiFile,handleApiImage} from '../../../services/ApiHandler';
 
 
 export const ProductosList = () => {
@@ -47,9 +47,10 @@ export const ProductosList = () => {
     getProductos();
   };
 
-  const handleEdit = async(nuevoProducto,id_producto,ficha) => {
+  const handleEdit = async(nuevoProducto,id_producto,ficha,imagen) => {
     await putApiData('producto',id_producto,nuevoProducto);
     if(ficha) handleApiFile('PUT',`producto/${id_producto}/ficha`,ficha);
+    if(imagen) handleApiImage('POST',`producto/${id_producto}/portada`,imagen);
     getProductos();
     console.log(producto);
   };
@@ -57,7 +58,7 @@ export const ProductosList = () => {
   const handleAgregar = async(nuevoProducto,ficha,imagen) => {
     const response = await postApiData('producto',nuevoProducto);
     if(ficha && response.success) handleApiFile('PUT',`producto/${response.data.id_producto}/ficha`,ficha);
-    if(imagen && response.success) handleApiFile('POST',`producto/${response.data.id_producto}/imagen`,imagen);
+    if(imagen && response.success) handleApiImage('POST',`producto/${response.data.id_producto}/portada`,imagen);
     getProductos();
   }
 
@@ -65,8 +66,8 @@ export const ProductosList = () => {
     console.log(file_path);
   }
 
-  const handleImportar = (uri) => {
-    console.log(uri);
+  const handleImportar = (csv) => {
+    handleApiFile('POST',`producto/list`,csv);
   }
 
   return (

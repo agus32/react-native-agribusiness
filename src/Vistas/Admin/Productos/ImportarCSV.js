@@ -7,7 +7,7 @@ export const ImportarCSVModal = ({ isVisible, onClose, onEnviar }) => {
   
     const handleEnviar = () => {
       if (selectedFile) {
-        onEnviar(selectedFile.uri);
+        onEnviar(selectedFile);
         onClose();
       }
       else{
@@ -15,11 +15,10 @@ export const ImportarCSVModal = ({ isVisible, onClose, onEnviar }) => {
       }
     };
   
+
     const handleSelectFile = async () => {
-      const result = await DocumentPicker.getDocumentAsync();
-      if (result.type === 'success') {
-        setSelectedFile(result);
-      }
+      let result = await DocumentPicker.getDocumentAsync({});
+      if(!result.canceled) {setSelectedFile(result.assets[0].uri);}
     };
   
     return (

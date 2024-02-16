@@ -3,8 +3,31 @@ import { View, Text, ImageBackground, StyleSheet,Image,TouchableOpacity } from '
 import { AppBarTab } from '../components/AppBarTab';
 import { SimpleLineIcons,Entypo } from '@expo/vector-icons';
 import { Verde,Azul } from '../constants/constants';
+import { getApiData } from '../services/ApiHandler'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigate } from 'react-router-native';
 
-const PerfilComponent = () => {
+const PerfilComponent = ({onLogout}) => {
+  const [user, setUser] = React.useState({});
+  const navigate = useNavigate();
+
+  const fetchUserData = async () => {
+    const loggedUser = await AsyncStorage.getItem('loggedUser');
+    if (loggedUser) {
+      const parsedUser = JSON.parse(loggedUser);
+      const data = await getApiData('persona/'+ parsedUser.cedula);
+      setUser(data);
+      console.log(data);
+  }}
+  React.useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const handleLogout = () => {
+    onLogout();
+    navigate("/");
+  };
+
   return (
     <ImageBackground
       source={require('../media/fondo.png')}
@@ -20,8 +43,8 @@ const PerfilComponent = () => {
         </View>
 
 
-        <Text style={styles.nombre}>Nombre del Usuario</Text>
-        <Text style={styles.cargo}>Cargo del Usuario</Text>
+        <Text style={styles.nombre}>{user.nombre}</Text>
+        <Text style={styles.cargo}>{user.cargo?.nombre ?? 'Cliente'}</Text>
 
 
         <Text style={styles.datosContacto}>Datos de Contacto</Text>
@@ -30,18 +53,18 @@ const PerfilComponent = () => {
         <View style={styles.infoContacto}>
           <View style={styles.iconoContacto}>
             <Entypo name="old-phone" size={30} color={Verde} />
-            <Text style={styles.textoContacto}> Teléfono</Text>
+            <Text style={styles.textoContacto}> {user.telefono}</Text>
           </View>
           <View style={styles.iconoContacto}>
             <Entypo name="email" size={30} color={Verde} />
-            <Text style={styles.textoContacto}> Correo</Text>
+            <Text style={styles.textoContacto}>{user.correo}</Text>
           </View>
           <View style={styles.iconoContacto}>
             <Entypo name="address" size={30} color={Verde} />
-            <Text style={styles.textoContacto}> Dirección</Text>
+            <Text style={styles.textoContacto}>{user.direccion}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.botonCerrarSesion}>
+        <TouchableOpacity style={styles.botonCerrarSesion} onPress={handleLogout}>
           <SimpleLineIcons name="logout" size={30} color={Azul} >
           <Text style={styles.textoCerrarSesion}>Cerrar Sesión</Text>
           </SimpleLineIcons>
@@ -115,6 +138,7 @@ const styles = StyleSheet.create({
   textoContacto: {
     fontSize: 16,
     color: 'black',
+    marginLeft: 10,
   },
   botonCerrarSesion: {
     paddingHorizontal: 20,
@@ -131,11 +155,11 @@ const styles = StyleSheet.create({
 });
 
 
-export const Perfil = () => {
+export const Perfil = ({onLogout}) => {
   return (
       <View style={{ width: '100%',flexGrow: 1 }}>
           <AppBarTab children={"Perfil"}/>
-          <PerfilComponent />
+          <PerfilComponent onLogout={onLogout} />
       </View>
   )
 };

@@ -95,7 +95,7 @@ export const Productos = [
       descripcion: "Descripción 1",
       ficha_tecnica: "../fichas_tecnicas/ejemplo.pdf",
       imagen: "https://naturespath.com/cdn/shop/articles/planting-seeds.jpg?v=1639148471",
-      proveedor: "Maria Martinez"
+      nombre_proveedor: "Maria Martinez"
     },
     {
       id_producto: 2,
@@ -105,7 +105,7 @@ export const Productos = [
       descripcion: "Descripción 2",
       ficha_tecnica: "../fichas_tecnicas/ejemplo.pdf",
       imagen: "https://naturespath.com/cdn/shop/articles/planting-seeds.jpg?v=1639148471",
-      proveedor: "Juan Perez"
+      nombre_proveedor: "Juan Perez"
     },
     {
       id_producto: 3,
@@ -115,7 +115,7 @@ export const Productos = [
       descripcion: "Descripción 3",
       ficha_tecnica: "../fichas_tecnicas/ejemplo.pdf",
       imagen: "https://naturespath.com/cdn/shop/articles/planting-seeds.jpg?v=1639148471",
-      proveedor: "Mauro Gonzalez"
+      nombre_proveedor: "Mauro Gonzalez"
     },
     {
       id_producto: 4,
@@ -125,13 +125,20 @@ export const Productos = [
       descripcion: "Descripción 4",
       ficha_tecnica: "../fichas_tecnicas/ejemplo.pdf",
       imagen: "https://naturespath.com/cdn/shop/articles/planting-seeds.jpg?v=1639148471",
-      proveedor: "Soledad Rodriguez"
+      nombre_proveedor: "Soledad Rodriguez"
     },
     
   ];
 
   export const Verde = "#abc051";
   export const Azul = "#1a6fb7";
+
+
+  export const getInitials = (fullName) => {
+    const names = fullName.split(' ');
+    const initials = names.map(name => name.charAt(0).toUpperCase()).join('');
+    return initials;
+  };
 
  export const Eventos = [
     {

@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, FlatList, Pressable, TextInput } from 'react-na
 import { Feather } from '@expo/vector-icons';
 import {EventosItem} from './EventosItem';
 import { AddEvento } from './AddEvento';
-import { getApiData, deleteApiData,postApiData,handleApiFile,putApiData} from '../../../services/ApiHandler';
+import { getApiData, deleteApiData,postApiData,handleApiImage,putApiData} from '../../../services/ApiHandler';
 
 
 
@@ -43,14 +43,14 @@ export const EventosList = () => {
   };
 
   const handleEdit = async(evento,id_evento,imagen) => {
-    const response = await putApiData('evento',id_evento,evento);
-    if(imagen) handleApiFile('PUT',`evento/${id_evento}/imagen`,imagen);
+    await putApiData('evento',id_evento,evento);
+    if(imagen) handleApiImage('PUT',`evento/${id_evento}/imagen`,imagen);
     getEventos();
   };
 
   const handleAgregar = async (nuevoEvento,imagen) => {
     const response = await postApiData('evento',nuevoEvento);
-    if(imagen && response.success) handleApiFile('PUT',`evento/${response.data.id_evento}/imagen`,imagen);  
+    if(imagen && response.success) handleApiImage('PUT',`evento/${response.data.id_evento}/imagen`,imagen);  
     getEventos();
   }
 

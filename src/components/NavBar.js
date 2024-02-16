@@ -45,7 +45,7 @@ export const NavBar = () => {
         <Pressable
           style={styles.navItem}
         >
-          <Link to="/">
+          <Link to="/notificaciones">
           <View style={styles.navItem}>
             <Feather name="bell" size={24} color="black" />
             <Text style={styles.navText}>Notificaciones</Text>

@@ -21,7 +21,9 @@ export const HomeScreen = () => {
         </Pressable>
         
         <Pressable style={styles.button}>
+          <Link to="/login" style={styles.link}>
           <Text style={styles.buttonText}>Cliente</Text>
+          </Link>
         </Pressable>
         <Text style={styles.underlineText}>Modo Invitado</Text>
       </View>

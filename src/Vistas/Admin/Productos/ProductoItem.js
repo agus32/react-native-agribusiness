@@ -12,8 +12,8 @@ export const ProductoItem = ({ producto, onDelete, onEdit,onDownload,proveedores
     onDelete(producto.id_producto);
     setConfirmModalVisible(false);
   };
-  const handleEnviarEdit = (nuevoProducto,id_producto,ficha) => {
-    onEdit(nuevoProducto,id_producto,ficha);
+  const handleEnviarEdit = (nuevoProducto,id_producto,ficha,imagen) => {
+    onEdit(nuevoProducto,id_producto,ficha,imagen);
     setEditModalVisible(false);
   }
   const handleDownload = () => {
@@ -23,7 +23,7 @@ export const ProductoItem = ({ producto, onDelete, onEdit,onDownload,proveedores
   return (
     <View style={styles.productoItem}>
       <View>
-        <Image source={producto.imagen || require('../../../media/image-not-found.png')} style={{ width: 100, height: 100,marginRight: '10px', borderRadius: 5 }} />
+        <Image source={producto.imagen || require('../../../media/image-not-found.png')} style={{ width: 120, height: 120,marginRight: '10px', borderRadius: 5 }} />
       </View>
       <View>
         <Text style={styles.productoNombre}>{producto.nombre}</Text>
@@ -31,7 +31,7 @@ export const ProductoItem = ({ producto, onDelete, onEdit,onDownload,proveedores
         <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Proovedor: </Text>{producto.nombre_proveedor}</Text>
         <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Presentacíon: </Text>{producto.presentacion}</Text>
         <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Precio: </Text>{producto.precio}</Text>
-        
+        <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>IVA: </Text>{producto.iva}</Text>
         <Pressable onPress={handleDownload}>
           <Text style={styles.linkText}>Descargar Ficha Técnica</Text>
         </Pressable>
@@ -92,6 +92,8 @@ const styles = StyleSheet.create({
     marginVertical: 5,
     borderRadius: 10,
     elevation: 2,
+    borderColor: '#E0E0E0',
+    borderWidth: 1,
     flexDirection: 'row',
     
   },

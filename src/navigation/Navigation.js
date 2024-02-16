@@ -15,7 +15,20 @@ import { ListaSolicitudes } from '../Vistas/Colaborador/Solicitudes/ListaSolicit
 import { Perfil } from '../Vistas/Perfil';
 import { ColaboradorMenu } from '../Vistas/Colaborador/Menu/ColaboradorMenu';
 import {ArchivosInteres} from '../Vistas/Colaborador/Menu/ArchivosInteres';
-
+import { FichasTecnicas } from '../Vistas/Colaborador/Menu/FichasTecnicas';
+import {NuevaCotizacion} from '../Vistas/Colaborador/Cotizaciones/NuevaCotizacion';
+import { ListaCotizaciones } from '../Vistas/Colaborador/Cotizaciones/ListaCotizaciones';
+import { GaleriaCompartida } from '../Vistas/Colaborador/Menu/GaleriaCompartida';
+import { GaleriaByID } from '../Vistas/Colaborador/Menu/GaleriaById';
+import { ClienteInicio } from '../Vistas/Cliente/ClienteInicio';
+import {LineasNegocio} from '../Vistas/Cliente/Productos/LineasNegocio';
+import { LineaById } from '../Vistas/Cliente/Productos/LineaById';
+import {ClienteEventos} from '../Vistas/Cliente/Eventos/ClienteEventos';
+import {ClienteMenu} from '../Vistas/Cliente/Menu/ClienteMenu';
+import {Directorio} from '../Vistas/Cliente/Menu/Directorio';
+import {ArticulosTecnicos} from '../Vistas/Cliente/Menu/ArticulosTecnicos';
+import { Chat } from '../components/Chat';
+import { ChatList } from '../components/ChatList';
 
 export const Admin= ({handleLogout}) => {
     return (
@@ -42,14 +55,36 @@ export const Colaborador= ({handleLogout}) => {
             <Route path="/solicitudes/nueva" element={<NuevaSolicitud/>}/>
             <Route path="/solicitudes/lista" element={<ListaSolicitudes/>}/>
             <Route path="/cotizaciones" element={<Cotizaciones/>}/>
-            <Route path="/cotizaciones/nueva" element={<Personas/>}/>
-            <Route path="/cotizaciones/lista" element={<Personas/>}/>
+            <Route path="/cotizaciones/nueva" element={<NuevaCotizacion/>}/>
+            <Route path="/cotizaciones/lista" element={<ListaCotizaciones/>}/>
             <Route path="/menu" element={<ColaboradorMenu/>}/>
-            <Route path="/menu/galeria" element={<Personas/>}/>
+            <Route path="/menu/galeria" element={<GaleriaCompartida/>}/>
+            <Route path="/menu/galeria/:id" element={<GaleriaByID/>}/>
             <Route path="/menu/archivos" element={<ArchivosInteres/>}/>
-            <Route path="/menu/archivos/fichas" element={<Personas/>}/>
-            <Route path="/perfil" element={<Perfil/>}/>
+            <Route path="/menu/archivos/fichas" element={<FichasTecnicas/>}/>
+            <Route path="/perfil" element={<Perfil onLogout={handleLogout}/>}/>
             <Route path="/notificaciones" element={<Eventos/>}/>
+        </Routes>     
+        <NavBar/>
+        </SafeAreaView>
+      );
+}
+
+export const Cliente = ({handleLogout}) => {
+    return (
+
+        <SafeAreaView style={styles.container}>
+        <Routes> 
+            <Route exact path="/"   element={<ClienteInicio/>}/>
+            <Route path="/perfil" element={<Perfil onLogout={handleLogout}/>}/>
+            <Route path="/productos" element={<LineasNegocio/>}/>
+            <Route path="/productos/:id" element={<LineaById/>}/>
+            <Route path="/eventos" element={<ClienteEventos/>}/>
+            <Route path="/menu" element={<ClienteMenu/>}/>
+            <Route path="/menu/directorio" element={<Directorio/>}/>
+            <Route path="/menu/articulos" element={<ArticulosTecnicos/>}/>
+            <Route path="/notificaciones" element={<ChatList/>}/>
+            <Route path="/chat/:cedula" element={<Chat/>}/>
         </Routes>     
         <NavBar/>
         </SafeAreaView>
@@ -70,7 +105,7 @@ export const Home= ({LoggedUser}) => {
 
 
 export const Navigation = ({user,LoggedUser,handleLogout}) => {
-
+   
     if (user != {}){
         switch(user.rol){
             case "admin":
@@ -78,7 +113,7 @@ export const Navigation = ({user,LoggedUser,handleLogout}) => {
             case "colaborador":
                 return <Colaborador handleLogout={handleLogout}/>;
             case "cliente":
-                return <Home LoggedUser={LoggedUser}/>;
+                return <Cliente handleLogout={handleLogout}/>;
             default:
                 return <Home LoggedUser={LoggedUser}/>;
         }

@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { View, Text, Modal, TextInput, Pressable, StyleSheet } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 
-export const AddPersona = ({ isVisible, onClose, onAgregar,cargos }) => {
+export const AddPersona = ({ isVisible, onClose, onAgregar,cargos}) => {
   const [rol, setRol] = useState("cliente");
   const [cedula, setCedula] = useState('');
   const [correo, setCorreo] = useState('');
   const [nombre, setNombre] = useState('');
   const [codZona, setCodZona] = useState(0);
-  const [codCargo, setCodCargo] = useState(0);
+  const [codCargo, setCodCargo] = useState(-1);
   const [telefono, setTelefono] = useState('');
   const [direccion, setDireccion] = useState('');
   const [password, setPassword] = useState('');
@@ -19,7 +19,7 @@ export const AddPersona = ({ isVisible, onClose, onAgregar,cargos }) => {
     setCorreo('');
     setNombre('');
     setCodZona(0);
-    setCodCargo(0);
+    setCodCargo(-1);
     setTelefono('');
     setDireccion('');
     setPassword('');
@@ -37,7 +37,7 @@ export const AddPersona = ({ isVisible, onClose, onAgregar,cargos }) => {
       telefono,
       direccion,
     };
-    nuevaPersona.cod_cargo = rol === "colaborador" ? codCargo : null;
+    if(nuevaPersona.rol === "cliente") nuevaPersona.cod_cargo = undefined;
     onAgregar(nuevaPersona);
     clearImputs();
     onClose();
@@ -93,6 +93,7 @@ export const AddPersona = ({ isVisible, onClose, onAgregar,cargos }) => {
                 mode="dropdown"
                 style={styles.picker}
               >
+                <Picker.Item label="Seleccione un cargo" value={-1} />
                 {cargos.map((cargo) => (
                   <Picker.Item
                     key={cargo.cod_cargo}
@@ -185,7 +186,7 @@ const styles = StyleSheet.create({
       borderRadius: 5,
       backgroundColor: 'white',
       overflow: 'hidden',
-      padding: 5,
+      padding: 10,
       marginBottom: 15,
     },
   });

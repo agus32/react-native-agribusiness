@@ -55,6 +55,7 @@ export const PersonaItem = ({ persona, onDelete, onEdit, cargos }) => {
         onClose={() => setEditModalVisible(false)}
         onEnviar={handleEnviarEdit}
         persona={persona}
+        cargos={cargos}
       />
 
     </View>

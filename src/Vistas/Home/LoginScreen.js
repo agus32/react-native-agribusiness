@@ -26,10 +26,11 @@ export const LoginScreen = ({LoggedUser}) => {
 
     const response = await PostLogin(imputs);
     if (response.success){    
-      await AsyncStorage.setItem('loggedUser', JSON.stringify({rol:response.rol,token:response.token}));
+      await AsyncStorage.setItem('loggedUser', JSON.stringify({rol:response.rol,token:response.token,cedula:imputs.cedula}));
       LoggedUser();
       navigate("/");
-    }else alert("Usuario o contraseña incorrectos");
+      alert("Bienvenido")
+    }
     
   }
 

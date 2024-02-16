@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, Modal, TextInput, Pressable, StyleSheet } from 'react-native';
+import {Picker} from '@react-native-picker/picker';
 
 
-export const EditPersonaModal = ({ isVisible, onClose, onEnviar, persona }) => {
+export const EditPersonaModal = ({ isVisible, onClose, onEnviar, persona,cargos }) => {
   const [rol, setRol] = useState(persona.rol);
   const [correo, setCorreo] = useState(persona.correo ?? '');
   const [nombre, setNombre] = useState(persona.nombre ?? '');
   const [codZona, setCodZona] = useState(persona.cod_zona);
-  const [codCargo, setCodCargo] = useState(persona.cod_cargo ?? '');
+  const [codCargo, setCodCargo] = useState(persona.cod_cargo ?? -1);
   const [telefono, setTelefono] = useState(persona.telefono ?? '');
   const [direccion, setDireccion] = useState(persona.direccion ?? '');
   const [password, setPassword] = useState('');
@@ -19,11 +20,11 @@ export const EditPersonaModal = ({ isVisible, onClose, onEnviar, persona }) => {
       correo,
       nombre,
       cod_zona: codZona,
-      cod_cargo: codCargo,
+      cod_cargo: parseInt(codCargo),
       telefono,
       direccion,
     };
-    nuevaPersona.cod_cargo = rol === "colaborador" ? codCargo : undefined;
+    if(nuevaPersona.rol === "cliente") nuevaPersona.cod_cargo = undefined;
     nuevaPersona.password = password === '' ? undefined : password;
     onEnviar(nuevaPersona,persona.cedula); 
     onClose();
@@ -66,14 +67,24 @@ export const EditPersonaModal = ({ isVisible, onClose, onEnviar, persona }) => {
             value={codZona.toString()}
             onChangeText={(text) => setCodZona(parseInt(text))}
           />
-          <Text>Código de Cargo</Text>
-          <TextInput
-            editable={rol === "colaborador"}
-            style={styles.input}
-            keyboardType="numeric"
-            value={codCargo.toString()}
-            onChangeText={(text) => setCodCargo(parseInt(text))}
-          />
+          {rol === "colaborador" && (
+          <View>
+          <Text>Cargo</Text>
+          <Picker           
+                selectedValue={codCargo}
+                onValueChange={setCodCargo}
+                mode="dropdown"
+                style={styles.picker}
+              >
+                <Picker.Item label="Seleccione un cargo" value={-1} />
+                {cargos.map((cargo) => (
+                  <Picker.Item
+                    key={cargo.cod_cargo}
+                    label={cargo.nombre}
+                    value={cargo.cod_cargo}
+                  />
+                ))}</Picker>
+                </View>)}
           <Text>Telefono:</Text>
           <TextInput
             style={styles.input}
@@ -153,5 +164,14 @@ const styles = StyleSheet.create({
     cancelarButtonText: {
       color: 'white',
       fontWeight: 'bold',
+    },
+    picker: {
+      borderWidth: 1,
+      borderColor: '#E0E0E0',
+      borderRadius: 5,
+      backgroundColor: 'white',
+      overflow: 'hidden',
+      padding: 10,
+      marginBottom: 15,
     },
   });
