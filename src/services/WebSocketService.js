@@ -1,45 +1,50 @@
 import { io } from 'socket.io-client';
-import { useEffect,useState } from 'react';
 
 const BASE_URL = 'epublit.com.ar:420';
 const socket = io(`ws://${BASE_URL}/`);
 
-
 export const useWebSocket = (token, cedula, onMessageReceived) => {
-  const [previousMessages, setPreviousMessages] = useState([]);
-  useEffect(() => {
-    
 
-    // Realizar un join a la sala con la persona que queremos enviar mensajes
+  const joinRoom = () => {
     socket.emit('join', { token, cedula });
+    console.log('Socket conectado');
+  };
 
-    // Escuchar los mensajes anteriores
+  const sendMessage = (message) => {
+    socket.emit('message', message);
+  };
+
+  const getAllMessages = (callback) => {
+    console.log("Obteniendo mensajes");
     socket.on('firstMessages', (rawMessages) => {
-      console.log(rawMessages);
-      setPreviousMessages(rawMessages.data);
+      const messages = rawMessages.data || [];
+      callback(messages);
     });
+  };
 
-    // Escuchar nuevos mensajes
+  const handleIncomingMessages = () => {
     socket.on('message', (rawMessage) => {
       const { sender, message } = rawMessage;
-      if (sender !== cedula) {
-        onMessageReceived(`Tienes un nuevo mensaje de ${sender}: ${message}`);
+      if (sender === cedula) {
+        onMessageReceived(sender, message);
       } else {
         console.log("Acabas de enviar un mensaje:", message);
       }
     });
+  };
 
-    return () => {
-      // Desconectar el socket al desmontar el componente o finalizar el hook
-      socket.disconnect();
-    };
-  }, [token, cedula, onMessageReceived]);
+  const disconnectSocket = () => {
+    socket.disconnect();
+    console.log('Socket desconectado');
+  };
 
   return {
-    sendMessage: (message) => {
-      socket.emit('message', message);
-    },
-    getPreviousMessages: () => previousMessages,
+    joinRoom,
+    sendMessage,
+    getAllMessages,
+    handleIncomingMessages,
+    disconnectSocket,
   };
 };
+
 

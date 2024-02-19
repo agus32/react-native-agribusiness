@@ -29,7 +29,6 @@ export const LoginScreen = ({LoggedUser}) => {
       await AsyncStorage.setItem('loggedUser', JSON.stringify({rol:response.rol,token:response.token,cedula:imputs.cedula}));
       LoggedUser();
       navigate("/");
-      alert("Bienvenido")
     }
     
   }

@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'top',
     
-    marginTop: '3rem',
+    marginTop: 30,
   },
   fotoPerfil: {
     width: 180,

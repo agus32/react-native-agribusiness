@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image,StyleSheet } from 'react-native';
+import { View, Text, FlatList, Image,StyleSheet, TouchableOpacity } from 'react-native';
 import { Link } from 'react-router-native';
 import { AppBarTab } from './AppBarTab';
 
@@ -16,7 +16,7 @@ const ChatListComponent = () => {
         },
         {
             "chat_id": 16,
-            "reciver": "348213901",
+            "reciver": "348213902",
             "reciver_name": "juan ramon"
         },
         {
@@ -45,11 +45,25 @@ const ChatListComponent = () => {
     </Link>
   );
 
+  const NuevoChat = () => {
+    return (
+      <Link to={`/newChat`}>
+        <View style={styles.itemContainer}>
+          <Image source={require('../media/perfil.png')} style={styles.profilePic} />
+          <View style={styles.textContainer}>
+            <Text style={styles.contactName}>Nuevo chat</Text>
+          </View>
+        </View>
+      </Link>
+    );
+  };
+
   return (
     <FlatList
       data={contacts}
       renderItem={renderItem}
       keyExtractor={(item) => item.chat_id}
+      ListHeaderComponent={<NuevoChat/>}
       ListFooterComponent={<View style={{ height: 80 }}/>}
     />
   );
