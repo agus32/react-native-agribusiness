@@ -1,14 +1,11 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, TextInput, Pressable, Image } from 'react-native';
-import { useNavigate } from "react-router-native";
-import { PostLogin } from '../../services/ApiHandler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { usePerson } from '../../context/PersonContext';
 
 
+export const LoginScreen = () => {
 
-export const LoginScreen = ({LoggedUser}) => {
-
-  const navigate = useNavigate();
+  const {doLogin} = usePerson();
 
   const [imputs, setImputs] = useState({
     cedula: '',
@@ -23,14 +20,7 @@ export const LoginScreen = ({LoggedUser}) => {
   }
 
   const handleEnviar = async() => {
-
-    const response = await PostLogin(imputs);
-    if (response.success){    
-      await AsyncStorage.setItem('loggedUser', JSON.stringify({rol:response.rol,token:response.token,cedula:imputs.cedula}));
-      LoggedUser();
-      navigate("/");
-    }
-    
+    doLogin(imputs);  
   }
 
 

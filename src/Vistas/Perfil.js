@@ -1,32 +1,25 @@
-import React from 'react';
+import React,{useEffect,useState} from 'react';
 import { View, Text, ImageBackground, StyleSheet,Image,TouchableOpacity } from 'react-native';
 import { AppBarTab } from '../components/AppBarTab';
 import { SimpleLineIcons,Entypo } from '@expo/vector-icons';
 import { Verde,Azul } from '../constants/constants';
 import { getApiData } from '../services/ApiHandler'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigate } from 'react-router-native';
+import { usePerson } from '../context/PersonContext';
 
-const PerfilComponent = ({onLogout}) => {
-  const [user, setUser] = React.useState({});
-  const navigate = useNavigate();
+const PerfilComponent = () => {
+  const { user, doLogout } = usePerson();
+  const [userInfo, setUserInfo] = useState({});
 
   const fetchUserData = async () => {
-    const loggedUser = await AsyncStorage.getItem('loggedUser');
-    if (loggedUser) {
-      const parsedUser = JSON.parse(loggedUser);
-      const data = await getApiData('persona/'+ parsedUser.cedula);
-      setUser(data);
-      console.log(data);
+    if (user.cedula) {
+      const data = await getApiData('persona/'+ user.cedula);
+      setUserInfo(data);
   }}
-  React.useEffect(() => {
+
+  useEffect(() => {
     fetchUserData();
   }, []);
 
-  const handleLogout = () => {
-    onLogout();
-    navigate("/");
-  };
 
   return (
     <ImageBackground
@@ -43,8 +36,10 @@ const PerfilComponent = ({onLogout}) => {
         </View>
 
 
-        <Text style={styles.nombre}>{user.nombre}</Text>
-        <Text style={styles.cargo}>{user.cargo?.nombre ?? 'Cliente'}</Text>
+        <Text style={styles.nombre}>{user.rol === 'invitado' ? 'Invitado' : userInfo.nombre}</Text>
+        {user.rol !== 'invitado' &&
+        <View>
+        <Text style={styles.cargo}>{userInfo.cargo?.nombre ?? 'Cliente'}</Text>
 
 
         <Text style={styles.datosContacto}>Datos de Contacto</Text>
@@ -53,18 +48,20 @@ const PerfilComponent = ({onLogout}) => {
         <View style={styles.infoContacto}>
           <View style={styles.iconoContacto}>
             <Entypo name="old-phone" size={30} color={Verde} />
-            <Text style={styles.textoContacto}> {user.telefono}</Text>
+            <Text style={styles.textoContacto}> {userInfo.telefono}</Text>
           </View>
           <View style={styles.iconoContacto}>
             <Entypo name="email" size={30} color={Verde} />
-            <Text style={styles.textoContacto}>{user.correo}</Text>
+            <Text style={styles.textoContacto}>{userInfo.correo}</Text>
           </View>
           <View style={styles.iconoContacto}>
             <Entypo name="address" size={30} color={Verde} />
-            <Text style={styles.textoContacto}>{user.direccion}</Text>
+            <Text style={styles.textoContacto}>{userInfo.direccion}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.botonCerrarSesion} onPress={handleLogout}>
+        </View>
+        }
+        <TouchableOpacity style={styles.botonCerrarSesion} onPress={doLogout}>
           <SimpleLineIcons name="logout" size={30} color={Azul} >
           <Text style={styles.textoCerrarSesion}>Cerrar Sesión</Text>
           </SimpleLineIcons>
@@ -113,6 +110,7 @@ const styles = StyleSheet.create({
     marginTop: '1rem',
   },
   cargo: {
+    alignSelf: 'center',
     fontSize: 22,
     color: 'black',
     marginBottom: 20,

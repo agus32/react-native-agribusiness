@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, FlatList, Pressable, TextInput,Image } from 'react-native';
+import { View, Text, StyleSheet, FlatList, Pressable, TextInput,Image,Alert } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { getApiData} from '../../../services/ApiHandler';
 import { Azul } from '../../../constants/constants';
 import { AppBarTab } from '../../../components/AppBarTab';
+import { usePerson } from '../../../context/PersonContext';
 
 
 export const ProductosList = ({productos}) => {
@@ -52,9 +53,14 @@ export const ProductosList = ({productos}) => {
   );
 };
 const ProductoItem = ({ producto}) => {
+    const{user} = usePerson();
 
     const handleDownload = () => {
+        if(user?.rol !== 'invitado'){
         console.log(producto.ficha_tecnica);
+        }else{
+            Alert.alert('Operación no permitida','Debe ser cliente para descargar la ficha técnica');
+        }
     };
 
   

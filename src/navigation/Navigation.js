@@ -30,13 +30,15 @@ import {ArticulosTecnicos} from '../Vistas/Cliente/Menu/ArticulosTecnicos';
 import { Chat } from '../components/Chat';
 import { ChatList } from '../components/ChatList';
 import { IniciarChat } from '../Vistas/Cliente/Chat/IniciarChat';
+import { usePerson } from '../context/PersonContext';
+import { InvitadoChat } from '../Vistas/Invitado/InvitadoChat';
 
-export const Admin= ({handleLogout}) => {
+const Admin= () => {
     return (
 
         <SafeAreaView style={styles.container}>
         <Routes> 
-            <Route exact path="/"   element={<AdminMenu handleLogout={handleLogout}/>}/>
+            <Route exact path="/"   element={<AdminMenu/>}/>
             <Route path="/usuarios" element={<Personas/>}/>
             <Route path="/productos" element={<Productos/>}/>
             <Route path="/eventos" element={<Eventos/>}/>
@@ -46,7 +48,7 @@ export const Admin= ({handleLogout}) => {
       );
 }
 
-export const Colaborador= ({handleLogout}) => {
+const Colaborador= () => {
     return (
 
         <SafeAreaView style={styles.container}>
@@ -63,28 +65,29 @@ export const Colaborador= ({handleLogout}) => {
             <Route path="/menu/galeria/:id" element={<GaleriaByID/>}/>
             <Route path="/menu/archivos" element={<ArchivosInteres/>}/>
             <Route path="/menu/archivos/fichas" element={<FichasTecnicas/>}/>
-            <Route path="/perfil" element={<Perfil onLogout={handleLogout}/>}/>
-            <Route path="/notificaciones" element={<Eventos/>}/>
+            <Route path="/perfil" element={<Perfil/>}/>
+            <Route path="/chat" element={<ChatList/>}/>
+            <Route path="/chat/:cedula" element={<Chat/>}/>
         </Routes>     
         <NavBar/>
         </SafeAreaView>
       );
 }
 
-export const Cliente = ({handleLogout}) => {
+const Cliente = () => {
     return (
 
         <SafeAreaView style={styles.container}>
         <Routes> 
             <Route exact path="/"   element={<ClienteInicio/>}/>
-            <Route path="/perfil" element={<Perfil onLogout={handleLogout}/>}/>
+            <Route path="/perfil" element={<Perfil/>}/>
             <Route path="/productos" element={<LineasNegocio/>}/>
             <Route path="/productos/:id" element={<LineaById/>}/>
             <Route path="/eventos" element={<ClienteEventos/>}/>
             <Route path="/menu" element={<ClienteMenu/>}/>
             <Route path="/menu/directorio" element={<Directorio/>}/>
             <Route path="/menu/articulos" element={<ArticulosTecnicos/>}/>
-            <Route path="/notificaciones" element={<ChatList/>}/>
+            <Route path="/chat" element={<ChatList/>}/>
             <Route path="/chat/:cedula" element={<Chat/>}/>
             <Route path="/iniciarChat" element={<IniciarChat/>}/>
         </Routes>     
@@ -93,12 +96,32 @@ export const Cliente = ({handleLogout}) => {
       );
 }
 
-export const Home= ({LoggedUser}) => {
+const Invitado = () => {
+    return (
+
+        <SafeAreaView style={styles.container}>
+        <Routes> 
+            <Route exact path="/"   element={<ClienteInicio/>}/>
+            <Route path="/perfil" element={<Perfil/>}/>
+            <Route path="/productos" element={<LineasNegocio/>}/>
+            <Route path="/productos/:id" element={<LineaById/>}/>
+            <Route path="/eventos" element={<ClienteEventos/>}/>
+            <Route path="/menu" element={<ClienteMenu/>}/>
+            <Route path="/menu/directorio" element={<Directorio/>}/>
+            <Route path="/menu/articulos" element={<ArticulosTecnicos/>}/>
+            <Route path="/chat" element={<InvitadoChat/>}/>
+        </Routes>     
+        <NavBar/>
+        </SafeAreaView>
+      );
+}
+
+const Home= () => {
     return(
         <SafeAreaView style={styles.container}>
         <Routes> 
             <Route exact path="/"   element={<HomeScreen/>}/>
-            <Route path="/login" element={<LoginScreen LoggedUser={LoggedUser}/>}/>
+            <Route path="/login" element={<LoginScreen/>}/>
         </Routes>     
         </SafeAreaView>
     );
@@ -106,20 +129,23 @@ export const Home= ({LoggedUser}) => {
 
 
 
-export const Navigation = ({user,LoggedUser,handleLogout}) => {
-   
+export const Navigation = () => {
+    const {user} = usePerson();
+
     if (user != {}){
         switch(user.rol){
             case "admin":
-                return <Admin handleLogout={handleLogout}/>;
+                return <Admin/>;
             case "colaborador":
-                return <Colaborador handleLogout={handleLogout}/>;
+                return <Colaborador/>;
             case "cliente":
-                return <Cliente handleLogout={handleLogout}/>;
+                return <Cliente/>;
+            case "invitado":
+                return <Invitado/>;
             default:
-                return <Home LoggedUser={LoggedUser}/>;
+                return <Home/>;
         }
-    }else return <Home LoggedUser={LoggedUser}/>;
+    }else return <Home/>;
 }
 
 const styles = StyleSheet.create({

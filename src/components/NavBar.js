@@ -45,10 +45,10 @@ export const NavBar = () => {
         <Pressable
           style={styles.navItem}
         >
-          <Link to="/notificaciones">
+          <Link to="/chat">
           <View style={styles.navItem}>
-            <Feather name="bell" size={24} color="black" />
-            <Text style={styles.navText}>Notificaciones</Text>
+            <Feather name="message-square" size={24} color="black" />
+            <Text style={styles.navText}>Chat</Text>
           </View>
           </Link>
         </Pressable>

@@ -2,8 +2,19 @@ import React from 'react';
 import { View, Text, StyleSheet, Pressable, Image} from 'react-native';
 import { Link } from 'react-router-native';
 import { Verde,Azul } from '../../constants/constants';
+import { usePerson } from '../../context/PersonContext';
 
 export const HomeScreen = () => {
+  const {doLogin} = usePerson();
+
+  const handleInvitado = () => {
+    const imputs = {
+      cedula: 'invitado',
+      password: 'invitado',
+    };
+    doLogin(imputs);
+  }
+
   return (
     <View style={styles.container}>
       <Image
@@ -25,7 +36,9 @@ export const HomeScreen = () => {
           <Text style={styles.buttonText}>Cliente</Text>
           </Link>
         </Pressable>
+        <Pressable onPress={handleInvitado}>
         <Text style={styles.underlineText}>Modo Invitado</Text>
+        </Pressable>
       </View>
       <View style={styles.bottomImageContainer}>
         <Image

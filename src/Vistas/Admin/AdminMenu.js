@@ -1,8 +1,11 @@
 import React from 'react';
 import { View, Text, Image, StyleSheet,Pressable } from 'react-native';
 import { Link } from "react-router-native"
+import { usePerson } from '../../context/PersonContext';
 
-export const AdminMenu = ({handleLogout}) => {
+export const AdminMenu = () => {
+  const { doLogout } = usePerson();
+
   return (
     <View style={styles.container}>
       <Image source={require('../../media/PAGINA-INICIO-C.jpeg')} style={styles.image} />
@@ -34,7 +37,7 @@ export const AdminMenu = ({handleLogout}) => {
             <Text style={styles.linkText}>Eventos</Text>
           </View>
         </Link>
-        <Pressable onPress={handleLogout} style={styles.link}>
+        <Pressable onPress={doLogout} style={styles.link}>
           <View>
             <Image source={require('../../media/cerrar-sesion.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Cerrar Sesión</Text>

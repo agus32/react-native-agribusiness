@@ -4,9 +4,10 @@ import { View, ImageBackground,Text } from 'react-native';
 import { useWebSocket } from '../services/WebSocketService';
 import { useParams } from 'react-router-native';
 import { AppBarTab } from './AppBarTab';
+import { usePerson } from '../context/PersonContext';
 
 
-const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjZWR1bGEiOiIzIiwibm9tYnJlIjoiSnVhbiBQZXJleiBUaWNhIiwicm9sIjoiY2xpZW50ZSIsImlhdCI6MTcwNzQwNDMyNywiZXhwIjoxNzEyNTg4MzI3fQ.9Tm-G5veGJ9E1zxNC7aZ7LZz9IcF0aicWeegs2QaMYM';
+
 
 const ChatComponent = () => {
 
@@ -18,43 +19,38 @@ const ChatComponent = () => {
         createdAt: new Date(),
         user: {
           _id: parseInt(sender),
-          //name: sender,
+          avatar: require('../media/USUARIO.png')
         },
       })
     );
   };
 
 
-
+    const {user} = usePerson();
     const { cedula } = useParams();
     const [messages, setMessages] = useState([]);
-    const { joinRoom, sendMessage, getAllMessages, handleIncomingMessages, disconnectSocket } = useWebSocket(token,cedula, onMessageReceived);
+    const { joinRoom, sendMessage, getAllMessages, handleIncomingMessages, disconnectSocket } = useWebSocket(user.token,cedula, onMessageReceived);
     const [loading, setLoading] = useState(true);
   
     
     useEffect(() => {
       joinRoom();
-      console.log("Montado");
       getAllMessages((previousMessages) => {
-        console.log("a");
         const formattedMessages = previousMessages.map((msg) => ({
           _id: msg.created_at,
           text: msg.message,
           createdAt: new Date(msg.created_at),
           user: {
             _id: parseInt(msg.sender),
-           // name: msg.sender,
            avatar: require('../media/USUARIO.png')
           },
         }));
         setMessages(formattedMessages);
-        console.log("Mensajes", formattedMessages);
         setLoading(false);
       });
       handleIncomingMessages();
       return () => {
         disconnectSocket();
-        console.log("Desmontado");
       };
     }, []);
 

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { View, ImageBackground,Text } from 'react-native';
+import { View, ImageBackground } from 'react-native';
 import { AppBarTab } from '../../../components/AppBarTab';
 import { getApiData } from '../../../services/ApiHandler';
 import { useNavigate } from "react-router-native";
