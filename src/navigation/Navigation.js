@@ -29,6 +29,7 @@ import {Directorio} from '../Vistas/Cliente/Menu/Directorio';
 import {ArticulosTecnicos} from '../Vistas/Cliente/Menu/ArticulosTecnicos';
 import { Chat } from '../components/Chat';
 import { ChatList } from '../components/ChatList';
+import { IniciarChat } from '../Vistas/Cliente/Chat/IniciarChat';
 
 export const Admin= ({handleLogout}) => {
     return (
@@ -85,6 +86,7 @@ export const Cliente = ({handleLogout}) => {
             <Route path="/menu/articulos" element={<ArticulosTecnicos/>}/>
             <Route path="/notificaciones" element={<ChatList/>}/>
             <Route path="/chat/:cedula" element={<Chat/>}/>
+            <Route path="/iniciarChat" element={<IniciarChat/>}/>
         </Routes>     
         <NavBar/>
         </SafeAreaView>

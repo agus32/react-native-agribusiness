@@ -5,6 +5,7 @@ import { useWebSocket } from '../services/WebSocketService';
 import { useParams } from 'react-router-native';
 import { AppBarTab } from './AppBarTab';
 
+
 const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjZWR1bGEiOiIzIiwibm9tYnJlIjoiSnVhbiBQZXJleiBUaWNhIiwicm9sIjoiY2xpZW50ZSIsImlhdCI6MTcwNzQwNDMyNywiZXhwIjoxNzEyNTg4MzI3fQ.9Tm-G5veGJ9E1zxNC7aZ7LZz9IcF0aicWeegs2QaMYM';
 
 const ChatComponent = () => {
@@ -22,9 +23,12 @@ const ChatComponent = () => {
       })
     );
   };
+
+
+
     const { cedula } = useParams();
     const [messages, setMessages] = useState([]);
-    const { joinRoom, sendMessage, getAllMessages, handleIncomingMessages, disconnectSocket } = useWebSocket(token, cedula, onMessageReceived);
+    const { joinRoom, sendMessage, getAllMessages, handleIncomingMessages, disconnectSocket } = useWebSocket(token,cedula, onMessageReceived);
     const [loading, setLoading] = useState(true);
   
     

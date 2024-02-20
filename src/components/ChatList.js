@@ -47,7 +47,7 @@ const ChatListComponent = () => {
 
   const NuevoChat = () => {
     return (
-      <Link to={`/newChat`}>
+      <Link to={`/iniciarChat`}>
         <View style={styles.itemContainer}>
           <Image source={require('../media/perfil.png')} style={styles.profilePic} />
           <View style={styles.textContainer}>

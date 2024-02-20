@@ -1,9 +1,13 @@
+import { useEffect,useState } from 'react';
 import { io } from 'socket.io-client';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const BASE_URL = 'epublit.com.ar:420';
 const socket = io(`ws://${BASE_URL}/`);
 
-export const useWebSocket = (token, cedula, onMessageReceived) => {
+export const useWebSocket = (token,cedula, onMessageReceived) => {
+
+  
 
   const joinRoom = () => {
     socket.emit('join', { token, cedula });
