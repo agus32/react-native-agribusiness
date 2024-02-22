@@ -9,6 +9,7 @@ export const useWebSocket = (token,cedula, onMessageReceived) => {
   
 
   const joinRoom = () => {
+    socket.connect();
     socket.emit('join', { token, cedula });
     console.log('Socket conectado');
   };

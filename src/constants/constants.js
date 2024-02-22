@@ -140,55 +140,13 @@ export const Productos = [
     return initials;
   };
 
- export const Eventos = [
-    {
-      id_evento: 1,
-      titulo: "Conferencia de Tecnología",
-      descripcion: "Una conferencia sobre las últimas tendencias tecnológicas.",
-      fecha_creacion: "2023-09-07",
-      image: "https://blog.visitacostadelsol.com/hubfs/1-Aug-26-2020-09-51-11-94-AM.jpg"
-    },
-    {
-      id_evento: 2,
-      titulo: "Concierto en Vivo",
-      descripcion: "¡Únete a nosotros para una noche llena de música en vivo y diversión!",
-      fecha_creacion: "2023-09-10",
-      image: "https://fotos.perfil.com/2022/02/11/trim/987/555/0211concierto-1311358.jpg"
-    },
-    {
-      id_evento: 3,
-      titulo: "Feria de Libros",
-      descripcion: "Explora una amplia selección de libros de diferentes géneros.",
-      fecha_creacion: "2023-09-15",
-      image: "https://images.pagina12.com.ar/styles/focal_16_9_960x540/public/2023-05/713411-feria-20del-20libro.jpg"
-    },
-    {
-      id_evento: 4,
-      titulo: "Curso de Fotografía",
-      descripcion: "Aprende las habilidades esenciales para tomar fotos impresionantes.",
-      fecha_creacion: "2023-09-20",
-      image: "https://www.slideteam.net/media/catalog/product/cache/1280x720/c/h/chronological_timeline_with_various_milestones_and_events_slide01.jpg"
-    },
-    {
-      id_evento: 5,
-      titulo: "Torneo de Ajedrez",
-      descripcion: "Participa en nuestro torneo de ajedrez y demuestra tus habilidades.",
-      fecha_creacion: "2023-09-25",
-      image: "https://www.slideteam.net/media/catalog/product/cache/1280x720/c/h/chronological_timeline_with_various_milestones_and_events_slide01.jpg"
-    },
-    {
-      id_evento: 6,
-      titulo: "Seminario de Marketing Digital",
-      descripcion: "Descubre las estrategias más efectivas de marketing en línea.",
-      fecha_creacion: "2023-09-30",
-      image: "https://www.slideteam.net/media/catalog/product/cache/1280x720/c/h/chronological_timeline_with_various_milestones_and_events_slide01.jpg"
-    },
-    {
-      id_evento: 7,
-      titulo: "Fiesta de Aniversario",
-      descripcion: "Celebremos juntos otro año de éxitos y logros.",
-      fecha_creacion: "2023-10-05",
-      image: "https://www.slideteam.net/media/catalog/product/cache/1280x720/c/h/chronological_timeline_with_various_milestones_and_events_slide01.jpg"
-    }
-  ];
+  export const extraerTipoImagen = (cadenaCompleta) => {
+    const indicePunto = cadenaCompleta.lastIndexOf(".");
+
+    // Extraer el tipo de imagen desde el final hasta el último punto
+    const tipoImagen = cadenaCompleta.substring(indicePunto + 1);
   
+    console.log(tipoImagen);
+  
+    return tipoImagen;
+  }

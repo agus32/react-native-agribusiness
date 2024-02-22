@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
-import { View, ImageBackground,Text } from 'react-native';
+import { View, ImageBackground,ActivityIndicator } from 'react-native';
 import { useWebSocket } from '../services/WebSocketService';
 import { useParams } from 'react-router-native';
 import { AppBarTab } from './AppBarTab';
@@ -35,7 +35,9 @@ const ChatComponent = () => {
     
     useEffect(() => {
       joinRoom();
+      console.log('joining room');
       getAllMessages((previousMessages) => {
+        console.log(previousMessages);
         const formattedMessages = previousMessages.map((msg) => ({
           _id: msg.created_at,
           text: msg.message,
@@ -77,10 +79,13 @@ const ChatComponent = () => {
           flex: 1,
           marginBottom: 100,
           width: '80%',
+          justifyContent:'center'
         }}
       >
         {loading ? (
-          <Text>Loading...</Text>
+          <View style={{alignItems:'center',justifyContent:'center'}}>
+            <ActivityIndicator size="large" />
+          </View>
         ) : (
           <GiftedChat
             messages={messages}

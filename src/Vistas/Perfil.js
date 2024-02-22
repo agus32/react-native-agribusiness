@@ -93,10 +93,6 @@ const styles = StyleSheet.create({
     height: 180,
     overflow: 'hidden',
     marginBottom: 10,
-    borderRadius: 100,
-    borderWidth: 1,
-    borderColor: 'gray',
-
 
   },
   fotoPerfilImagen: {

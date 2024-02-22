@@ -105,7 +105,9 @@ const NuevaCotizacionForm = () => {
             <Picker.Item key={item.cedula} label={item.nombre} value={item.cedula} />
         ))}
         </Picker>
-   
+        {cotizacionData.cliente !== '.' && cotizacionData.cliente !== '' && 
+        <Text style={{ fontSize: 16, marginBottom: 10 }}>Cedula: {personas.find((item) => item.cedula === cotizacionData.cliente)?.cedula}</Text>
+        }
         {cotizacionData.cliente === '.' && <TextInput
           style={styles.input}
           placeholder="Cliente no registrado"

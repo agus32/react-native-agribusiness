@@ -32,6 +32,18 @@ const ChatComponent = () => {
         const response = await getApiData('chat/init?motivo='+message);
         if(response.cedula){
             navigate(`/chat/${response.cedula}`)
+        }else{
+            setMessages((previousMessages) =>
+            GiftedChat.append(previousMessages, {
+                _id: new Date(),
+                text: "No se encontró un representante disponible, por favor intente más tarde.",
+                createdAt: new Date(),
+                user: {
+                    _id: 2,
+                    name: 'Agribussiness Ecuador',
+                    avatar: require('../../../media/agrobusiness_logo.png'),
+                },
+            }));
         }
     }
 

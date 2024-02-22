@@ -2,22 +2,24 @@ import React, { useState, useEffect } from 'react';
 import { AppBarTab } from '../../../components/AppBarTab';
 import { Azul} from '../../../constants/constants';
 import { postApiData,getApiData} from '../../../services/ApiHandler';
-import { View, TextInput, TouchableOpacity, StyleSheet,Text } from 'react-native';
+import { View, TextInput, TouchableOpacity, StyleSheet,Text,ImageBackground,ActivityIndicator } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { usePerson } from '../../../context/PersonContext';
 
 const NuevaSolicitudForm = () => {
+  const {user} = usePerson();
   const [colaboradores, setColaboradores] = useState([]);
-  const [solicitado, SetSolicitado] = useState('');
+  const [solicitado, setSolicitado] = useState("");
   const [descripcion, setDescripcion] = useState('');
+  const [loading, setLoading] = useState(true);
 
   
   const getColaboradores = async () => {
-    const loggedUser = await AsyncStorage.getItem('loggedUser');
-    if (loggedUser) {
-      const parsedUser = JSON.parse(loggedUser);
-      const data = await getApiData(`persona/${parsedUser.cedula}/solicitables`);
+    if (user.cedula) {
+      const data = await getApiData(`persona/${user.cedula}/solicitables`);
       setColaboradores(data);
+      console.log(data);
+      setLoading(false);
   }}
 
   
@@ -25,23 +27,28 @@ useEffect(() => { getColaboradores();}, []);
 
   const handleEnviar = async() => {
     await postApiData('solicitud',{ solicitado, descripcion });
-    SetSolicitado('');
+    setSolicitado("");
     setDescripcion('');
   };
 
-  return (
-    <View style={styles.container}>
+
+  const LoadedComponent = () => (
+    <View style={styles.formContainer}>
       <Text style={styles.texto}>Destinatario:</Text>
         <Picker
           solicitado={solicitado}
           style={styles.picker}
-          onValueChange={(itemValue) => SetSolicitado(itemValue)}
+          onValueChange={(itemValue) => setSolicitado(itemValue)}
         >
           <Picker.Item label="Seleccione un colaborador" value="" />
           {colaboradores.map((item) => (
             <Picker.Item key={item.cedula} label={item.nombre} value={item.cedula} />
           ))}
         </Picker>
+        {solicitado !== "" && 
+          <Text style={styles.texto}>Cargo: {colaboradores.find((item) => item.cedula === solicitado).cargo}</Text>
+        }
+
       <Text style={styles.texto}>Solicitud:</Text>
       <TextInput
         style={styles.textInput}
@@ -53,11 +60,38 @@ useEffect(() => { getColaboradores();}, []);
       <TouchableOpacity style={styles.enviarButton} onPress={handleEnviar}>
         <Text style={styles.buttonText}>Enviar Solicitud</Text>
       </TouchableOpacity>
-    </View>
+      </View>
+  );
+
+
+  return (
+    <ImageBackground style={styles.container} source={require('../../../media/fondo.png')}>
+      {loading ? (
+      <ActivityIndicator size="large" color="#0000ff" />
+    ) : (
+      colaboradores ? (
+        <LoadedComponent/>
+      ) : (
+        <Text> No tienes colaboradores por encima de tu cargo para hacerle solicitudes.</Text>
+      )
+    )}
+    </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  formContainer: {
+    margin: 16, // Ajusta el margen según tus preferencias
+    padding: 16, // Ajusta el padding según tus preferencias
+    backgroundColor: 'white', // Color de fondo del container secundario
+    borderRadius: 10, // Bordes redondeados
+    shadowColor: 'gray',
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+
+  },
   container: {
     flex: 1,
     justifyContent: 'flex-start', // Alinea al comienzo del contenedor
@@ -74,7 +108,6 @@ const styles = StyleSheet.create({
     alignItems: 'left',
   },
   picker: {
-    width: 300,
     borderWidth: 1,
     borderColor: '#E0E0E0',
     borderRadius: 5,
@@ -83,8 +116,7 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   textInput: {
-    height: 300,
-    width: 400,
+    minHeight: 250,
     borderColor: '#E0E0E0',
     borderRadius: 5,
     borderWidth: 1,
@@ -99,9 +131,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     padding: 10,
     marginVertical: 20,
-    alignItems: 'center',
+    alignSelf: 'center',
   },
   buttonText: {
+    alignSelf: 'center',
     color: 'white',
     fontSize: 16,
 

@@ -1,43 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, Image,StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList,StyleSheet } from 'react-native';
 import { Link } from 'react-router-native';
 import { AppBarTab } from './AppBarTab';
+import { usePerson } from '../context/PersonContext';
+import { getApiData } from '../services/ApiHandler';
+import { PersonInitials } from './PersonInitials';
+import { NuevoChatColaborador } from '../Vistas/Colaborador/Chat/NuevoChatColaborador';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 
 const ChatListComponent = () => {
   const [contacts, setContacts] = useState([]);
+  const {user} = usePerson();
 
-  useEffect(() => {
-
-    const response = [
-        {
-          "chat_id": 17,
-          "reciver": "392142823",
-          "reciver_name": "Manuel Variego"
-        },
-        {
-            "chat_id": 16,
-            "reciver": "348213902",
-            "reciver_name": "juan ramon"
-        },
-        {
-            "chat_id": 15,
-            "reciver": "492183214",
-            "reciver_name": "Juan ramon Alberto Jose"
-        },
-        {
-            "chat_id": 13,
-            "reciver": "2043491978",
-            "reciver_name": "Juan ramon Alberto Jose"
-        }
-        // ...otros contactos
-      ];
-        setContacts(response);
+ 
+  const getContacts = async () => {
+    if(user.cedula){
+    const response = await getApiData(`persona/${user.cedula}/chat`);
+    setContacts(response);
+  }
+  };
+  
+ useEffect(() => {
+    getContacts();
   }, []);
 
   const renderItem = ({ item }) => (
-    <Link to={`/chat/${item.reciver}`}>
+    <Link to={`/chat/${item.reciver}`} style={{alignItems:'center'}}>
       <View style={styles.itemContainer}>
-        <Image source={require('../media/perfil.png')} style={styles.profilePic} />
+        <PersonInitials name={item.reciver_name} />
         <View style={styles.textContainer}>
           <Text style={styles.contactName}>{item.reciver_name}</Text>
         </View>
@@ -45,11 +35,11 @@ const ChatListComponent = () => {
     </Link>
   );
 
-  const NuevoChat = () => {
+  const NuevoChatCliente = () => {
     return (
-      <Link to={`/iniciarChat`}>
+      <Link to={`/iniciarChat`} style={{alignItems:'center'}}>
         <View style={styles.itemContainer}>
-          <Image source={require('../media/perfil.png')} style={styles.profilePic} />
+        <MaterialCommunityIcons name="chat-plus-outline" size={50} color="black" />
           <View style={styles.textContainer}>
             <Text style={styles.contactName}>Nuevo chat</Text>
           </View>
@@ -58,12 +48,15 @@ const ChatListComponent = () => {
     );
   };
 
+  
+
+
   return (
     <FlatList
       data={contacts}
       renderItem={renderItem}
       keyExtractor={(item) => item.chat_id}
-      ListHeaderComponent={<NuevoChat/>}
+      ListHeaderComponent={user.rol === 'cliente' ? <NuevoChatCliente/> : <NuevoChatColaborador/>}
       ListFooterComponent={<View style={{ height: 80 }}/>}
     />
   );
@@ -77,6 +70,7 @@ const styles = StyleSheet.create({
       padding: 10,
       borderBottomWidth: 1,
       borderBottomColor: '#ccc',
+      width: '90%',
     },
     profilePic: {
       width: 50,
@@ -88,6 +82,7 @@ const styles = StyleSheet.create({
       flex: 1,
     },
     contactName: {
+      marginLeft: 10,
       fontSize: 16,
       fontWeight: 'bold',
     },

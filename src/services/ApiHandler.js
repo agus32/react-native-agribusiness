@@ -1,4 +1,5 @@
 import {Alert} from 'react-native';
+import { extraerTipoImagen } from '../constants/constants';
 
 const showAlert = (message, title) => {
   Alert.alert(
@@ -105,11 +106,12 @@ export const postApiData = async (route,body) => {
   };
 
   export const handleApiImage = async (method,route,image) => {
+    
     const formData = new FormData();
     formData.append('image', {
       uri: image,
       name: 'image',
-      type: 'image/jpg',
+      type: extraerTipoImagen(image),
     });
 
     try {
@@ -136,7 +138,7 @@ export const postApiData = async (route,body) => {
     formData.append('image', {
       uri: image,
       name: 'image',
-      type: 'image/jpg',
+      type: 'image/' + extraerTipoImagen(image),
     });
     formData.append('comentarios', comentario);
 
