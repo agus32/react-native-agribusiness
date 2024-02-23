@@ -14,7 +14,7 @@ export const ClienteInicio = () => {
       </View>
 
 
-        <View style={styles.linkContainer}>
+        <View style={[styles.linkContainer, {marginBottom:80}]}>
         <Link to="/eventos" style={styles.link}>
         <View>
             <Image source={require('../../media/eventos.png')} style={styles.linkImage} />

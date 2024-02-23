@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet,Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet,TouchableOpacity,Linking } from 'react-native';
 import { Link } from "react-router-native"
 
 export const ColaboradorInicio = () => {
@@ -14,26 +14,26 @@ export const ColaboradorInicio = () => {
       </View>
 
       <View style={styles.linkContainer}>
-        <Link to="/usuarios" style={styles.link}>
+        <TouchableOpacity style={styles.link} onPress={() => Linking.openURL("https://sacierp.cloud/#/login")}>
           <View>
             <Image source={require('../../media/saci-erp.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Hacer Pedidos</Text>
           </View>
-        </Link>
-        <Link to="/solicitudes" style={styles.link}>
+        </TouchableOpacity>
+        <Link to="/solicitudes" style={styles.link} underlayColor={1} activeOpacity={0.3}>
         <View>
             <Image source={require('../../media/solicitudes.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Solicitudes</Text>
           </View>
         </Link>
         </View>
-        <View style={styles.linkContainer}>
-        <Link to="/eventos" style={styles.link}>
+        <View style={[styles.linkContainer, {marginBottom:80}]}>
+        <TouchableOpacity style={styles.link} onPress={() => Linking.openURL("https://www.zoho.com/login.html")}>
         <View>
             <Image source={require('../../media/zoho-crm.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Registrar Visita</Text>
           </View>
-        </Link >
+        </TouchableOpacity >
         <Link to="/cotizaciones" style={styles.link}>     
           <View>
             <Image source={require('../../media/cotizaciones.png')} style={styles.linkImage} />

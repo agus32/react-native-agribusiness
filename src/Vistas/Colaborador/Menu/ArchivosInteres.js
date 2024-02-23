@@ -45,17 +45,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
-    paddingBottom: 70,
+    marginBottom: 80,
   },
   link: {
 
-    width: '100%',
+    flex: 1,
+    marginBottom: 10, 
   },
   linkContent: {
-
+    flex:1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
+
   },
   buttonText: {
     color: Azul,
@@ -64,9 +65,10 @@ const styles = StyleSheet.create({
     
   },
   imagen: {
-    width: 200,
-    height: 200,
+    height: '80%', // Ocupa el 100% de la altura disponible
+    width: '100%', // Ocupa el 100% del ancho disponible
     resizeMode: 'contain',
+    marginBottom: 10,
 
   },
 });

@@ -87,6 +87,7 @@ export const ProductosList = () => {
           <ProductoItem producto={item} onDelete={handleDelete} onEdit={handleEdit} onDownload={handleDownload} proveedores={proveedores}/>
         )}
         keyExtractor={(item) => item.id_producto}
+        ListFooterComponent={<View style={{ height: 80 }}/>}
         ListHeaderComponent={         
             <View style={styles.addProductoContainer}>
               <Pressable style={styles.addProductoButton} onPress={() => setModalVisible(true)}>
@@ -97,6 +98,9 @@ export const ProductosList = () => {
               </Pressable>
             </View>         
         }
+        ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                   <Text>No se encontraron productos</Text>
+                            </View>}
       />
       <AddProducto
         isVisible={modalVisible}

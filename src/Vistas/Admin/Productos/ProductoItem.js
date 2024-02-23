@@ -3,6 +3,7 @@ import { View, Text, Pressable, StyleSheet,Modal,Image } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { EditProductoModal } from './EditProducto';
 import { Azul} from '../../../constants/constants';
+import { downloadFile } from '../../../services/DownloadHandler';
 
 export const ProductoItem = ({ producto, onDelete, onEdit,onDownload,proveedores }) => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
@@ -16,14 +17,18 @@ export const ProductoItem = ({ producto, onDelete, onEdit,onDownload,proveedores
     onEdit(nuevoProducto,id_producto,ficha,imagen);
     setEditModalVisible(false);
   }
-  const handleDownload = () => {
-    onDownload(producto.ficha_tecnica);
+  const handleDownload = async () => {
+    try {
+      await downloadFile(producto.ficha_tecnica);
+    } catch (error) {
+      console.error('Error al intentar compartir la imagen', error);
+    }
   }
 
   return (
     <View style={styles.productoItem}>
       <View>
-        <Image source={producto.imagen || require('../../../media/image-not-found.png')} style={{ width: 120, height: 120,marginRight: '10px', borderRadius: 5 }} />
+        <Image source={producto.portada ? {uri:producto.portada} : require('../../../media/image-not-found.png')} style={{ width: 120, height: 120,marginRight: 10, borderRadius: 5 }} />
       </View>
       <View>
         <Text style={styles.productoNombre}>{producto.nombre}</Text>
@@ -32,9 +37,11 @@ export const ProductoItem = ({ producto, onDelete, onEdit,onDownload,proveedores
         <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Presentacíon: </Text>{producto.presentacion}</Text>
         <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Precio: </Text>{producto.precio}</Text>
         <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>IVA: </Text>{producto.iva}</Text>
-        <Pressable onPress={handleDownload}>
-          <Text style={styles.linkText}>Descargar Ficha Técnica</Text>
-        </Pressable>
+        {producto.ficha_tecnica && 
+          <Pressable onPress={handleDownload}>
+            <Text style={styles.linkText}>Descargar Ficha Técnica</Text>
+          </Pressable>
+          }
       </View>
       <View style={styles.iconContainer}>
         <Pressable style={styles.icon} onPress={() => setEditModalVisible(true)}>

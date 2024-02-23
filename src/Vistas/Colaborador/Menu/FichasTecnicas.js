@@ -5,6 +5,7 @@ import { getApiData} from '../../../services/ApiHandler';
 import { Azul } from '../../../constants/constants';
 import { AppBarTab } from '../../../components/AppBarTab';
 import { usePerson } from '../../../context/PersonContext';
+import {downloadFile} from '../../../services/DownloadHandler';
 
 
 export const ProductosList = ({productos}) => {
@@ -55,9 +56,13 @@ export const ProductosList = ({productos}) => {
 const ProductoItem = ({ producto}) => {
     const{user} = usePerson();
 
-    const handleDownload = () => {
+    const handleDownload = async() => {
         if(user?.rol !== 'invitado'){
-        console.log(producto.ficha_tecnica);
+          try {
+            await downloadFile(producto.ficha_tecnica);
+          } catch (error) {
+            console.error('Error al intentar compartir la imagen', error);
+          }
         }else{
             Alert.alert('Operación no permitida','Debe ser cliente para descargar la ficha técnica');
         }
@@ -67,7 +72,10 @@ const ProductoItem = ({ producto}) => {
     return (
       <View style={styles.productoItem}>
         <View>
-          <Image source={producto.portada || require('../../../media/image-not-found.png')} style={{ width: 120, height: 120,marginRight: '10px', borderRadius: 5 }} />
+          <Image 
+            source={producto.portada ? {uri:producto.portada} : require('../../../media/image-not-found.png')} 
+            style={{ width: 120, height: 120,marginRight: 10, borderRadius: 5 }} 
+          />
         </View>
         <View>
           <Text style={styles.productoNombre}>{producto.nombre}</Text>
@@ -76,9 +84,11 @@ const ProductoItem = ({ producto}) => {
           <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Presentacíon: </Text>{producto.presentacion}</Text>
           <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Precio: </Text>{producto.precio}</Text>
           <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>IVA: </Text>{producto.iva}</Text>
+          {producto.ficha_tecnica && 
           <Pressable onPress={handleDownload}>
             <Text style={styles.linkText}>Descargar Ficha Técnica</Text>
           </Pressable>
+          }
         </View>
 
       </View>

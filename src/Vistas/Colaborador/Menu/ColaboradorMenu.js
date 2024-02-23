@@ -35,27 +35,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    marginTop: 30,
+    marginBottom: 80
   },
   link: {
-
+    flex: 1,
     width: '100%',
+    marginBottom: 10,
   },
   linkContent: {
-
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
-    width: '100%',
   },
   buttonText: {
     color: 'black',
     fontSize: 22,
     fontWeight: 'bold',
-    
   },
   imagen: {
-    width: 200,
-    height: 200,
-
+    height: '80%', // Ocupa el 100% de la altura disponible
+    width: '100%', // Ocupa el 100% del ancho disponible
+    resizeMode: 'contain',
   },
 });
 

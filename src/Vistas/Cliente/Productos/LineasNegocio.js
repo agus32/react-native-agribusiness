@@ -44,19 +44,17 @@ const LineasList = () => {
 const LineasItem = ({linea}) => {
 
     return (
-      <View style={styles.lineaItem}>
+      <Link style={styles.link} to={'/productos/'+linea.id_linea}>
+        <View style={styles.lineaItem}>
           <ImageBackground 
-            source={linea.image || require('../../../media/image-not-found.png')}
+            source={linea.image ? { uri: linea.image } : require('../../../media/image-not-found.png')}
             style={styles.lineaImagen} 
             resizeMode="cover"
           />
-          <Link to={'/productos/'+linea.id_linea}>
-              <Text style={styles.lineaTexto}>{linea.nombre}</Text>
-          </Link>
-      </View>
-        
+          <Text style={styles.lineaTexto}>{linea.nombre}</Text>
+        </View>
+      </Link>
     );
-    //linea.image || require('../../../media/image-not-found.png'
 };
   
 
@@ -67,12 +65,14 @@ const LineasItem = ({linea}) => {
         backgroundColor: 'white',
         width: '100%',
     },
-    lineaItem: {
+    link: {
       flex: 1,
       aspectRatio: 1, // Para que cada ítem sea cuadrado
       margin: 4,
-      overflow: 'hidden'
 
+    },
+    lineaItem: {
+      flex: 1,
     },
     lineaImagen: {
       flex: 1,
@@ -85,6 +85,7 @@ const LineasItem = ({linea}) => {
       fontSize: windowHeight * 0.03,
       alignSelf: 'center',
       bottom: 10,
+      
     },
 
   });

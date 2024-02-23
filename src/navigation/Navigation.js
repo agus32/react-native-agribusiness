@@ -43,7 +43,6 @@ const Admin= () => {
             <Route path="/productos" element={<Productos/>}/>
             <Route path="/eventos" element={<Eventos/>}/>
         </Routes>     
-        <NavBar/>
         </SafeAreaView>
       );
 }

@@ -83,9 +83,12 @@ const ProductoItem = ({ producto,handleCargar}) => {
     return (
       <View style={styles.productoItem}>
         <View>
-          <Image source={producto.portada || require('../../../media/image-not-found.png')} style={{ width: 120, height: 120,marginRight: '10px', borderRadius: 5 }} />
+        <Image 
+            source={producto.portada ? {uri:producto.portada} : require('../../../media/image-not-found.png')} 
+            style={{ width: 120, height: 120,marginRight: 10, borderRadius: 5 }} 
+          />
         </View>
-        <View>
+        <View style={{flex:1}}>
           <Text style={styles.productoNombre}>{producto.nombre}</Text>
           <Text style={styles.productoDesc} numberOfLines={1} ellipsizeMode="tail" >{producto.descripcion}</Text>
           <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Proovedor: </Text>{producto.nombre_proveedor}</Text>
@@ -227,10 +230,11 @@ const ProductoItem = ({ producto,handleCargar}) => {
         alignItems: 'center',
       },
       button: {
+        flex: 1,
         padding: 5,
         borderRadius: 10,
-        margin: 5,
-        minWidth: 120,
+        margin: 10,
+
         alignItems: 'center',
       },
       loadButton: {

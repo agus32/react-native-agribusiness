@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TextInput, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Modal, TextInput, Pressable, StyleSheet,ScrollView } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import {Picker} from '@react-native-picker/picker';
@@ -50,9 +50,10 @@ export const AddProducto = ({ isVisible, onClose, onEnviar,proveedores}) => {
   };
 
   return (
-    <Modal animationType="slide" transparent={true} visible={isVisible} onRequestClose={onClose}>
+    <Modal animationType="slide" transparent={true} visible={isVisible} onRequestClose={onClose}>  
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
+          <ScrollView>
           <Text style={styles.modalTitle}>Agregar Producto</Text>
             <TextInput
             style={styles.input}
@@ -120,6 +121,7 @@ export const AddProducto = ({ isVisible, onClose, onEnviar,proveedores}) => {
           <Pressable style={styles.cancelarButton} onPress={onClose}>
             <Text style={styles.cancelarButtonText}>Cancelar</Text>
           </Pressable>
+         </ScrollView>  
         </View>
       </View>
     </Modal>

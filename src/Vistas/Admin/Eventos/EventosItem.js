@@ -21,7 +21,7 @@ export const EventosItem = ({ evento, onDelete, onEdit }) => {
   return (
     <View style={styles.eventoItem}>
       <View style={styles.imageContainer}>
-        <Image source={evento.image || require('../../../media/image-not-found.png')} style={styles.eventoImage} />
+        <Image source={evento.image ? {uri:evento.image} : require('../../../media/image-not-found.png')} style={styles.eventoImage} />
       </View>
       <View style={styles.eventoInfo}>
         <Text style={styles.eventoNombre}>{evento.titulo}</Text>

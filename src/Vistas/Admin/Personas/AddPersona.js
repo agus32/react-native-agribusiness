@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TextInput, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Modal, TextInput, Pressable, StyleSheet,ScrollView } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 
 export const AddPersona = ({ isVisible, onClose, onAgregar,cargos}) => {
@@ -7,7 +7,7 @@ export const AddPersona = ({ isVisible, onClose, onAgregar,cargos}) => {
   const [cedula, setCedula] = useState('');
   const [correo, setCorreo] = useState('');
   const [nombre, setNombre] = useState('');
-  const [codZona, setCodZona] = useState(0);
+  const [codZona, setCodZona] = useState('');
   const [codCargo, setCodCargo] = useState(-1);
   const [telefono, setTelefono] = useState('');
   const [direccion, setDireccion] = useState('');
@@ -18,7 +18,7 @@ export const AddPersona = ({ isVisible, onClose, onAgregar,cargos}) => {
     setCedula('');
     setCorreo('');
     setNombre('');
-    setCodZona(0);
+    setCodZona('');
     setCodCargo(-1);
     setTelefono('');
     setDireccion('');
@@ -32,7 +32,7 @@ export const AddPersona = ({ isVisible, onClose, onAgregar,cargos}) => {
       correo,
       nombre,
       password,
-      cod_zona: codZona,
+      cod_zona: parseInt(codZona),
       cod_cargo: parseInt(codCargo),
       telefono,
       direccion,
@@ -45,9 +45,10 @@ export const AddPersona = ({ isVisible, onClose, onAgregar,cargos}) => {
   
 
   return (
-    <Modal animationType="slide" transparent={true} visible={isVisible} onRequestClose={onClose}>
-      <View style={styles.modalContainer}>
+    <Modal animationType="slide" transparent={true} visible={isVisible} onRequestClose={onClose}>     
+      <View style={styles.modalContainer}>      
         <View style={styles.modalContent}>
+          <ScrollView >
           <Text style={styles.modalTitle}>Agregar Persona</Text>
           <Text>Rol:</Text>
           <Pressable style={styles.dropdown} onPress={() => setRol(rol === "cliente" ? "colaborador" : "cliente")}>
@@ -81,8 +82,8 @@ export const AddPersona = ({ isVisible, onClose, onAgregar,cargos}) => {
           <TextInput           
             style={styles.input}
             keyboardType="numeric"
-            value={codZona.toString()}
-            onChangeText={(text) => setCodZona(parseInt(text))}
+            value={codZona}
+            onChangeText={setCodZona}
           />
           {rol === "colaborador" && (
           <View>
@@ -120,8 +121,9 @@ export const AddPersona = ({ isVisible, onClose, onAgregar,cargos}) => {
           <Pressable style={styles.cancelarButton} onPress={onClose}>
             <Text style={styles.cancelarButtonText}>Cancelar</Text>
           </Pressable>
+        </ScrollView>
         </View>
-      </View>
+      </View>      
     </Modal>
   );
 };

@@ -1,8 +1,10 @@
 import * as FileSystem from 'expo-file-system';
 import * as Sharing from 'expo-sharing';
-import { Linking, Alert, Platform } from 'react-native';
+import { Linking, Platform } from 'react-native';
+
 
 export const DownloadAndShare = async (url) => {
+
   try {
     // Crea un nombre de archivo único basado en la URL
     const nombreArchivo = url.substring(url.lastIndexOf('/') + 1);
@@ -24,6 +26,26 @@ export const DownloadAndShare = async (url) => {
 };
 
 
+export const downloadFile = async (url) => {
+
+  const nombreArchivo = url.substring(url.lastIndexOf('/') + 1);
+  const downloadResumable = FileSystem.createDownloadResumable(
+    url,
+    FileSystem.documentDirectory + nombreArchivo,
+    {},
+  );
+  
+  try {
+    const { uri } = await downloadResumable.downloadAsync();
+    console.log('Finished downloading to ', uri);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+
+
+
 export const callNumber = phone => {
   console.log('callNumber ----> ', phone);
   let phoneNumber = phone;
@@ -34,12 +56,9 @@ export const callNumber = phone => {
     phoneNumber = `tel:${phone}`;
   }
   Linking.canOpenURL(phoneNumber)
-  .then(supported => {
-    if (!supported) {
-      Alert.alert('El numero de telefono no es valido');
-    } else {
+  .then(() =>{
+
       return Linking.openURL(phoneNumber);
-    }
   })
   .catch(err => console.log(err));
 };

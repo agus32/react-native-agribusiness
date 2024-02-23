@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TextInput, Pressable, StyleSheet } from 'react-native';
+import { View, Text, Modal, TextInput, Pressable, StyleSheet,ScrollView } from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 
 
@@ -7,7 +7,7 @@ export const EditPersonaModal = ({ isVisible, onClose, onEnviar, persona,cargos 
   const [rol, setRol] = useState(persona.rol);
   const [correo, setCorreo] = useState(persona.correo ?? '');
   const [nombre, setNombre] = useState(persona.nombre ?? '');
-  const [codZona, setCodZona] = useState(persona.cod_zona);
+  const [codZona, setCodZona] = useState(persona.cod_zona.toString() ?? '');
   const [codCargo, setCodCargo] = useState(persona.cod_cargo ?? -1);
   const [telefono, setTelefono] = useState(persona.telefono ?? '');
   const [direccion, setDireccion] = useState(persona.direccion ?? '');
@@ -19,7 +19,7 @@ export const EditPersonaModal = ({ isVisible, onClose, onEnviar, persona,cargos 
       password,
       correo,
       nombre,
-      cod_zona: codZona,
+      cod_zona: parseInt(codZona),
       cod_cargo: parseInt(codCargo),
       telefono,
       direccion,
@@ -34,6 +34,7 @@ export const EditPersonaModal = ({ isVisible, onClose, onEnviar, persona,cargos 
     <Modal animationType="slide" transparent={true} visible={isVisible} onRequestClose={onClose}>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
+          <ScrollView>
           <Text style={styles.modalTitle}>Editar Usuario</Text>
           <Text>Rol:</Text>
           <Pressable style={styles.dropdown} onPress={() => setRol(rol === "cliente" ? "colaborador" : "cliente")}>
@@ -64,8 +65,8 @@ export const EditPersonaModal = ({ isVisible, onClose, onEnviar, persona,cargos 
           <TextInput           
             style={styles.input}
             keyboardType="numeric"
-            value={codZona.toString()}
-            onChangeText={(text) => setCodZona(parseInt(text))}
+            value={codZona}
+            onChangeText={setCodZona}
           />
           {rol === "colaborador" && (
           <View>
@@ -105,6 +106,7 @@ export const EditPersonaModal = ({ isVisible, onClose, onEnviar, persona,cargos 
           <Pressable style={styles.cancelarButton} onPress={onClose}>
             <Text style={styles.cancelarButtonText}>Cancelar</Text>
           </Pressable>
+          </ScrollView>
         </View>
       </View>
     </Modal>

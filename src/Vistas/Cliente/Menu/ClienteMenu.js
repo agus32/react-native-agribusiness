@@ -8,28 +8,28 @@ const windowHeight = Dimensions.get('window').height;
 const Menu = () => {
   return (
     <View style={styles.container}>
-      <View style={styles.imageContainer}>
+      <Link to="/menu/directorio" style={styles.link} >
+        <View style={styles.imageContainer}>
         <Image
           source={require('../../../media/DIRECTORIO.png')}
           style={styles.image}
         />
-        <Link to="/menu/directorio" style={styles.link} >
         <Text style={styles.text}>Directorio</Text>
-        </Link>
-      </View>
-      <View style={styles.imageContainer}>
+        </View>
+      </Link>
+      <Link to="/menu/articulos" style={styles.link} >
+        <View style={styles.imageContainer}>
         <Image 
           source={require('../../../media/ARTICULO-TECNICO.png')}
           style={styles.image}
-        />
-        <Link to="/menu/articulos" style={styles.link} >
+        />        
         <Text style={styles.text}>Artículos Técnicos</Text>
-        </Link>
-      </View>
+        </View>
+      </Link>
     </View>
   );
 };
-
+//  <Text style={styles.text}>Artículos Técnicos</Text>  <Text style={styles.text}>Directorio</Text>
 export const ClienteMenu = () => {
 
     return (
@@ -44,6 +44,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
     marginBottom: 60,
   },
   imageContainer: {
@@ -53,10 +55,7 @@ const styles = StyleSheet.create({
   },
   link: {
     flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
     width: '100%',
-    bottom: '10%',
   },
   image: {
     width: '100%',
@@ -64,6 +63,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   text: {
+    fontWeight: 'bold',
     position: 'absolute',
     bottom: '10%', // Espacio desde la parte inferior en porcentaje
     color: 'white', // Color del texto

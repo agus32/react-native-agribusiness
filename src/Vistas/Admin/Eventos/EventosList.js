@@ -72,6 +72,10 @@ export const EventosList = () => {
           <EventosItem evento={item} onDelete={handleDelete} onEdit={handleEdit} />
         )}
         keyExtractor={(item) => item.id_evento}
+        ListFooterComponent={<View style={{ height: 80 }}/>}
+        ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+                                   <Text>No se encontraron Eventos</Text>
+                            </View>}
         ListHeaderComponent={         
             <View style={styles.addProductoContainer}>
               <Pressable style={styles.addProductoButton} onPress={() => setModalVisible(true)}>

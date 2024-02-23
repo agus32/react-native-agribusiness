@@ -25,17 +25,13 @@ export const HomeScreen = () => {
       <Text style={styles.smallText}>Para comenzar, seleccione una opción:</Text>
       <View style={styles.buttonContainer}>
         
-        <Pressable style={styles.button}>
-        <Link to="/login" style={styles.link}>
+        <Link to="/login" style={styles.button}>
           <Text style={styles.buttonText}>Colaborador</Text>
-          </Link>
-        </Pressable>
-        
-        <Pressable style={styles.button}>
-          <Link to="/login" style={styles.link}>
+        </Link>
+        <Link to="/login" style={styles.button}>
           <Text style={styles.buttonText}>Cliente</Text>
-          </Link>
-        </Pressable>
+        </Link>
+
         <Pressable onPress={handleInvitado}>
         <Text style={styles.underlineText}>Modo Invitado</Text>
         </Pressable>
@@ -92,7 +88,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     marginTop: 30,
-    width: 200, // Ancho del botón al 100% del contenedor
+    width: 200,
   },
   buttonText: {
     color: 'white',

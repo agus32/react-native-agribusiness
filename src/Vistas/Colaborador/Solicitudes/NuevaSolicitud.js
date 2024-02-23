@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AppBarTab } from '../../../components/AppBarTab';
 import { Azul} from '../../../constants/constants';
 import { postApiData,getApiData} from '../../../services/ApiHandler';
-import { View, TextInput, TouchableOpacity, StyleSheet,Text,ImageBackground,ActivityIndicator } from 'react-native';
+import { View, TextInput, TouchableOpacity, StyleSheet,Text,ImageBackground,ActivityIndicator} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { usePerson } from '../../../context/PersonContext';
 
@@ -10,7 +10,7 @@ const NuevaSolicitudForm = () => {
   const {user} = usePerson();
   const [colaboradores, setColaboradores] = useState([]);
   const [solicitado, setSolicitado] = useState("");
-  const [descripcion, setDescripcion] = useState('');
+  const [descripcion, setDescripcion] = useState("");
   const [loading, setLoading] = useState(true);
 
   
@@ -28,15 +28,21 @@ useEffect(() => { getColaboradores();}, []);
   const handleEnviar = async() => {
     await postApiData('solicitud',{ solicitado, descripcion });
     setSolicitado("");
-    setDescripcion('');
+    setDescripcion("");
   };
 
 
-  const LoadedComponent = () => (
-    <View style={styles.formContainer}>
-      <Text style={styles.texto}>Destinatario:</Text>
+
+  return (
+    <ImageBackground style={styles.container} source={require('../../../media/fondo.png')}>
+      {loading ? (
+      <ActivityIndicator size="large" color="#0000ff" />
+    ) : (
+      colaboradores ? (
+        <View style={styles.formContainer}>
+        <Text style={styles.texto}>Destinatario:</Text>
         <Picker
-          solicitado={solicitado}
+          selectedValue={solicitado}
           style={styles.picker}
           onValueChange={(itemValue) => setSolicitado(itemValue)}
         >
@@ -52,25 +58,17 @@ useEffect(() => { getColaboradores();}, []);
       <Text style={styles.texto}>Solicitud:</Text>
       <TextInput
         style={styles.textInput}
-        multiline
+        multiline={true}
+        numberOfLines={4}
         placeholder="Ingrese su descripcion aquí..."
         value={descripcion}
-        onChangeText={(text) => setDescripcion(text)}
+        onChangeText={setDescripcion}
       />
+
       <TouchableOpacity style={styles.enviarButton} onPress={handleEnviar}>
         <Text style={styles.buttonText}>Enviar Solicitud</Text>
       </TouchableOpacity>
       </View>
-  );
-
-
-  return (
-    <ImageBackground style={styles.container} source={require('../../../media/fondo.png')}>
-      {loading ? (
-      <ActivityIndicator size="large" color="#0000ff" />
-    ) : (
-      colaboradores ? (
-        <LoadedComponent/>
       ) : (
         <Text> No tienes colaboradores por encima de tu cargo para hacerle solicitudes.</Text>
       )
@@ -116,14 +114,13 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   textInput: {
-    minHeight: 250,
+
     borderColor: '#E0E0E0',
     borderRadius: 5,
     borderWidth: 1,
     marginBottom: 20,
     padding: 10,
     textAlignVertical: 'top',
-
   },
   enviarButton: {
     width: 300,
@@ -139,6 +136,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
 
   },
+
 });
 
 
