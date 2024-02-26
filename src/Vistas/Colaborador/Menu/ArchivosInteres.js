@@ -7,7 +7,7 @@ import { AppBarTab } from '../../../components/AppBarTab';
 const ArchivosInteresComponent = () => {
   return (
     <View style={styles.container}>
-      <Link to="/solicitudes/lista" style={styles.link}>
+      <Link to="/solicitudes/lista" style={styles.link} underlayColor={1} activeOpacity={0.3}>
         <View style={styles.linkContent}>
           <Image
             source={require('../../../media/precio.png')}
@@ -17,7 +17,7 @@ const ArchivosInteresComponent = () => {
         </View>
       </Link>
 
-      <Link to="/solicitudes/lista" style={styles.link}>
+      <Link to="/solicitudes/lista" style={styles.link} underlayColor={1} activeOpacity={0.3}>
         <View style={styles.linkContent}>
           <Image
             source={require('../../../media/proyecciones-ventas.png')}
@@ -26,7 +26,7 @@ const ArchivosInteresComponent = () => {
           <Text style={styles.buttonText}>Descargar Proyecciones de Ventas</Text>
         </View>
       </Link>
-      <Link to="/menu/archivos/fichas" style={[styles.link,{marginTop:10}]}>
+      <Link to="/menu/archivos/fichas" style={[styles.link,{marginTop:10}]} underlayColor={1} activeOpacity={0.3}>
         <View style={styles.linkContent}>
           <Image
             source={require('../../../media/ficha-tecnica.png')}

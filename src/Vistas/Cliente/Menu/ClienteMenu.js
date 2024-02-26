@@ -8,7 +8,7 @@ const windowHeight = Dimensions.get('window').height;
 const Menu = () => {
   return (
     <View style={styles.container}>
-      <Link to="/menu/directorio" style={styles.link} >
+      <Link to="/menu/directorio" style={styles.link}  underlayColor={1} activeOpacity={0.3}>
         <View style={styles.imageContainer}>
         <Image
           source={require('../../../media/DIRECTORIO.png')}
@@ -17,7 +17,7 @@ const Menu = () => {
         <Text style={styles.text}>Directorio</Text>
         </View>
       </Link>
-      <Link to="/menu/articulos" style={styles.link} >
+      <Link to="/menu/articulos" style={styles.link}  underlayColor={1} activeOpacity={0.3}>
         <View style={styles.imageContainer}>
         <Image 
           source={require('../../../media/ARTICULO-TECNICO.png')}

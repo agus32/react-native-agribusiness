@@ -29,18 +29,35 @@ export const DownloadAndShare = async (url) => {
 export const downloadFile = async (url) => {
 
   const nombreArchivo = url.substring(url.lastIndexOf('/') + 1);
-  const downloadResumable = FileSystem.createDownloadResumable(
-    url,
-    FileSystem.documentDirectory + nombreArchivo,
-    {},
-  );
-  
-  try {
-    const { uri } = await downloadResumable.downloadAsync();
-    console.log('Finished downloading to ', uri);
-  } catch (e) {
-    console.error(e);
+  const rutaDescarga = `${FileSystem.documentDirectory}${nombreArchivo}`;
+  const result = await FileSystem.downloadAsync(url, rutaDescarga);
+
+  const type = () =>{
+    const p = url.substring(url.lastIndexOf('.') + 1);
+    if (p === 'pdf') return 'application/pdf';
+    else if (p === 'csv') return 'text/csv';
+    else return 'image/'+p;
   }
+  
+  if(Platform.OS === 'android'){
+    const permissons = await FileSystem.StorageAccessFramework.requestDirectoryPermissionsAsync();
+    if (permissons.granted ) {
+      const base64 = await FileSystem.readAsStringAsync(result.uri, { encoding: FileSystem.EncodingType.Base64 });
+      await FileSystem.StorageAccessFramework.createFileAsync(permissons.directoryUri, nombreArchivo, type() )
+      .then(async(uri) => {
+        console.log(type());
+        await FileSystem.writeAsStringAsync(uri, base64, { encoding: FileSystem.EncodingType.Base64 });
+      })
+      .catch(err => console.log(err));
+    }
+    else {
+    await Sharing.shareAsync(result.uri);
+    }
+  }
+  else{
+    await Sharing.shareAsync(result.uri);
+  }
+
 };
 
 

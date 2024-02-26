@@ -6,7 +6,7 @@ import { AppBarTab } from '../../../components/AppBarTab';
 const MenuComponent = () => {
   return (
     <View style={styles.container}>
-      <Link to="/menu/galeria" style={styles.link}>
+      <Link to="/menu/galeria" style={styles.link} underlayColor={1} activeOpacity={0.3}>
         <View style={styles.linkContent}>
           <Image
             source={require('../../../media/galeria.png')}
@@ -16,7 +16,7 @@ const MenuComponent = () => {
         </View>
       </Link>
 
-      <Link to="/menu/archivos" style={styles.link}>
+      <Link to="/menu/archivos" style={styles.link} underlayColor={1} activeOpacity={0.3}>
         <View style={styles.linkContent}>
           <Image
             source={require('../../../media/archivos-interes.png')}

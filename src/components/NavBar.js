@@ -14,7 +14,7 @@ export const NavBar = () => {
           style={styles.navItem}
           
         >
-          <Link to="/">
+          <Link to="/" underlayColor={1} activeOpacity={0.3}>
           <View style={styles.navItem}>
             <Feather name="home" size={24} color="black" />
             <Text style={styles.navText}>Inicio</Text>
@@ -25,7 +25,7 @@ export const NavBar = () => {
         <Pressable
           style={styles.navItem}
         >
-          <Link to="/perfil">
+          <Link to="/perfil" underlayColor={1} activeOpacity={0.3}>
           <View style={styles.navItem}>
             <Feather name="user" size={24} color="black" />
             <Text style={styles.navText}>Perfil</Text>
@@ -35,7 +35,7 @@ export const NavBar = () => {
         <Pressable
           style={styles.navItem}
         >
-          <Link to="/menu">
+          <Link to="/menu" underlayColor={1} activeOpacity={0.3}>
           <View style={styles.navItem}>
             <Feather name="menu" size={24} color="black" />
             <Text style={styles.navText}>Menú</Text>
@@ -45,7 +45,7 @@ export const NavBar = () => {
         <Pressable
           style={styles.navItem}
         >
-          <Link to="/chat">
+          <Link to="/chat" underlayColor={1} activeOpacity={0.3}>
           <View style={styles.navItem}>
             <Feather name="message-square" size={24} color="black" />
             <Text style={styles.navText}>Chat</Text>

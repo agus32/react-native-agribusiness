@@ -12,11 +12,11 @@ const SolicitudesMenu = () => {
     >
       <View style={styles.container}>
 
-        <Link to="/solicitudes/nueva" style={styles.link}>
+        <Link to="/solicitudes/nueva" style={styles.link} underlayColor={1} activeOpacity={0.3}>
           <Text style={styles.buttonText}>Nueva Solicitud</Text>
         </Link>
 
-        <Link to="/solicitudes/lista" style={styles.link}>
+        <Link to="/solicitudes/lista" style={styles.link} underlayColor={1} activeOpacity={0.3}>
           <Text style={styles.buttonText}>Estatus de Solicitud</Text>
         </Link>
 

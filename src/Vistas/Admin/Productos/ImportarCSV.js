@@ -17,7 +17,7 @@ export const ImportarCSVModal = ({ isVisible, onClose, onEnviar }) => {
   
 
     const handleSelectFile = async () => {
-      let result = await DocumentPicker.getDocumentAsync({});
+      let result = await DocumentPicker.getDocumentAsync({type: 'text/csv'});
       if(!result.canceled) {setSelectedFile(result.assets[0].uri);}
     };
   

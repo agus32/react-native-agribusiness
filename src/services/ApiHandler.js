@@ -40,7 +40,7 @@ export const PostLogin = async (body) => {
     if (!response.ok)ErrorHandler(data);
     return data;
   } catch (error) {
-    throw error;
+    console.log(error, 'Error');
   }
 }
 
@@ -58,7 +58,7 @@ export const getApiData = async (route) => {
       }
       return data.data;
     } catch (error) {
-      throw error;
+      console.log(error, 'Error');
     }
   };
   
@@ -78,14 +78,28 @@ export const postApiData = async (route,body) => {
       }else showAlert(data.message, 'Exito');
       return data;
     } catch (error) {
-      throw error;
+      console.log(error, 'Error');
     }
   };
 
 
   export const handleApiFile = async (method,route,file) => {
     const formData = new FormData();
-    formData.append('file', file);
+    const fileName = file.substring(file.lastIndexOf('/') + 1);
+    const type = () =>{
+      const p = fileName.substring(fileName.lastIndexOf('.') + 1);
+      if (p === 'pdf') return 'application/pdf';
+      else if (p === 'csv') return 'text/csv';
+      else return 'application/octet-stream';
+    }
+    formData.append('file', {
+      uri: file,
+      name: fileName,
+      type: type(),
+    });
+    console.log(formData);
+
+
     try {
       const response = await fetch(`${BASE_URL}/${route}`, {
         method: method,
@@ -101,17 +115,22 @@ export const postApiData = async (route,body) => {
       }else showAlert(data.message, 'Exito');
       return data;
     } catch (error) {
-      throw error;
+      console.log(error, 'Error');
     }
   };
 
   export const handleApiImage = async (method,route,image) => {
     
     const formData = new FormData();
+
+    const filename = image.split('/').pop();
+    const match = /\.(\w+)$/.exec(filename);
+    const type = match ? `image/${match[1]}` : `image`;
+
     formData.append('image', {
       uri: image,
-      name: 'image',
-      type: extraerTipoImagen(image),
+      name: filename,
+      type,
     });
 
     try {
@@ -128,17 +147,22 @@ export const postApiData = async (route,body) => {
       }else showAlert(data.message, 'success');
       return data;
     } catch (error) {
-      throw error;
+      console.log(error, 'Error');
     }
   };
 
 
   export const handleGaleriaImage = async (idProducto,image,comentario) => {
     const formData = new FormData();
+
+    const filename = image.split('/').pop();
+    const match = /\.(\w+)$/.exec(filename);
+    const type = match ? `image/${match[1]}` : `image`;
+    
     formData.append('image', {
       uri: image,
-      name: 'image',
-      type: 'image/' + extraerTipoImagen(image),
+      name: filename,
+      type,
     });
     formData.append('comentarios', comentario);
 
@@ -156,7 +180,7 @@ export const postApiData = async (route,body) => {
       }else showAlert(data.message, 'success');
       return data;
     } catch (error) {
-      throw error;
+      console.log(error, 'Error');
     }
   };
 
@@ -178,8 +202,7 @@ export const putApiData = async (route, id, body) => {
       }else showAlert(data.message, 'Exito');
       return data;
     } catch (error) {
-      
-      throw error;
+      console.log(error, 'Error');
     }
   };
   
@@ -197,7 +220,7 @@ export const deleteApiData = async (route, id) => {
       }else showAlert(data.message, 'Exito');
       return data;
     } catch (error) {
-      throw error;
+      console.log(error, 'Error');
     }
   };
 

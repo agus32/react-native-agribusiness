@@ -29,16 +29,16 @@ export const EditProductoModal = ({ isVisible, onClose, onEnviar, producto ,prov
     onClose();
   };
   const handleSelectFile = async () => {
-    let result = await DocumentPicker.getDocumentAsync({});
+    let result = await DocumentPicker.getDocumentAsync({type: 'application/pdf',});
     if(!result.canceled) setSelectedFile(result.assets[0].uri); 
   };
 
   const handleImagen = async () => {
    
     let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [1, 1],
       quality: 1,
     });
     if (!result.canceled) {

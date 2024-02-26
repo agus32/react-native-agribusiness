@@ -52,7 +52,6 @@ export const ProductosList = () => {
     if(ficha) handleApiFile('PUT',`producto/${id_producto}/ficha`,ficha);
     if(imagen) handleApiImage('POST',`producto/${id_producto}/portada`,imagen);
     getProductos();
-    console.log(producto);
   };
 
   const handleAgregar = async(nuevoProducto,ficha,imagen) => {

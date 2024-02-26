@@ -4,7 +4,7 @@ import { getApiData} from '../../../services/ApiHandler';
 import { AppBarTab } from '../../../components/AppBarTab';
 import { useParams } from 'react-router-native';
 import { AntDesign } from '@expo/vector-icons';
-import { DownloadAndShare } from '../../../services/DownloadHandler';
+import { downloadFile } from '../../../services/DownloadHandler';
 
 const ImagenesList = () => {
     const { id } = useParams();
@@ -22,7 +22,7 @@ const ImagenesList = () => {
 
     const handleShare = async (imageUrl) => {
       try {
-        await DownloadAndShare(imageUrl);
+        await downloadFile(imageUrl);
       } catch (error) {
         console.error('Error al intentar compartir la imagen', error);
       }

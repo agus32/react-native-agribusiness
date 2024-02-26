@@ -100,7 +100,7 @@ const ProductoItem = ({ producto,handleCargar}) => {
                 <Text style={styles.buttonText}>Cargar</Text>
             </TouchableOpacity>
 
-            <Link to={'/menu/galeria/'+producto.id_producto} style={[styles.button, styles.viewButton]}>
+            <Link to={'/menu/galeria/'+producto.id_producto} style={[styles.button, styles.viewButton]} underlayColor={1} activeOpacity={0.3}>
                 <Text style={styles.buttonText}>Ver</Text>
             </Link>
           </View>
@@ -113,7 +113,7 @@ const ProductoItem = ({ producto,handleCargar}) => {
 
   export const CargaModal = ({ isVisible, onClose, idProducto,onEnviar }) => {
     const [selectedImagen, setSelectedImagen] = useState([]);
-    const [comentario, setComentario] = useState([]);
+    const [comentario, setComentario] = useState("");
   
     const handleEnviar = () => {
       if (selectedImagen) {
@@ -125,7 +125,7 @@ const ProductoItem = ({ producto,handleCargar}) => {
     const pickImage = async () => {
    
       let result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
         aspect: [1,1],
         quality: 1,

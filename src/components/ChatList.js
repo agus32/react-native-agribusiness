@@ -25,7 +25,7 @@ const ChatListComponent = () => {
   }, []);
 
   const renderItem = ({ item }) => (
-    <Link to={`/chat/${item.reciver}`} style={{alignItems:'center'}}>
+    <Link to={`/chat/${item.reciver}`} style={{alignItems:'center'}} underlayColor={1} activeOpacity={0.3}>
       <View style={styles.itemContainer}>
         <PersonInitials name={item.reciver_name} />
         <View style={styles.textContainer}>
@@ -37,7 +37,7 @@ const ChatListComponent = () => {
 
   const NuevoChatCliente = () => {
     return (
-      <Link to={`/iniciarChat`} style={{alignItems:'center'}}>
+      <Link to={`/iniciarChat`} style={{alignItems:'center'}} underlayColor={1} activeOpacity={0.3}>
         <View style={styles.itemContainer}>
         <MaterialCommunityIcons name="chat-plus-outline" size={50} color="black" />
           <View style={styles.textContainer}>

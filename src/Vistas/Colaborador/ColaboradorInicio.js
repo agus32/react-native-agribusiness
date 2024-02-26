@@ -34,7 +34,7 @@ export const ColaboradorInicio = () => {
             <Text style={styles.linkText}>Registrar Visita</Text>
           </View>
         </TouchableOpacity >
-        <Link to="/cotizaciones" style={styles.link}>     
+        <Link to="/cotizaciones" style={styles.link} underlayColor={1} activeOpacity={0.3}>     
           <View>
             <Image source={require('../../media/cotizaciones.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Cotizaciones</Text>

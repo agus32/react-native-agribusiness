@@ -44,13 +44,14 @@ export const EventosList = () => {
 
   const handleEdit = async(evento,id_evento,imagen) => {
     await putApiData('evento',id_evento,evento);
-    if(imagen) handleApiImage('PUT',`evento/${id_evento}/imagen`,imagen);
+    if(imagen) handleApiImage('PUT',`evento/${id_evento}/image`,imagen);
     getEventos();
   };
 
   const handleAgregar = async (nuevoEvento,imagen) => {
     const response = await postApiData('evento',nuevoEvento);
-    if(imagen && response.success) handleApiImage('PUT',`evento/${response.data.id_evento}/imagen`,imagen);  
+    console.log(response);
+    if(imagen && response.success) handleApiImage('PUT',`evento/${response.data.id_evento}/image`,imagen);  
     getEventos();
   }
 

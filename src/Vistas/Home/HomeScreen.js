@@ -25,10 +25,10 @@ export const HomeScreen = () => {
       <Text style={styles.smallText}>Para comenzar, seleccione una opción:</Text>
       <View style={styles.buttonContainer}>
         
-        <Link to="/login" style={styles.button}>
+        <Link to="/login" style={styles.button} underlayColor={1} activeOpacity={0.3}>
           <Text style={styles.buttonText}>Colaborador</Text>
         </Link>
-        <Link to="/login" style={styles.button}>
+        <Link to="/login" style={styles.button} underlayColor={1} activeOpacity={0.3}>
           <Text style={styles.buttonText}>Cliente</Text>
         </Link>
 

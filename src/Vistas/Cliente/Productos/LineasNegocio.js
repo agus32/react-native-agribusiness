@@ -44,7 +44,7 @@ const LineasList = () => {
 const LineasItem = ({linea}) => {
 
     return (
-      <Link style={styles.link} to={'/productos/'+linea.id_linea}>
+      <Link style={styles.link} to={'/productos/'+linea.id_linea} underlayColor={1} activeOpacity={0.3}>
         <View style={styles.lineaItem}>
           <ImageBackground 
             source={linea.image ? { uri: linea.image } : require('../../../media/image-not-found.png')}

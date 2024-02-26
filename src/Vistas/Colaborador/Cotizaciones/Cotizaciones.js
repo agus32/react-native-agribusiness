@@ -12,11 +12,11 @@ const CotizacionesMenu = () => {
     >
       <View style={styles.container}>
 
-        <Link to="/cotizaciones/nueva" style={styles.link}>
+        <Link to="/cotizaciones/nueva" style={styles.link} underlayColor={1} activeOpacity={0.3}>
           <Text style={styles.buttonText}>Nueva Cotizacion</Text>
         </Link>
 
-        <Link to="/cotizaciones/lista" style={styles.link}>
+        <Link to="/cotizaciones/lista" style={styles.link} underlayColor={1} activeOpacity={0.3}>
           <Text style={styles.buttonText}>Cotizaciones Anteriores</Text>
         </Link>
 

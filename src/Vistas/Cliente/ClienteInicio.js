@@ -15,13 +15,13 @@ export const ClienteInicio = () => {
 
 
         <View style={[styles.linkContainer, {marginBottom:80}]}>
-        <Link to="/eventos" style={styles.link}>
+        <Link to="/eventos" style={styles.link} underlayColor={1} activeOpacity={0.3}>
         <View>
             <Image source={require('../../media/eventos.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Eventos</Text>
           </View>
         </Link >
-        <Link to="/productos" style={styles.link}>     
+        <Link to="/productos" style={styles.link} underlayColor={1} activeOpacity={0.3}>     
           <View>
             <Image source={require('../../media/LOGO-PRODUCTO.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Productos</Text>

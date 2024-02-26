@@ -17,13 +17,13 @@ export const AdminMenu = () => {
       </View>
 
       <View style={styles.linkContainer}>
-        <Link to="/usuarios" style={styles.link}>
+        <Link to="/usuarios" style={styles.link} underlayColor={1} activeOpacity={0.3}>
           <View>
             <Image source={require('../../media/USUARIO.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Usuarios</Text>
           </View>
         </Link>
-        <Link to="/productos" style={styles.link}>
+        <Link to="/productos" style={styles.link} underlayColor={1} activeOpacity={0.3}>
         <View>
             <Image source={require('../../media/LOGO-PRODUCTO.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Productos</Text>
@@ -31,7 +31,7 @@ export const AdminMenu = () => {
         </Link>
         </View>
         <View style={styles.linkContainer}>
-        <Link to="/eventos" style={styles.link}>
+        <Link to="/eventos" style={styles.link} underlayColor={1} activeOpacity={0.3}>
         <View>
             <Image source={require('../../media/eventos.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Eventos</Text>
