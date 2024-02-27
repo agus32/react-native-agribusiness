@@ -1,7 +1,8 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { useNavigate, } from 'react-router-native';
+import {useNavigate} from 'react-router-native';
 import { PostLogin,setGlobalToken } from '../services/ApiHandler';
+import {getNotificationsToken} from '../services/NotificationsTokenHandler';
 
 const PersonContext = createContext();
 
@@ -20,6 +21,7 @@ export const PersonProvider = ({ children }) => {
         setGlobalToken(parsedUser.token);
       }
     };
+    getNotificationsToken();
     fetchLoggedUser();
   }, []);
 

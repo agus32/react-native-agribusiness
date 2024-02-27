@@ -1,5 +1,4 @@
 import {Alert} from 'react-native';
-import { extraerTipoImagen } from '../constants/constants';
 
 const showAlert = (message, title) => {
   Alert.alert(
