@@ -91,7 +91,7 @@ const ChatComponent = () => {
             messages={messages}
             onSend={(newMessages) => onSend(newMessages)}
             user={{
-              _id: 3,
+              _id: user.cedula,
             }}
             placeholder="Escribe un mensaje..."
           />
