@@ -16,11 +16,11 @@ const ChatComponent = () => {
         setMessages([
           {
             _id: 1,
-            text: 'Hola, bienvenido al chatbot de Agribussiness Ecuador \n¿Cómo podemos ayudarte? \n 1. Información Técnica Comercial \n 2. Pedido',
+            text: 'Hola, bienvenido al chatbot de Agribusiness Ecuador \n¿Cómo podemos ayudarte? \n 1. Información Técnica Comercial \n 2. Pedido',
             createdAt: new Date(),
             user: {
               _id: 2,
-              name: 'Agribussiness Ecuador',
+              name: 'Agribusiness Ecuador',
               avatar: require('../../../media/agrobusiness_logo.png'),
             },
           },
@@ -40,7 +40,7 @@ const ChatComponent = () => {
                 createdAt: new Date(),
                 user: {
                     _id: 2,
-                    name: 'Agribussiness Ecuador',
+                    name: 'Agribusiness Ecuador',
                     avatar: require('../../../media/agrobusiness_logo.png'),
                 },
             }));
@@ -66,7 +66,7 @@ const ChatComponent = () => {
             createdAt: new Date(),
             user: {
                 _id: 2,
-                name: 'Agribussiness Ecuador',
+                name: 'Agribusiness Ecuador',
                 avatar: require('../../../media/agrobusiness_logo.png'),
             },
         }));

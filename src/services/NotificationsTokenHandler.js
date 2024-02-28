@@ -1,6 +1,8 @@
 import * as Notifications from 'expo-notifications';
 
 
+const projectId ='5547cd21-e47e-48b3-889e-415ccf1dd78c';
+
 export const getNotificationsToken = async () => {
   const { status } = await Notifications.getPermissionsAsync();
   if (status !== 'granted') {
@@ -10,7 +12,7 @@ export const getNotificationsToken = async () => {
     }
   }
 
-  const token = (await Notifications.getExpoPushTokenAsync()).data;
+  const token = (await Notifications.getExpoPushTokenAsync({projectId})).data;
   console.log(token);
   return token;
 };

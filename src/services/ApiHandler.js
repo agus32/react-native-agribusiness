@@ -26,9 +26,9 @@ const ErrorHandler = (data) => {
 }
 
 
-export const PostLogin = async (body) => {
+export const PostWithoutToken = async (route,body) => {
   try {
-    const response = await fetch(`${BASE_URL}/persona/login`, {
+    const response = await fetch(`${BASE_URL}/${route}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -39,6 +39,8 @@ export const PostLogin = async (body) => {
     if (!response.ok)ErrorHandler(data);
     return data;
   } catch (error) {
+    const errorMessage = error.toString() || 'Error desconocido';
+    showAlert(errorMessage, 'Error de conexión');
     console.log(error, 'Error');
   }
 }
@@ -57,6 +59,8 @@ export const getApiData = async (route) => {
       }
       return data.data;
     } catch (error) {
+      const errorMessage = error.toString() || 'Error desconocido';
+      showAlert(errorMessage, 'Error de conexión');
       console.log(error, 'Error');
     }
   };
@@ -77,6 +81,8 @@ export const postApiData = async (route,body) => {
       }else showAlert(data.message, 'Exito');
       return data;
     } catch (error) {
+      const errorMessage = error.toString() || 'Error desconocido';
+      showAlert(errorMessage, 'Error de conexión');
       console.log(error, 'Error');
     }
   };
@@ -114,6 +120,8 @@ export const postApiData = async (route,body) => {
       }else showAlert(data.message, 'Exito');
       return data;
     } catch (error) {
+      const errorMessage = error.toString() || 'Error desconocido';
+      showAlert(errorMessage, 'Error de conexión');
       console.log(error, 'Error');
     }
   };
@@ -146,6 +154,8 @@ export const postApiData = async (route,body) => {
       }else showAlert(data.message, 'success');
       return data;
     } catch (error) {
+      const errorMessage = error.toString() || 'Error desconocido';
+      showAlert(errorMessage, 'Error de conexión');
       console.log(error, 'Error');
     }
   };
@@ -179,6 +189,8 @@ export const postApiData = async (route,body) => {
       }else showAlert(data.message, 'success');
       return data;
     } catch (error) {
+      const errorMessage = error.toString() || 'Error desconocido';
+      showAlert(errorMessage, 'Error de conexión');
       console.log(error, 'Error');
     }
   };
@@ -201,6 +213,8 @@ export const putApiData = async (route, id, body) => {
       }else showAlert(data.message, 'Exito');
       return data;
     } catch (error) {
+      const errorMessage = error.toString() || 'Error desconocido';
+      showAlert(errorMessage, 'Error de conexión');
       console.log(error, 'Error');
     }
   };
@@ -219,6 +233,8 @@ export const deleteApiData = async (route, id) => {
       }else showAlert(data.message, 'Exito');
       return data;
     } catch (error) {
+      const errorMessage = error.toString() || 'Error desconocido';
+      showAlert(errorMessage, 'Error de conexión');
       console.log(error, 'Error');
     }
   };

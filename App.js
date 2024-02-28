@@ -3,9 +3,8 @@ import { Navigation } from './src/navigation/Navigation';
 import { PersonProvider } from './src/context/PersonContext';
 
 
-
 export default function App() {
-
+  
 
   return(
     <NativeRouter>

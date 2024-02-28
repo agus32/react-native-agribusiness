@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import { View, Text, StyleSheet, TextInput, Pressable, Image } from 'react-native';
 import { usePerson } from '../../context/PersonContext';
-
+import { Link } from 'react-router-native';
 
 export const LoginScreen = () => {
 
@@ -34,15 +34,15 @@ export const LoginScreen = () => {
       <TextInput style={styles.input} value={imputs.cedula} onChangeText={(text) => handleInputChange(text, 'cedula')}/>
       <Text style={styles.label}>Contraseña:</Text>
       <TextInput style={styles.input} secureTextEntry={true}  value={imputs.password} onChangeText={(text) => handleInputChange(text, 'password')}/>
-      <Pressable style={styles.forgotPasswordLink}>
+    { /**  <Pressable style={styles.forgotPasswordLink}>
         <Text style={styles.forgotPasswordText}>Olvidé mi contraseña</Text>
-      </Pressable>
+      </Pressable>*/}
       <Pressable style={styles.loginButton}>
         <Text style={styles.loginButtonText} onPress={handleEnviar}>Iniciar sesión</Text>
       </Pressable>
-      <Pressable style={styles.signupLink}>
+      <Link to="/register" style={styles.signupLink} underlayColor={1} activeOpacity={0.3}>
         <Text style={styles.signupText}>¿No tiene cuenta? <Text style={styles.signupLinkText}>Regístrese aquí</Text></Text>
-      </Pressable>
+      </Link>
     </View>
   );
 };

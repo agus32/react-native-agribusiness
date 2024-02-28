@@ -1,9 +1,10 @@
-import { StyleSheet, SafeAreaView} from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, SafeAreaView,Alert,BackHandler} from 'react-native';
 import {NavBar} from '../components/NavBar';
 import {HomeScreen} from '../Vistas/Home/HomeScreen';
 import {LoginScreen} from '../Vistas/Home/LoginScreen';
 import { Productos } from '../Vistas/Admin/Productos/Productos';
-import { Route,Routes } from 'react-router-native';
+import { Route,Routes,useNavigate,useLocation} from 'react-router-native';
 import { Personas } from '../Vistas/Admin/Personas/Personas';
 import { AdminMenu } from '../Vistas/Admin/AdminMenu';
 import { Eventos } from '../Vistas/Admin/Eventos/Eventos';
@@ -32,6 +33,7 @@ import { ChatList } from '../components/ChatList';
 import { IniciarChat } from '../Vistas/Cliente/Chat/IniciarChat';
 import { usePerson } from '../context/PersonContext';
 import { InvitadoChat } from '../Vistas/Invitado/InvitadoChat';
+import {RegisterForm} from '../Vistas/Home/RegisterForm';
 
 const Admin= () => {
     return (
@@ -121,6 +123,7 @@ const Home= () => {
         <Routes> 
             <Route exact path="/"   element={<HomeScreen/>}/>
             <Route path="/login" element={<LoginScreen/>}/>
+            <Route path="/register" element={<RegisterForm/>}/>
         </Routes>     
         </SafeAreaView>
     );
@@ -130,6 +133,31 @@ const Home= () => {
 
 export const Navigation = () => {
     const {user} = usePerson();
+    const navigate = useNavigate();
+    const location = useLocation();
+    useEffect(() => {
+        const backAction = () => {
+            console.log(location);
+        if(location.pathname === "/") {
+            Alert.alert('Advertencia', 'Estas seguro que deseas salir?', [
+            {
+                text: 'No',
+                onPress: () => null,
+                style: 'cancel',
+            },
+            {text: 'Si', onPress: () => BackHandler.exitApp()},
+            ]);
+        } else navigate(-1);
+        return true;
+        };
+
+        const backHandler = BackHandler.addEventListener(
+        'hardwareBackPress',
+        backAction,
+        );
+
+        return () => backHandler.remove();
+    }, [location]);
 
     if (user != {}){
         switch(user.rol){

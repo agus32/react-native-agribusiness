@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 
-const getRandomColor = () => {
+const getRandomColor = (name) => {
     const colors = ['#1abc9c', '#3498db', '#9b59b6', '#e74c3c', '#f39c12', '#2ecc71', '#34495e'];
-    const randomIndex = Math.floor(Math.random() * colors.length);
+    const randomIndex = name.length % colors.length;
     return colors[randomIndex];
 };
 
@@ -18,7 +18,7 @@ const getInitials = (name) => {
 export const PersonInitials = ({name}) => {
   return (
         <View
-          style={[styles.circle, { backgroundColor: getRandomColor() }]}
+          style={[styles.circle, { backgroundColor: getRandomColor(name) }]}
         >
           <Text style={styles.initials}>{getInitials(name)}</Text>
         </View>
