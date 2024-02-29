@@ -62,7 +62,7 @@ export const ProductosList = () => {
   }
 
   const handleDownload = (file_path) => {
-    console.log(file_path);
+    
   }
 
   const handleImportar = (csv) => {

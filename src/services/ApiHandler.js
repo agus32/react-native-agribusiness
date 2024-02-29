@@ -12,8 +12,8 @@ let globalToken = '';
 
 export const setGlobalToken = (token) => {
   globalToken = token;
-  console.log(globalToken);
-  console.log(token);
+  
+  
 };
 
 const BASE_URL = 'http://epublit.com.ar:420'; // Ruta base
@@ -102,7 +102,7 @@ export const postApiData = async (route,body) => {
       name: fileName,
       type: type(),
     });
-    console.log(formData);
+    
 
 
     try {
@@ -114,7 +114,7 @@ export const postApiData = async (route,body) => {
         body: formData,
       });
       const data = await response.json();
-      console.log(formData);
+      
       if (!response.ok){
         ErrorHandler(data);
       }else showAlert(data.message, 'Exito');

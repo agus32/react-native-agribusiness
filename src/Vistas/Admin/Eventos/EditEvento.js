@@ -15,10 +15,10 @@ export const EditEventoModal = ({ isVisible, onClose, onEnviar, evento }) => {
         titulo,
         descripcion,
     };
-    console.log(evento.id_evento);
+    
     onEnviar(nuevoEvento,evento.id_evento,selectedImagen);
     onClose();
-    console.log(selectedImagen);
+    
   };
 
   const pickImage = async () => {

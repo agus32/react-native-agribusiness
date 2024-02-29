@@ -42,7 +42,7 @@ export const PersonasList = () => {
   
   const getPersonas = async () => {
     const response = await getApiData('persona');
-    console.log(response);
+    
     setPersonas(response);
   };
   const getCargos = async () => {

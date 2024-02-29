@@ -11,7 +11,7 @@ export const useWebSocket = (token,cedula, onMessageReceived) => {
   const joinRoom = () => {
     socket.connect();
     socket.emit('join', { token, cedula });
-    console.log('Socket conectado');
+    
   };
 
   const sendMessage = (message) => {
@@ -19,7 +19,7 @@ export const useWebSocket = (token,cedula, onMessageReceived) => {
   };
 
   const getAllMessages = (callback) => {
-    console.log("Obteniendo mensajes");
+    
     socket.on('firstMessages', (rawMessages) => {
       const messages = rawMessages.data || [];
       callback(messages);
@@ -32,14 +32,14 @@ export const useWebSocket = (token,cedula, onMessageReceived) => {
       if (sender === cedula) {
         onMessageReceived(sender, message);
       } else {
-        console.log("Acabas de enviar un mensaje:", message);
+        
       }
     });
   };
 
   const disconnectSocket = () => {
     socket.disconnect();
-    console.log('Socket desconectado');
+    
   };
 
   return {

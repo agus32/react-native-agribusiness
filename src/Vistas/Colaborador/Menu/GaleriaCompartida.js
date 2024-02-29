@@ -40,7 +40,7 @@ const ProductosList = () => {
   };
 
   const handleEnviar = async (selectedFile,idProducto,comentario) => {
-    console.log(selectedFile);
+    
     await handleGaleriaImage(idProducto,selectedFile,comentario);
 
   }
@@ -131,7 +131,7 @@ const ProductoItem = ({ producto,handleCargar}) => {
         quality: 1,
       });
       if (!result.canceled) {
-        console.log(result);
+        
           setSelectedImagen(result.assets[0]?.uri);
       }
     };

@@ -35,9 +35,9 @@ const ChatComponent = () => {
     
     useEffect(() => {
       joinRoom();
-      console.log('joining room');
+      
       getAllMessages((previousMessages) => {
-        console.log(previousMessages);
+        
         const formattedMessages = previousMessages.map((msg) => ({
           _id: msg.created_at,
           text: msg.message,

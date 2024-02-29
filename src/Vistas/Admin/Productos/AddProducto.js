@@ -24,7 +24,7 @@ export const AddProducto = ({ isVisible, onClose, onEnviar,proveedores}) => {
         descripcion,
         id_proveedor: parseInt(idProveedor),
     };
-    console.log(selectedFile);
+    
     onEnviar(nuevoProducto,selectedFile,selectedImagen);   
     onClose();
   };

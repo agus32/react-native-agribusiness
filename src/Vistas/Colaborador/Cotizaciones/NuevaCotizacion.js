@@ -81,7 +81,7 @@ const NuevaCotizacionForm = () => {
     }
 
     const handleProductoChange = (id) => {
-        console.log(id);
+        
         if(id === -1) setProveedor('');
         else{
           const producto = productosList.find((item) => item.id_producto === parseInt(id));

@@ -45,7 +45,7 @@ export const downloadFile = async (url) => {
       const base64 = await FileSystem.readAsStringAsync(result.uri, { encoding: FileSystem.EncodingType.Base64 });
       await FileSystem.StorageAccessFramework.createFileAsync(permissons.directoryUri, nombreArchivo, type() )
       .then(async(uri) => {
-        console.log(type());
+        
         await FileSystem.writeAsStringAsync(uri, base64, { encoding: FileSystem.EncodingType.Base64 });
       })
       .catch(err => console.log(err));
@@ -64,7 +64,7 @@ export const downloadFile = async (url) => {
 
 
 export const callNumber = phone => {
-  console.log('callNumber ----> ', phone);
+  
   let phoneNumber = phone;
   if (Platform.OS !== 'android') {
     phoneNumber = `telprompt:${phone}`;

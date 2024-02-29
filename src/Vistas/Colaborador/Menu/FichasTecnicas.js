@@ -157,7 +157,7 @@ export const FichasTecnicas = () => {
 
   const getProductos = async () => {
     const response = await getApiData('producto'); 
-    console.log(response);
+    
     setProductos(response);
   };
   

@@ -50,7 +50,7 @@ export const EventosList = () => {
 
   const handleAgregar = async (nuevoEvento,imagen) => {
     const response = await postApiData('evento',nuevoEvento);
-    console.log(response);
+    
     if(imagen && response.success) handleApiImage('PUT',`evento/${response.data.id_evento}/image`,imagen);  
     getEventos();
   }

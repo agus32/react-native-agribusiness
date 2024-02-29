@@ -13,7 +13,7 @@ export const getNotificationsToken = async () => {
   }
 
   const token = (await Notifications.getExpoPushTokenAsync({projectId})).data;
-  console.log(token);
+  
   return token;
 };
 

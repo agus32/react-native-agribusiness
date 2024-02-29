@@ -18,7 +18,7 @@ const NuevaSolicitudForm = () => {
     if (user.cedula) {
       const data = await getApiData(`persona/${user.cedula}/solicitables`);
       setColaboradores(data);
-      console.log(data);
+      
       setLoading(false);
   }}
 

@@ -31,7 +31,7 @@ const ArticulosItem = ({ item }) => {
         const fechaActual = new Date();
         const diferencia = fechaActual - fechaPublicacion;
         const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
-        console.log(dias, fechaPublicacion, fechaActual, diferencia);
+        
         return dias;
     };
 
@@ -51,7 +51,7 @@ export const ClienteEventos = () => {
 
     const getArticulos = async () => {
       const response = await getApiData('evento');
-      console.log(response);
+      
       setArticulos(response);
     };
   

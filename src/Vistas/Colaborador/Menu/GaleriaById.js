@@ -12,7 +12,7 @@ const ImagenesList = () => {
 
     const fetchImagenes = async () => {
         const response = await getApiData(`producto/${id}/imagen`);
-        console.log(response.imagenes); 
+         
         setImagenes(response.imagenes || []);
     }
 

@@ -137,7 +137,7 @@ export const Navigation = () => {
     const location = useLocation();
     useEffect(() => {
         const backAction = () => {
-            console.log(location);
+            
         if(location.pathname === "/") {
             Alert.alert('Advertencia', 'Estas seguro que deseas salir?', [
             {
