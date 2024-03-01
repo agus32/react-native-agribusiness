@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, Text, Image, StyleSheet,Pressable } from 'react-native';
+import { View, Text, Image, StyleSheet} from 'react-native';
 import { Link } from "react-router-native"
-import { usePerson } from '../../context/PersonContext';
 
 export const AdminMenu = () => {
-  const { doLogout } = usePerson();
 
   return (
     <View style={styles.container}>
@@ -30,19 +28,19 @@ export const AdminMenu = () => {
           </View>
         </Link>
         </View>
-        <View style={styles.linkContainer}>
+        <View style={[styles.linkContainer,{marginBottom:80}]}>
         <Link to="/eventos" style={styles.link} underlayColor={1} activeOpacity={0.3}>
         <View>
             <Image source={require('../../media/eventos.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Eventos</Text>
           </View>
         </Link>
-        <Pressable onPress={doLogout} style={styles.link}>
+        <Link to="/articulos" style={styles.link} underlayColor={1} activeOpacity={0.3}>
           <View>
-            <Image source={require('../../media/cerrar-sesion.png')} style={styles.linkImage} />
-            <Text style={styles.linkText}>Cerrar Sesión</Text>
+            <Image source={require('../../media/articulos.png')} style={styles.linkImage} />
+            <Text style={styles.linkText}>Artículos Técnicos</Text>
           </View>
-        </Pressable>
+        </Link>
         </View>
       
     </View>

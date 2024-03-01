@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
         position: 'sticky',
         top: 0,
         zIndex: 1, 
-        paddingTop: 40,       
+        paddingTop: 10,       
     },
     AppBar: {
         flexDirection: 'row',

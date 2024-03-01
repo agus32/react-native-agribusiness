@@ -37,7 +37,7 @@ const PerfilComponent = () => {
 
 
         <Text style={styles.nombre}>{user.rol === 'invitado' ? 'Invitado' : userInfo.nombre}</Text>
-        {user.rol !== 'invitado' &&
+        {user.rol !== 'invitado' && user.rol !== 'admin' &&
         <View>
         <Text style={styles.cargo}>{userInfo.cargo?.nombre ?? 'Cliente'}</Text>
 

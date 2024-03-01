@@ -41,6 +41,7 @@ const ArticulosItem = ({ item }) => {
         <Text style={styles.diasPublicado}>hace {diasPublicado(item.fecha_creacion)} día/s | 1 min lectura</Text>
         <View style={styles.lineaSeparadora} />
         <Text style={styles.descripcion}>{item.descripcion}</Text>
+        {item.url && <Text style={styles.url} onPress={() => {Linking.openURL(item.url);}}>{item.url}</Text>}
         {item.image && <Image source={{ uri: item.image }} style={styles.articuloImagen} resizeMode="cover"/>}
     </View>
   );
@@ -88,7 +89,7 @@ const styles = StyleSheet.create({
   },
   lineaSeparadora: {
     borderTopWidth: 1,
-    borderTopColor: 'lightgrey',
+    borderTopColor: '#B5B2B2',
     marginVertical: 8,
     marginBottom: 8,
 
@@ -101,7 +102,7 @@ const styles = StyleSheet.create({
   },
   diasPublicado: {
     textAlign: 'left',
-    color: 'lightgrey',
+    color: '#B5B2B2',
     fontSize: 12,
 
   },
@@ -110,5 +111,11 @@ const styles = StyleSheet.create({
     color: 'black',
     fontSize: 16,
 
+  },
+  url:{
+    textAlign: 'left',
+    color: '#3366BB',
+    fontSize: 16,
+    textDecorationLine: 'underline',
   },
 });

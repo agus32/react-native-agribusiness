@@ -27,13 +27,14 @@ import { LineaById } from '../Vistas/Cliente/Productos/LineaById';
 import {ClienteEventos} from '../Vistas/Cliente/Eventos/ClienteEventos';
 import {ClienteMenu} from '../Vistas/Cliente/Menu/ClienteMenu';
 import {Directorio} from '../Vistas/Cliente/Menu/Directorio';
-import {ArticulosTecnicos} from '../Vistas/Cliente/Menu/ArticulosTecnicos';
+import {ClienteArticulosTecnicos} from '../Vistas/Cliente/Menu/ClienteArticulosTecnicos';
 import { Chat } from '../components/Chat';
 import { ChatList } from '../components/ChatList';
 import { IniciarChat } from '../Vistas/Cliente/Chat/IniciarChat';
 import { usePerson } from '../context/PersonContext';
 import { InvitadoChat } from '../Vistas/Invitado/InvitadoChat';
 import {RegisterForm} from '../Vistas/Home/RegisterForm';
+import { ArticulosTecnicos } from '../Vistas/Admin/ArticulosTecnicos/ArticulosTecnicos';
 
 const Admin= () => {
     return (
@@ -43,8 +44,13 @@ const Admin= () => {
             <Route exact path="/"   element={<AdminMenu/>}/>
             <Route path="/usuarios" element={<Personas/>}/>
             <Route path="/productos" element={<Productos/>}/>
-            <Route path="/eventos" element={<Eventos/>}/>
-        </Routes>     
+            <Route path="/eventos" element={<ArticulosTecnicos/>}/>
+            <Route path="/articulos" element={<ArticulosTecnicos/>}/>
+            <Route path="/menu" element={<AdminMenu/>}/>
+            <Route path="/perfil" element={<Perfil/>}/>
+            <Route path="/chat" element={<AdminMenu/>}/>
+        </Routes>
+        <NavBar/>
         </SafeAreaView>
       );
 }
@@ -87,7 +93,7 @@ const Cliente = () => {
             <Route path="/eventos" element={<ClienteEventos/>}/>
             <Route path="/menu" element={<ClienteMenu/>}/>
             <Route path="/menu/directorio" element={<Directorio/>}/>
-            <Route path="/menu/articulos" element={<ArticulosTecnicos/>}/>
+            <Route path="/menu/articulos" element={<ClienteArticulosTecnicos/>}/>
             <Route path="/chat" element={<ChatList/>}/>
             <Route path="/chat/:cedula" element={<Chat/>}/>
             <Route path="/iniciarChat" element={<IniciarChat/>}/>
@@ -109,7 +115,7 @@ const Invitado = () => {
             <Route path="/eventos" element={<ClienteEventos/>}/>
             <Route path="/menu" element={<ClienteMenu/>}/>
             <Route path="/menu/directorio" element={<Directorio/>}/>
-            <Route path="/menu/articulos" element={<ArticulosTecnicos/>}/>
+            <Route path="/menu/articulos" element={<ClienteArticulosTecnicos/>}/>
             <Route path="/chat" element={<InvitadoChat/>}/>
         </Routes>     
         <NavBar/>

@@ -1,14 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, FlatList, Pressable, TextInput } from 'react-native';
 import { Feather } from '@expo/vector-icons';
-import {EventosItem} from './EventosItem';
-import { AddEvento } from './AddEvento';
+import {EventosItem} from '../Eventos/EventosItem';
+import { AddEvento } from '../Eventos/AddEvento';
 import { getApiData, deleteApiData,postApiData,handleApiImage,putApiData} from '../../../services/ApiHandler';
+import { AppBarTab } from '../../../components/AppBarTab';
 
 
 
 
-export const EventosList = () => {
+const ArticulosList = () => {
   const [eventos,setEventos] = useState([]);
   const [filteredEventos, setFilteredEventos] = useState([]);
   const [searchText, setSearchText] = useState('');
@@ -27,7 +28,7 @@ export const EventosList = () => {
   }, [searchText]);
   
   const getEventos = async () => {
-    const response = await getApiData('evento');
+    const response = await getApiData('articulo');
       setEventos(response);
       setFilteredEventos(response);
   };
@@ -38,20 +39,20 @@ export const EventosList = () => {
 
 
   const handleDelete = async (id_evento) => {
-    await deleteApiData('evento', id_evento);
+    await deleteApiData('articulo', id_evento);
     getEventos();
   };
 
   const handleEdit = async(evento,id_evento,imagen) => {
-    await putApiData('evento',id_evento,evento);
-    if(imagen) handleApiImage('PUT',`evento/${id_evento}/image`,imagen);
+    await putApiData('articulo',id_evento,evento);
+    if(imagen) handleApiImage('PUT',`articulo/${id_evento}/image`,imagen);
     getEventos();
   };
 
   const handleAgregar = async (nuevoEvento,imagen) => {
-    const response = await postApiData('evento',nuevoEvento);
+    const response = await postApiData('articulo',nuevoEvento);
     
-    if(imagen && response.success) handleApiImage('PUT',`evento/${response.data.id_evento}/image`,imagen);  
+    if(imagen && response.success) handleApiImage('PUT',`articulo/${response.data.id}/image`,imagen);  
     getEventos();
   }
 
@@ -61,7 +62,7 @@ export const EventosList = () => {
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
-          placeholder="Buscar por titulo..."
+          placeholder="Buscar por titulo del artículo..."
           value={searchText}
           onChangeText={setSearchText}
         />
@@ -70,17 +71,17 @@ export const EventosList = () => {
       <FlatList
         data={filteredEventos}
         renderItem={({ item }) => (
-          <EventosItem evento={item} onDelete={handleDelete} onEdit={handleEdit} type="Evento"/>
+          <EventosItem evento={item} onDelete={handleDelete} onEdit={handleEdit} type="Artículo"/>
         )}
-        keyExtractor={(item) => item.id_evento}
+        keyExtractor={(item) => item.id}
         ListFooterComponent={<View style={{ height: 80 }}/>}
         ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                                   <Text>No se encontraron Eventos</Text>
+                                   <Text>No se encontraron Artículos</Text>
                             </View>}
         ListHeaderComponent={         
             <View style={styles.addProductoContainer}>
               <Pressable style={styles.addProductoButton} onPress={() => setModalVisible(true)}>
-                <Text style={styles.addProductoText}>Nuevo Evento</Text>
+                <Text style={styles.addProductoText}>Nuevo Artículo</Text>
               </Pressable>
             </View>         
         }
@@ -89,11 +90,21 @@ export const EventosList = () => {
         isVisible={modalVisible}
         onClose={() => setModalVisible(false)}
         onEnviar={handleAgregar}
-        type="Evento"
+        type="Artículo"
       />
     </View>
   );
 };
+
+export const ArticulosTecnicos = () => {
+    return (
+        <View style={{width:'100%',flexGrow: 1}}>
+            <AppBarTab children={"Artículos Técnicos"}/>
+            <ArticulosList/>
+        </View>
+    )
+};
+
 
 const styles = StyleSheet.create({
   container: {

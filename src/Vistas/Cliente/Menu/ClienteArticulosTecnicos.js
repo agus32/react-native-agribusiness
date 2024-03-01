@@ -5,7 +5,7 @@ import { getApiData } from '../../../services/ApiHandler';
 import { AppBarTab } from '../../../components/AppBarTab';
 
 
-export const ArticulosTecnicos = () => {
+export const ClienteArticulosTecnicos = () => {
     const [articulos, setArticulos] = useState([]);
 
     const getArticulos = async () => {

@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, Pressable, StyleSheet, Modal, Image } from 'react-native';
+import { View, Text, Pressable, StyleSheet, Modal, Image,Linking } from 'react-native';
 import { AntDesign } from '@expo/vector-icons';
 import { EditEventoModal } from './EditEvento';
 import { Azul, fechaParser} from '../../../constants/constants';
 
 
-export const EventosItem = ({ evento, onDelete, onEdit }) => {
+export const EventosItem = ({ evento, onDelete, onEdit,type }) => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
 
   const handleConfirmarBorrar = () => {
+    if(type === "Evento"){
     onDelete(evento.id_evento);
+    }else onDelete(evento.id);
+
     setConfirmModalVisible(false);
   };
   const handleEnviarEdit = (evento,id_evento,imagen) => {
@@ -30,6 +33,11 @@ export const EventosItem = ({ evento, onDelete, onEdit }) => {
           {fechaParser(evento.fecha_creacion)}
         </Text>
         <Text style={styles.eventoDesc}>{evento.descripcion}</Text>
+        {type !== "Evento" && 
+        <Pressable onPress={() => {Linking.openURL(evento.url);}}>
+            <Text style={styles.eventoUrl}>{evento.url}</Text>
+        </Pressable>
+        }
       </View>
       <View style={styles.iconContainer}>
         <Pressable style={styles.icon} onPress={() => setEditModalVisible(true)}>
@@ -43,23 +51,25 @@ export const EventosItem = ({ evento, onDelete, onEdit }) => {
         isVisible={confirmModalVisible}
         onClose={() => setConfirmModalVisible(false)}
         onConfirm={handleConfirmarBorrar}
+        type={type}
       />
       <EditEventoModal
         isVisible={editModalVisible}
         onClose={() => setEditModalVisible(false)}
         onEnviar={handleEnviarEdit}
         evento={evento}
+        type={type}
       />
     </View>
   );
 };
 
-const ConfirmarBorrarModal = ({ isVisible, onClose, onConfirm }) => {
+const ConfirmarBorrarModal = ({ isVisible, onClose, onConfirm,type }) => {
   return (
     <Modal animationType="slide" transparent={true} visible={isVisible} onRequestClose={onClose}>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalText}>¿Estás seguro que deseas borrar este evento?</Text>
+          <Text style={styles.modalText}>¿Estás seguro que deseas borrar este {type}?</Text>
           <View style={styles.buttonContainer}>
             <Pressable style={styles.cancelButton} onPress={onClose}>
               <Text style={styles.buttonText}>Cancelar</Text>
@@ -108,6 +118,11 @@ const styles = StyleSheet.create({
   eventoDesc: {
     fontSize: 14,
     color: '#757575',
+  },
+  eventoUrl:{
+    fontSize: 14,
+    color: '#3366BB',
+    textDecorationLine: 'underline',
   },
   iconContainer: {
     flexDirection: 'row',

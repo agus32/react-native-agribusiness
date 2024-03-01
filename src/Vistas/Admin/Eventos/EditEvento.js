@@ -5,18 +5,18 @@ import * as ImagePicker from 'expo-image-picker';
 
 
 
-export const EditEventoModal = ({ isVisible, onClose, onEnviar, evento }) => {
+export const EditEventoModal = ({ isVisible, onClose, onEnviar, evento,type }) => {
     const[titulo, setTitulo] = useState(evento.titulo) ?? "";
     const[descripcion, setDescripcion] = useState(evento.descripcion?? "");
+    const [url, setUrl] = useState(evento.url?? "");
     const[selectedImagen, setSelectedImagen] = useState(null);
 
   const handleEnviar = () => {
-    const nuevoEvento = {
-        titulo,
-        descripcion,
+    if(type === "Evento"){
+      onEnviar({titulo,descripcion},evento.id_evento,selectedImagen);
+    }else{
+      onEnviar({titulo,descripcion,url},evento.id,selectedImagen);
     };
-    
-    onEnviar(nuevoEvento,evento.id_evento,selectedImagen);
     onClose();
     
   };
@@ -38,7 +38,7 @@ export const EditEventoModal = ({ isVisible, onClose, onEnviar, evento }) => {
     <Modal animationType="slide" transparent={true} visible={isVisible} onRequestClose={onClose}>
       <View style={styles.modalContainer}>
         <View style={styles.modalContent}>
-          <Text style={styles.modalTitle}>Editar Evento</Text>
+          <Text style={styles.modalTitle}>Editar {type}</Text>
           <Text>Titulo:</Text>
             <TextInput
             style={styles.input}
@@ -55,6 +55,14 @@ export const EditEventoModal = ({ isVisible, onClose, onEnviar, evento }) => {
             value={descripcion}
             onChangeText={setDescripcion}
             />
+            {type !== "Evento" &&
+            <TextInput
+            style={styles.input}
+            placeholder="URL"
+            value={url}
+            onChangeText={setUrl}
+            />
+            } 
             <Pressable style={styles.importarButton} onPress={pickImage}>
               <Text style={styles.agregarButtonText}>Seleccionar Imagen</Text>
             </Pressable>
