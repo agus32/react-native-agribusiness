@@ -44,7 +44,7 @@ const Admin= () => {
             <Route exact path="/"   element={<AdminMenu/>}/>
             <Route path="/usuarios" element={<Personas/>}/>
             <Route path="/productos" element={<Productos/>}/>
-            <Route path="/eventos" element={<ArticulosTecnicos/>}/>
+            <Route path="/eventos" element={<Eventos/>}/>
             <Route path="/articulos" element={<ArticulosTecnicos/>}/>
             <Route path="/menu" element={<AdminMenu/>}/>
             <Route path="/perfil" element={<Perfil/>}/>
