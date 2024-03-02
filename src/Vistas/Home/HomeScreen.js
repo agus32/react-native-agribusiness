@@ -32,7 +32,7 @@ export const HomeScreen = () => {
           <Text style={styles.buttonText}>Cliente</Text>
         </Link>
 
-        <Pressable onPress={handleInvitado}>
+        <Pressable style={{padding:5}}onPress={handleInvitado}>
         <Text style={styles.underlineText}>Modo Invitado</Text>
         </Pressable>
       </View>

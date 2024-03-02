@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet,Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet,Alert,ScrollView } from 'react-native';
 import { Azul,Verde } from '../../constants/constants';
 import { Link } from 'react-router-native';
 import {Picker} from '@react-native-picker/picker';
@@ -57,6 +57,7 @@ export const RegisterForm = () => {
 
     return(
         <View style={styles.container}>
+        <ScrollView>
             <Text style={styles.title}>Crear nueva cuenta</Text>
             <Text style={styles.label}>Cédula:</Text>
             <TextInput style={styles.input} keyboardType="numeric" value={imputs.cedula} onChangeText={(text) => handleInputChange(text, 'cedula')}/>
@@ -91,6 +92,7 @@ export const RegisterForm = () => {
             <Link to="/login" style={{marginTop:20}} underlayColor={1} activeOpacity={0.3}>
                 <Text>¿Ya tiene cuenta? <Text style={{textDecorationLine: 'underline'}}>Iniciar sesión</Text></Text>
             </Link>
+        </ScrollView>
         </View>
     )
 }
