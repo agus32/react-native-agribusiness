@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Agribusiness Ecuador",
-    "slug": "Agribusiness Ecuador",
+    "name": "Agribusiness",
+    "slug": "my-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,28 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.tetifake.myapp",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5547cd21-e47e-48b3-889e-415ccf1dd78c"
+      }
+    },
+    "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "usesCleartextTraffic": true,
+            "debuggable": true
+          }
+        }
+      ]
+    ]
   }
 }
