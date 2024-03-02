@@ -24,16 +24,15 @@ export const PersonProvider = ({ children }) => {
     fetchLoggedUser();
   }, []);
 
-  const doLogin = async (inputs) => {
-    const expo_token = await getNotificationsToken();
-    const response = await PostWithoutToken("persona/login",{...inputs,expo_token});
-    if (response.success) {
-      await AsyncStorage.setItem('loggedUser', JSON.stringify({ rol: response.rol, token: response.token, cedula: inputs.cedula, expo_token }));
-      setUser({ rol: response.rol, token: response.token, cedula: inputs.cedula, expo_token });
-      setGlobalToken(response.token);
-      navigate("/");
-    }
-  };
+    const doLogin = async (inputs) => {
+        const expo_token = await getNotificationsToken(); const response = await PostWithoutToken("persona/login",{...inputs,expo_token});
+        if (response.success) {
+            await AsyncStorage.setItem('loggedUser', JSON.stringify({ rol: response.rol, token: response.token, cedula: inputs.cedula, expo_token }));
+            setUser({ rol: response.rol, token: response.token, cedula: inputs.cedula, expo_token });
+            setGlobalToken(response.token);
+            navigate("/");
+        }
+    };
 
   const doLogout = async() => {
     if(user.expo_token){
