@@ -84,11 +84,9 @@ const ProductoItem = ({ producto}) => {
           <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Presentacíon: </Text>{producto.presentacion}</Text>
           <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Precio: </Text>{producto.precio}</Text>
           <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>IVA: </Text>{producto.iva}</Text>
-          {producto.ficha_tecnica && 
           <Pressable onPress={handleDownload}>
             <Text style={styles.linkText}>Descargar Ficha Técnica</Text>
           </Pressable>
-          }
         </View>
 
       </View>
@@ -156,9 +154,8 @@ export const FichasTecnicas = () => {
   const [productos, setProductos] = useState([]);
 
   const getProductos = async () => {
-    const response = await getApiData('producto'); 
-    
-    setProductos(response);
+    const data = await getApiData('producto?ficha_tecnica=notnull'); 
+    setProductos(data);
   };
   
   useEffect(() => {

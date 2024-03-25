@@ -1,13 +1,19 @@
 import React from 'react';
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { Link } from 'react-router-native';
 import { Azul } from '../../../constants/constants';
 import { AppBarTab } from '../../../components/AppBarTab';
+import { getApiData } from '../../../services/ApiHandler';
+import { downloadFile } from '../../../services/DownloadHandler';
 
 const ArchivosInteresComponent = () => {
+  const handlePreciosDownload = async () => {
+    const path = await getApiData('lista_precios');
+    if(path.url) await downloadFile(path.url);
+  };
   return (
     <View style={styles.container}>
-      <Link to="/solicitudes/lista" style={styles.link} underlayColor={1} activeOpacity={0.3}>
+      <TouchableOpacity style={styles.link} underlayColor={1} activeOpacity={0.3} onPress={handlePreciosDownload}>
         <View style={styles.linkContent}>
           <Image
             source={require('../../../media/precio.png')}
@@ -15,9 +21,9 @@ const ArchivosInteresComponent = () => {
           />
           <Text style={styles.buttonText}>Descarga Lista de Precios</Text>
         </View>
-      </Link>
+      </TouchableOpacity>
 
-      <Link to="/solicitudes/lista" style={styles.link} underlayColor={1} activeOpacity={0.3}>
+      <TouchableOpacity style={styles.link} underlayColor={1} activeOpacity={0.3}>
         <View style={styles.linkContent}>
           <Image
             source={require('../../../media/proyecciones-ventas.png')}
@@ -25,7 +31,7 @@ const ArchivosInteresComponent = () => {
           />
           <Text style={styles.buttonText}>Descargar Proyecciones de Ventas</Text>
         </View>
-      </Link>
+      </TouchableOpacity>
       <Link to="/menu/archivos/fichas" style={[styles.link,{marginTop:10}]} underlayColor={1} activeOpacity={0.3}>
         <View style={styles.linkContent}>
           <Image

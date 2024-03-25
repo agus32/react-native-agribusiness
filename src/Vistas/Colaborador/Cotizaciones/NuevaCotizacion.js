@@ -7,7 +7,7 @@ import { Azul} from '../../../constants/constants';
 import { CotizacionModal } from './CotizacionModal';
 
 
-const NuevaCotizacionForm = () => {
+export const NuevaCotizacionForm = ({cotizacion = null, handleEditar = null}) => {
   const [cotizacionData, setCotizacionData] = useState({
     cliente: '',
     formaPago: 'Contado', // Valor por defecto
@@ -42,7 +42,23 @@ const NuevaCotizacionForm = () => {
   useEffect(() => {   
     getProductos(); 
     getPersonas();
-  }, []);
+    if(Object.keys(cotizacion).length > 0){
+      if(!cotizacion.cliente_cedula)setClienteDesconocido(cotizacion.cliente_nuevo);
+      setCotizacionData({
+        cliente: cotizacion.cliente_cedula ?? '.',
+        formaPago: cotizacion.forma_pago,
+        tiempoEntrega: cotizacion.tiempo_entrega.toString(),
+        disposiciones: cotizacion.disposiciones,
+      });      
+      
+      setProductos(cotizacion.productos.map((item) => 
+        ({ id_producto: item.id_producto,
+          cantidad: parseInt(item.cantidad),
+          precio_final: parseFloat(item.precio)
+        }))
+      );
+    }
+  }, [cotizacion]);
 
   const agregarProducto = () => {
     if (nuevoProducto.id_producto && nuevoProducto.cantidad) {
@@ -69,7 +85,7 @@ const NuevaCotizacionForm = () => {
       if(cotizacionData.cliente === '.') body.cliente_nuevo = clienteDesconocido;
       else body.cliente = cotizacionData.cliente;
 
-      const response = await postApiData('cotizacion',body);
+      const response = cotizacion ? await handleEditar(body) : await postApiData('cotizacion',body);
       if(response.success){
         setFile(response.data.file);
         setCompartirModal(true);
@@ -93,7 +109,7 @@ const NuevaCotizacionForm = () => {
     <ScrollView>
     <View style={styles.container}>
 
-        <CotizacionModal isVisible={compartirModal} onClose={() => setCompartirModal(false)} file={file}/>
+        <CotizacionModal isVisible={compartirModal} onClose={() => setCompartirModal(false)} file={file} mode={cotizacion ? "editar" : "crear"}/>
         <Picker
         selectedValue={cotizacionData.cliente}
         style={styles.picker}
@@ -226,13 +242,13 @@ const TablaCotizacion = ({ productos,setProductos,productosList}) => {
       return productos.reduce((total, producto) => {
         const prodList = productosList.find((item) => item.id_producto === parseInt(producto.id_producto));
         const precioFinal = producto.precio_final || 0;
-        return total + producto.cantidad * precioFinal*(1+(prodList.iva/100));
+        return total + producto.cantidad * precioFinal*(1+(prodList?.iva/100));
       }, 0);
     };
 
     const getNombreProducto = (id) => {
         const producto = productosList.find((item) => item.id_producto === parseInt(id));
-        return producto.nombre;
+        return producto?.nombre;
       }
 
     const quitarProducto = (index) => {

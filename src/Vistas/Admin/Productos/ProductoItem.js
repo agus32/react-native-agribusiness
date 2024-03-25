@@ -5,7 +5,7 @@ import { EditProductoModal } from './EditProducto';
 import { Azul} from '../../../constants/constants';
 import { downloadFile } from '../../../services/DownloadHandler';
 
-export const ProductoItem = ({ producto, onDelete, onEdit,onDownload,proveedores }) => {
+export const ProductoItem = ({ producto, onDelete, onEdit,proveedores }) => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
 
@@ -34,7 +34,7 @@ export const ProductoItem = ({ producto, onDelete, onEdit,onDownload,proveedores
         <Text style={styles.productoNombre}>{producto.nombre}</Text>
         <Text style={styles.productoDesc} numberOfLines={1} ellipsizeMode="tail" >{producto.descripcion}</Text>
         <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Proovedor: </Text>{producto.nombre_proveedor}</Text>
-        <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Presentacíon: </Text>{producto.presentacion}</Text>
+        <Text style={styles.productoDesc} ><Text style={{ fontWeight: 'bold' }}>Presentacíon: </Text>{producto.presentacion}</Text>
         <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>Precio: </Text>{producto.precio}</Text>
         <Text style={styles.productoDesc}><Text style={{ fontWeight: 'bold' }}>IVA: </Text>{producto.iva}</Text>
         {producto.ficha_tecnica && 
@@ -102,7 +102,7 @@ const styles = StyleSheet.create({
     borderColor: '#E0E0E0',
     borderWidth: 1,
     flexDirection: 'row',
-    
+
   },
   productoNombre: {
     fontSize: 18,
@@ -112,6 +112,7 @@ const styles = StyleSheet.create({
   productoDesc: {
     fontSize: 14,
     color: '#757575',
+    width: '90%',
   },
   linkText: {
     fontSize: 14,

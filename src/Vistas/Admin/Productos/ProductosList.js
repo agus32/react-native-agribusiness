@@ -49,21 +49,18 @@ export const ProductosList = () => {
 
   const handleEdit = async(nuevoProducto,id_producto,ficha,imagen) => {
     await putApiData('producto',id_producto,nuevoProducto);
-    if(ficha) handleApiFile('PUT',`producto/${id_producto}/ficha`,ficha);
-    if(imagen) handleApiImage('POST',`producto/${id_producto}/portada`,imagen);
+    if(ficha) await handleApiFile('PUT',`producto/${id_producto}/ficha`,ficha);
+    if(imagen) await handleApiImage('POST',`producto/${id_producto}/portada`,imagen);
     getProductos();
   };
 
   const handleAgregar = async(nuevoProducto,ficha,imagen) => {
     const response = await postApiData('producto',nuevoProducto);
-    if(ficha && response.success) handleApiFile('PUT',`producto/${response.data.id_producto}/ficha`,ficha);
-    if(imagen && response.success) handleApiImage('POST',`producto/${response.data.id_producto}/portada`,imagen);
+    if(ficha && response.success) await handleApiFile('PUT',`producto/${response.data.id_producto}/ficha`,ficha);
+    if(imagen && response.success) await handleApiImage('POST',`producto/${response.data.id_producto}/portada`,imagen);
     getProductos();
   }
 
-  const handleDownload = (file_path) => {
-    
-  }
 
   const handleImportar = (csv) => {
     handleApiFile('POST',`producto/list`,csv);
@@ -83,7 +80,7 @@ export const ProductosList = () => {
       <FlatList
         data={filteredProductos}
         renderItem={({ item }) => (
-          <ProductoItem producto={item} onDelete={handleDelete} onEdit={handleEdit} onDownload={handleDownload} proveedores={proveedores}/>
+          <ProductoItem producto={item} onDelete={handleDelete} onEdit={handleEdit} proveedores={proveedores}/>
         )}
         keyExtractor={(item) => item.id_producto}
         ListFooterComponent={<View style={{ height: 80 }}/>}

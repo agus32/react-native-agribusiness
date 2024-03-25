@@ -5,7 +5,7 @@ import { AppBarTab } from '../../../components/AppBarTab';
 import { getApiData } from '../../../services/ApiHandler';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {DownloadAndShare} from '../../../services/DownloadHandler';
-
+import {Link} from 'react-router-native'; 
 
 
 
@@ -64,6 +64,9 @@ const CotizacionItem = ({ cotizacion }) => {
               <TouchableOpacity onPress={handleShare}>
                 <Text style={[styles.modalButton, { backgroundColor: 'green' }]}>Descargar PDF</Text>
               </TouchableOpacity>
+              <Link to={`/cotizaciones/editar/${cotizacion.nro_cotizacion}`}>
+                <Text style={[styles.modalButton, { backgroundColor: Azul }]}>Editar</Text>
+              </Link>
               <TouchableOpacity onPress={() => setModalVisible(false)}>
                 <Text style={[styles.modalButton, { backgroundColor: 'red' }]}>Cerrar</Text>
               </TouchableOpacity>
@@ -208,6 +211,7 @@ const styles = StyleSheet.create({
   modalButtons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
+    width: '100%',
     marginTop: 20,
   },
   modalButton: {

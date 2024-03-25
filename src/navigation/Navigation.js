@@ -35,6 +35,7 @@ import { usePerson } from '../context/PersonContext';
 import { InvitadoChat } from '../Vistas/Invitado/InvitadoChat';
 import {RegisterForm} from '../Vistas/Home/RegisterForm';
 import { ArticulosTecnicos } from '../Vistas/Admin/ArticulosTecnicos/ArticulosTecnicos';
+import { EditarCotizacion } from '../Vistas/Colaborador/Cotizaciones/EditarCotizacion';
 
 const Admin= () => {
     return (
@@ -67,6 +68,7 @@ const Colaborador= () => {
             <Route path="/cotizaciones" element={<Cotizaciones/>}/>
             <Route path="/cotizaciones/nueva" element={<NuevaCotizacion/>}/>
             <Route path="/cotizaciones/lista" element={<ListaCotizaciones/>}/>
+            <Route path="/cotizaciones/editar/:id" element={<EditarCotizacion/>}/>
             <Route path="/menu" element={<ColaboradorMenu/>}/>
             <Route path="/menu/galeria" element={<GaleriaCompartida/>}/>
             <Route path="/menu/galeria/:id" element={<GaleriaByID/>}/>

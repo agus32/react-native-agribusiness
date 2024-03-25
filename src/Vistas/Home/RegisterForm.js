@@ -50,7 +50,7 @@ export const RegisterForm = () => {
             telefono: imputs.telefono,
             cod_zona: parseInt(imputs.zona),
             rol : 'cliente',
-        });
+        },true);
         setImputs(initialState);
         
     }
@@ -103,6 +103,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'flex-start', // Centrado horizontal
         paddingTop: 30,
+        paddingBottom: 30,
         backgroundColor: 'white',
     },
     label: {

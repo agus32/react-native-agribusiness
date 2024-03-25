@@ -1,11 +1,14 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Modal, Image, StyleSheet} from 'react-native';
-import { Verde } from '../../../constants/constants';
+import { Verde,Azul } from '../../../constants/constants';
 import {DownloadAndShare} from '../../../services/DownloadHandler';
+import { useNavigate } from 'react-router-native';
 
 
 
-export const CotizacionModal = ({ isVisible, onClose,file}) => {
+
+export const CotizacionModal = ({ isVisible, onClose,file,mode}) => {
+  const navigate = useNavigate();
 
   const handleShare = async () => {
     try {
@@ -14,6 +17,10 @@ export const CotizacionModal = ({ isVisible, onClose,file}) => {
       console.error('Error al intentar compartir la imagen', error);
     }
   };
+
+  const handleNavigate = () => {
+    navigate(-1);
+  }
 
     return (
       <Modal
@@ -30,9 +37,16 @@ export const CotizacionModal = ({ isVisible, onClose,file}) => {
             <TouchableOpacity style={styles.boton} onPress={() => handleShare()}>
               <Text style={styles.buttonText} >Compartir</Text>
             </TouchableOpacity>
+            {mode === "editar" ?
+            <TouchableOpacity style={[styles.boton, {backgroundColor:Azul}]} onPress={handleNavigate}>
+              <Text style={styles.buttonText} >Volver</Text>
+            </TouchableOpacity>
+            :
             <TouchableOpacity style={[styles.boton, {backgroundColor:'red'}]} onPress={onClose}>
               <Text style={styles.buttonText} >Cerrar</Text>
             </TouchableOpacity>
+            }
+            
             </View>
           </View>
         </View>

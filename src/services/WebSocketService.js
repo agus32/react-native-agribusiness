@@ -1,8 +1,8 @@
 import { io } from 'socket.io-client';
+import { BASE_URL } from './ApiHandler';
 
-
-const BASE_URL = 'epublit.com.ar:420';
-const socket = io(`ws://${BASE_URL}/`);
+const parsedURL = BASE_URL.replace(/^https?:\/\//, '');
+const socket = io(`ws://${parsedURL}/`);
 
 export const useWebSocket = (token,cedula, onMessageReceived) => {
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, Modal, TextInput, Pressable, StyleSheet,ScrollView } from 'react-native';
+import { View, Text, Modal, TextInput, Pressable, StyleSheet,ScrollView,Alert } from 'react-native';
 import * as DocumentPicker from 'expo-document-picker';
 import * as ImagePicker from 'expo-image-picker';
 import {Picker} from '@react-native-picker/picker';
@@ -15,7 +15,20 @@ export const AddProducto = ({ isVisible, onClose, onEnviar,proveedores}) => {
   const[selectedFile, setSelectedFile] = useState(null);
   const[selectedImagen, setSelectedImagen] = useState(null);
 
+  const clearImputs = () => {
+    setNombre("");
+    setPresentacion("");
+    setPrecio("");
+    setIva("0");
+    setDescripcion("");
+    setIdProveedor(proveedores[0]?.id_proveedor ?? "1");
+    setSelectedFile(null);
+    setSelectedImagen(null);
+  };
+
   const handleEnviar = () => {
+    if(!selectedImagen) Alert.alert("Advertencia","No se seleccionó imagen de portada");
+    else{
     const nuevoProducto = {
         precio: parseFloat(precio),
         iva: parseFloat(iva),
@@ -24,9 +37,10 @@ export const AddProducto = ({ isVisible, onClose, onEnviar,proveedores}) => {
         descripcion,
         id_proveedor: parseInt(idProveedor),
     };
-    
-    onEnviar(nuevoProducto,selectedFile,selectedImagen);   
+    onEnviar(nuevoProducto,selectedFile,selectedImagen);
     onClose();
+    clearImputs();
+    }
   };
 
 

@@ -16,7 +16,7 @@ export const setGlobalToken = (token) => {
   
 };
 
-const BASE_URL = 'http://epublit.com.ar:420'; // Ruta base
+export const BASE_URL = 'https://agribussiness.thorque.com.ar/api/v1'; // Ruta base
 
 const ErrorHandler = (data) => { 
   if (data.errors && data.errors.length > 0) {
@@ -26,7 +26,7 @@ const ErrorHandler = (data) => {
 }
 
 
-export const PostWithoutToken = async (route,body) => {
+export const PostWithoutToken = async (route,body,feedback = false) => {
   try {
     const response = await fetch(`${BASE_URL}/${route}`, {
       method: 'POST',
@@ -37,6 +37,7 @@ export const PostWithoutToken = async (route,body) => {
     });
     const data = await response.json();
     if (!response.ok)ErrorHandler(data);
+    else if(feedback) showAlert(data.message, 'Exito');
     return data;
   } catch (error) {
     const errorMessage = error.toString() || 'Error desconocido';
