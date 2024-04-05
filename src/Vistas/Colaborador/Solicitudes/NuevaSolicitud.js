@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { AppBarTab } from '../../../components/AppBarTab';
 import { Azul} from '../../../constants/constants';
 import { postApiData,getApiData} from '../../../services/ApiHandler';
-import { View, TextInput, TouchableOpacity, StyleSheet,Text,ImageBackground,ActivityIndicator} from 'react-native';
+import { View, TextInput, TouchableOpacity, StyleSheet,Text,ImageBackground,ActivityIndicator,ScrollView} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
 import { usePerson } from '../../../context/PersonContext';
 
@@ -10,7 +10,9 @@ const NuevaSolicitudForm = () => {
   const {user} = usePerson();
   const [colaboradores, setColaboradores] = useState([]);
   const [solicitado, setSolicitado] = useState("");
+  const [asunto, setAsunto] = useState("");
   const [descripcion, setDescripcion] = useState("");
+  const [solucion, setSolucion] = useState("");
   const [loading, setLoading] = useState(true);
 
   
@@ -18,7 +20,6 @@ const NuevaSolicitudForm = () => {
     if (user.cedula) {
       const data = await getApiData(`persona/${user.cedula}/solicitables`);
       setColaboradores(data);
-      
       setLoading(false);
   }}
 
@@ -26,8 +27,10 @@ const NuevaSolicitudForm = () => {
 useEffect(() => { getColaboradores();}, []);
 
   const handleEnviar = async() => {
-    await postApiData('solicitud',{ solicitado, descripcion });
+    await postApiData('solicitud',{ solicitado, descripcion, asunto, solucion});
     setSolicitado("");
+    setAsunto("");
+    setSolucion("");
     setDescripcion("");
   };
 
@@ -40,6 +43,7 @@ useEffect(() => { getColaboradores();}, []);
     ) : (
       colaboradores ? (
         <View style={styles.formContainer}>
+        <ScrollView >
         <Text style={styles.texto}>Destinatario:</Text>
         <Picker
           selectedValue={solicitado}
@@ -55,19 +59,35 @@ useEffect(() => { getColaboradores();}, []);
           <Text style={styles.texto}>Cargo: {colaboradores.find((item) => item.cedula === solicitado).cargo}</Text>
         }
 
-      <Text style={styles.texto}>Solicitud:</Text>
+      <Text style={styles.texto}>Asunto:</Text>
+      <TextInput
+        style={styles.textInput}
+        placeholder="Ingrese el asunto aquí..."
+        value={asunto}
+        onChangeText={setAsunto}
+      />
+      <Text style={styles.texto}>Descripcion:</Text>
       <TextInput
         style={styles.textInput}
         multiline={true}
         numberOfLines={4}
-        placeholder="Ingrese su descripcion aquí..."
+        placeholder="Ingrese la descripcion aquí..."
         value={descripcion}
         onChangeText={setDescripcion}
       />
-
+      <Text style={styles.texto}>Solución:</Text>
+      <TextInput
+        style={styles.textInput}
+        multiline={true}
+        numberOfLines={2}
+        placeholder="Ingrese la solucion aquí..."
+        value={solucion}
+        onChangeText={setSolucion}
+      />
       <TouchableOpacity style={styles.enviarButton} onPress={handleEnviar}>
         <Text style={styles.buttonText}>Enviar Solicitud</Text>
       </TouchableOpacity>
+      </ScrollView>
       </View>
       ) : (
         <Text> No tienes colaboradores por encima de tu cargo para hacerle solicitudes.</Text>
@@ -127,7 +147,7 @@ const styles = StyleSheet.create({
     backgroundColor: Azul,
     borderRadius: 10,
     padding: 10,
-    marginVertical: 20,
+    marginVertical: 10,
     alignSelf: 'center',
   },
   buttonText: {

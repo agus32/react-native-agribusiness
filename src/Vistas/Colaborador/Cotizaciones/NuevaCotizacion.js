@@ -42,7 +42,7 @@ export const NuevaCotizacionForm = ({cotizacion = null, handleEditar = null}) =>
   useEffect(() => {   
     getProductos(); 
     getPersonas();
-    if(Object.keys(cotizacion).length > 0){
+    if(cotizacion !== null && Object.keys(cotizacion).length > 0){
       if(!cotizacion.cliente_cedula)setClienteDesconocido(cotizacion.cliente_nuevo);
       setCotizacionData({
         cliente: cotizacion.cliente_cedula ?? '.',
