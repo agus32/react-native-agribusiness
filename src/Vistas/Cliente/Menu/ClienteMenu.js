@@ -29,7 +29,7 @@ const Menu = () => {
     </View>
   );
 };
-//  <Text style={styles.text}>Artículos Técnicos</Text>  <Text style={styles.text}>Directorio</Text>
+
 export const ClienteMenu = () => {
 
     return (
@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 60,
   },
   imageContainer: {
     flex: 1,

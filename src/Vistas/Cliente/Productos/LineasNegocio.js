@@ -33,7 +33,6 @@ const LineasList = () => {
           <LineasItem linea={item}/>
         )}
         keyExtractor={(item) => item.id_linea}
-        ListFooterComponent={<View style={{ height: 80 }}/>}
 
       />
 

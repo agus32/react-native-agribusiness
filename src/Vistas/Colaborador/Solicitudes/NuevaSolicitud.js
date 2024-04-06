@@ -24,7 +24,9 @@ const NuevaSolicitudForm = () => {
   }}
 
   
-useEffect(() => { getColaboradores();}, []);
+  useEffect(() => { 
+    getColaboradores();
+  }, []);
 
   const handleEnviar = async() => {
     await postApiData('solicitud',{ solicitado, descripcion, asunto, solucion});
@@ -41,7 +43,8 @@ useEffect(() => { getColaboradores();}, []);
       {loading ? (
       <ActivityIndicator size="large" color="#0000ff" />
     ) : (
-      colaboradores ? (
+      colaboradores && colaboradores.length > 0 ? (
+        
         <View style={styles.formContainer}>
         <ScrollView >
         <Text style={styles.texto}>Destinatario:</Text>

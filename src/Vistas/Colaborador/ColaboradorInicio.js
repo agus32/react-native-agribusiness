@@ -27,7 +27,7 @@ export const ColaboradorInicio = () => {
           </View>
         </Link>
         </View>
-        <View style={[styles.linkContainer, {marginBottom:80}]}>
+        <View style={styles.linkContainer}>
         <TouchableOpacity style={styles.link} onPress={() => Linking.openURL("https://www.zoho.com/login.html")}>
         <View>
             <Image source={require('../../media/zoho-crm.png')} style={styles.linkImage} />

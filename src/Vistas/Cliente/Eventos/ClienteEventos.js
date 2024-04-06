@@ -14,8 +14,7 @@ import { Azul } from '../../../constants/constants';
         renderItem={({ item }) => (
           <ArticulosItem item={item}/>
         )}
-        keyExtractor={(item) => item.id_evento}
-        ListFooterComponent={<View style={{ height: 80 }} />}
+        keyExtractor={(item) => item.id_evento ?? item.id}
         ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                    <Text>No se encontraron articulos</Text>
                             </View>}

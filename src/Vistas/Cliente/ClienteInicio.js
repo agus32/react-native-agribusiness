@@ -14,15 +14,15 @@ export const ClienteInicio = () => {
       </View>
 
 
-        <View style={[styles.linkContainer, {marginBottom:80}]}>
+        <View style={styles.linkContainer}>
         <Link to="/eventos" style={styles.link} underlayColor={1} activeOpacity={0.3}>
-        <View>
+        <View style={styles.imageContainer}>
             <Image source={require('../../media/eventos.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Eventos</Text>
           </View>
         </Link >
         <Link to="/productos" style={styles.link} underlayColor={1} activeOpacity={0.3}>     
-          <View>
+        <View style={styles.imageContainer}>
             <Image source={require('../../media/LOGO-PRODUCTO.png')} style={styles.linkImage} />
             <Text style={styles.linkText}>Productos</Text>
           </View>
@@ -75,6 +75,11 @@ const styles = StyleSheet.create({
   },
   link: {
     margin: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+  },
+  imageContainer: {
     alignItems: 'center',
     justifyContent: 'center',
     flex: 1,

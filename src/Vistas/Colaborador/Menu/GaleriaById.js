@@ -52,7 +52,6 @@ const ImagenesList = () => {
             ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                    <Text>No hay imagenes</Text>
                                 </View>}
-            ListFooterComponent={<View style={{ height: 50 }}/>}
           />
         </View>
 

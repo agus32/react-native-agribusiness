@@ -28,7 +28,7 @@ export const AdminMenu = () => {
           </View>
         </Link>
         </View>
-        <View style={[styles.linkContainer,{marginBottom:80}]}>
+        <View style={styles.linkContainer}>
         <Link to="/eventos" style={styles.link} underlayColor={1} activeOpacity={0.3}>
         <View>
             <Image source={require('../../media/eventos.png')} style={styles.linkImage} />

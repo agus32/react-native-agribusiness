@@ -92,7 +92,6 @@ export const PersonasList = () => {
           <PersonaItem persona={item} onDelete={handleDelete} onEdit={handleEdit} cargos={cargos} />
         )}
         keyExtractor={(item) => item.cedula}
-        ListFooterComponent={<View style={{ height: 80 }}/>}
         ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                    <Text>No se encontraron Usuarios</Text>
                             </View>}

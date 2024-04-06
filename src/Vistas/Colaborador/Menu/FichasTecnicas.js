@@ -43,7 +43,6 @@ export const ProductosList = ({productos}) => {
           <ProductoItem producto={item}/>
         )}
         keyExtractor={(item) => item.id_producto}
-        ListFooterComponent={<View style={{ height: 80 }}/>}
         ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                    <Text>No se encontraron productos</Text>
                             </View>}

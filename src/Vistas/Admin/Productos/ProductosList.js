@@ -83,7 +83,6 @@ export const ProductosList = () => {
           <ProductoItem producto={item} onDelete={handleDelete} onEdit={handleEdit} proveedores={proveedores}/>
         )}
         keyExtractor={(item) => item.id_producto}
-        ListFooterComponent={<View style={{ height: 80 }}/>}
         ListHeaderComponent={         
             <View style={styles.addProductoContainer}>
               <Pressable style={styles.addProductoButton} onPress={() => setModalVisible(true)}>

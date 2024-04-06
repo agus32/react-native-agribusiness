@@ -47,17 +47,12 @@ export const NavBar = () => {
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
-      backgroundColor: Verde,//#c2d75f
+      backgroundColor: Verde,
       borderTopWidth: 1,
       borderTopColor: '#ccc',
-      position: 'absolute',
-      zIndex: 1,
-      bottom: 0,
-      left: 0,
-      right: 0,
       paddingHorizontal: 20,
       paddingVertical: 10,
-      width: '100%'
+      width: '100%',
     },
     navItem: {
       flex: 1,

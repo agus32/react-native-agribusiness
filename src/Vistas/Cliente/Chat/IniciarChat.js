@@ -90,7 +90,6 @@ const ChatComponent = () => {
       <View
         style={{
           flex: 1,
-          marginBottom: 100,
           width: '80%',
         }}
       >

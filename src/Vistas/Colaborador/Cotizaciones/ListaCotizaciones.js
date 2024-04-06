@@ -3,7 +3,7 @@ import { View, Text, StyleSheet,FlatList,Modal,TouchableOpacity} from 'react-nat
 import { Azul,fechaParser } from '../../../constants/constants';
 import { AppBarTab } from '../../../components/AppBarTab';
 import { getApiData } from '../../../services/ApiHandler';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { usePerson } from '../../../context/PersonContext';
 import {DownloadAndShare} from '../../../services/DownloadHandler';
 import {Link} from 'react-router-native'; 
 
@@ -85,12 +85,11 @@ const CotizacionItem = ({ cotizacion }) => {
 
 export const ListaCotizaciones = () => {
   const [cotizaciones, setCotizaciones] = useState([]);
+  const {user} = usePerson();
 
   const getCotizaciones = async () => {
-    const loggedUser = await AsyncStorage.getItem('loggedUser');
-    if (loggedUser) {
-      const parsedUser = JSON.parse(loggedUser);
-      const data = await getApiData(`persona/${parsedUser.cedula}/cotizacion`);
+    if (user) {
+      const data = await getApiData(`persona/${user.cedula}/cotizacion`);
       setCotizaciones(data);
   }
   };
@@ -115,7 +114,6 @@ export const ListaCotizaciones = () => {
         ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                               <Text>No hay cotizaciones</Text>
                             </View>}
-        ListFooterComponent={<View style={{ height: 120 }}/>}
       />
       </View>
     </View>

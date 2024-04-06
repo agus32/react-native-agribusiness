@@ -46,10 +46,12 @@ const PerfilComponent = () => {
 
 
         <View style={styles.infoContacto}>
+          {userInfo.telefono &&
           <View style={styles.iconoContacto}>
             <Entypo name="old-phone" size={30} color={Verde} />
             <Text style={styles.textoContacto}> {userInfo.telefono}</Text>
           </View>
+          }
           <View style={styles.iconoContacto}>
             <Entypo name="email" size={30} color={Verde} />
             <Text style={styles.textoContacto}>{userInfo.correo}</Text>

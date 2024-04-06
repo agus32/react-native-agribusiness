@@ -57,7 +57,6 @@ const ChatListComponent = () => {
       renderItem={renderItem}
       keyExtractor={(item) => item.chat_id}
       ListHeaderComponent={user.rol === 'cliente' ? <NuevoChatCliente/> : <NuevoChatColaborador/>}
-      ListFooterComponent={<View style={{ height: 80 }}/>}
     />
   );
 };

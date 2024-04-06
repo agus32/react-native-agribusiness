@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
     marginTop: 30,
-    marginBottom: 80
   },
   link: {
     flex: 1,

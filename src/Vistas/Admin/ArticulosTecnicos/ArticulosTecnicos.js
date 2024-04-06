@@ -74,7 +74,6 @@ const ArticulosList = () => {
           <EventosItem evento={item} onDelete={handleDelete} onEdit={handleEdit} type="Artículo"/>
         )}
         keyExtractor={(item) => item.id}
-        ListFooterComponent={<View style={{ height: 80 }}/>}
         ListEmptyComponent={<View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                                    <Text>No se encontraron Artículos</Text>
                             </View>}

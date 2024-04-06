@@ -218,7 +218,6 @@ export const NuevaCotizacionForm = ({cotizacion = null, handleEditar = null}) =>
       </TouchableOpacity>
 
     </View>
-    <View style={{height:100}}></View>
     </ScrollView>
 
   );

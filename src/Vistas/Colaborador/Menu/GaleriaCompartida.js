@@ -67,7 +67,6 @@ const ProductosList = () => {
           <ProductoItem producto={item} handleCargar={handleCargar}/>
         )}
         keyExtractor={(item) => item.id_producto}
-        ListFooterComponent={<View style={{ height: 50 }}/>}
 
       />
       <CargaModal isVisible={modal} onClose={() => setModal(false)} idProducto={idProducto} onEnviar={handleEnviar} />
