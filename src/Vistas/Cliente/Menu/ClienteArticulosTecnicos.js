@@ -10,7 +10,6 @@ export const ClienteArticulosTecnicos = () => {
 
     const getArticulos = async () => {
       const response = await getApiData('articulo');
-      console.log(response);
       setArticulos(response);
     };
   

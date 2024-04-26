@@ -53,6 +53,7 @@ export const NavBar = () => {
       paddingHorizontal: 20,
       paddingVertical: 10,
       width: '100%',
+      height: 70,
     },
     navItem: {
       flex: 1,

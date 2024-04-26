@@ -20,9 +20,7 @@ export const EditarCotizacion = () => {
     };
 
     const handleEditar = async (cotizacion) => {
-        console.log(cotizacion);
         const response = await putApiData("cotizacion",id, cotizacion);
-        console.log(response);
         return response;
     }
 
