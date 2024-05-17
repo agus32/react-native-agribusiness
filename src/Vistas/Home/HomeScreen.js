@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, Text, StyleSheet, Pressable, Image} from 'react-native';
+import { View, Text, StyleSheet, Pressable, Image, ScrollView} from 'react-native';
 import { Link } from 'react-router-native';
 import { Verde,Azul } from '../../constants/constants';
 import { usePerson } from '../../context/PersonContext';
 
 export const HomeScreen = () => {
   const {doLogin} = usePerson();
-
+  
   const handleInvitado = () => {
     const imputs = {
       cedula: 'invitado',
@@ -16,15 +16,17 @@ export const HomeScreen = () => {
   }
 
   return (
+    
     <View style={styles.container}>
+      <View style={styles.headerContainer}>
       <Image
         source={require('../../media/slogan-1-1024x416.png')}
         style={styles.logo}
       />
       <Text style={styles.welcomeText}>Bienvenido</Text>
-      <Text style={styles.smallText}>Para comenzar, seleccione una opción:</Text>
+      </View>
       <View style={styles.buttonContainer}>
-        
+      <Text style={styles.smallText}>Para comenzar, seleccione una opción:</Text>
         <Link to="/login" style={styles.button} underlayColor={1} activeOpacity={0.3}>
           <Text style={styles.buttonText}>Colaborador</Text>
         </Link>
@@ -32,7 +34,7 @@ export const HomeScreen = () => {
           <Text style={styles.buttonText}>Cliente</Text>
         </Link>
 
-        <Pressable style={{padding:5}}onPress={handleInvitado}>
+        <Pressable style={{padding:7}}onPress={handleInvitado}>
         <Text style={styles.underlineText}>Modo Invitado</Text>
         </Pressable>
       </View>
@@ -42,6 +44,7 @@ export const HomeScreen = () => {
           style={styles.bottomImage}
         />
       </View>
+      
     </View>
   );
 };
@@ -55,9 +58,14 @@ const styles = StyleSheet.create({
     paddingBottom: 30, // Margen de abajo a arriba
     backgroundColor: 'white',
   },
+  headerContainer: {
+    flex:2,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
   logo: {
-    width: 300,
-    height: 200,
+    marginTop: 10,
+    height: '60%',
     resizeMode: 'contain',
     tintColor: Azul,
   },
@@ -69,7 +77,7 @@ const styles = StyleSheet.create({
   },
   smallText: {
     fontSize: 14,
-    marginTop: 30,
+    marginTop: 10,
   },
   underlineText: {
     fontSize: 14,
@@ -79,8 +87,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     width: '100%',
-    paddingHorizontal: 20, // Espacio a los lados de los botones
-    marginTop: 50,
+    flex: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   button: {
     backgroundColor: Verde,
@@ -97,13 +106,12 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   bottomImageContainer: {
-    flex: 1,
     justifyContent: 'flex-end',
     marginBottom: 15,
+    flex: 1,
   },
   bottomImage: {
-    width: 200,
-    height: 200,
+    height: '75%',
     resizeMode: 'contain',
   },
 });

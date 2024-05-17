@@ -89,7 +89,7 @@ export const RegisterForm = () => {
             <TouchableOpacity style={styles.loginButton} onPress={handleEnviar}>
                 <Text style={styles.loginButtonText} >Registrarse</Text>
             </TouchableOpacity>
-            <Link to="/login" style={{marginTop:20}} underlayColor={1} activeOpacity={0.3}>
+            <Link to="/login" style={styles.loginText} underlayColor={1} activeOpacity={0.3}>
                 <Text>¿Ya tiene cuenta? <Text style={{textDecorationLine: 'underline'}}>Iniciar sesión</Text></Text>
             </Link>
         </ScrollView>
@@ -102,8 +102,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start', // Centrado horizontal
-        paddingTop: 30,
-        paddingBottom: 30,
+        width: '100%',
         backgroundColor: 'white',
     },
     label: {
@@ -113,9 +112,16 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     title: {
+        alignSelf: 'center',
         fontSize: 30,
         color: Verde,
+        marginTop: 40,
+        marginBottom: 40,
+    },
+    loginText: {
+        marginBottom: 40,
         marginTop: 20,
+        alignSelf: 'center',
     },
     input: {
         width: 300,
